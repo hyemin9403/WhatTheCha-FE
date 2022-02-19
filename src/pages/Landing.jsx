@@ -5,30 +5,35 @@ import { Header } from "../components";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
-import "swiper/swiper-bundle.min.css";
-import "swiper/swiper.min.css";
-import "swiper/components/navigation/navigation.min.css";
-import "swiper/components/pagination/pagination.min.css";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+// import "swiper/swiper-bundle.min.css";
+// import "swiper/swiper.min.css";
+// import "swiper/components/navigation/navigation.min.css";
+// import "swiper/components/pagination/pagination.min.css";
 
 import "./Landing.css";
 
 // import required modules
-import SwiperCore, { Pagination, Navigation } from "swiper";
+//import SwiperCore, { Pagination, Navigation } from "swiper";
+import { Autoplay, Pagination, Navigation } from "swiper";
 
 const Landing = () => {
-  SwiperCore.use([Pagination, Navigation]);
+  //SwiperCore.use([Pagination, Navigation]);
 
   return (
     <div>
-      <Header />
       <Swiper
+        className="mySwiper"
         // install Swiper modules
+        slidesPerView={1}
         modules={[Navigation, Pagination]}
+        navigation={true}
         direction={"vertical"}
         pagination={{
           clickable: true,
         }}
-        className="mySwiper"
       >
         {/* 로컬에 있는 이미지 삽입하려 할 경우 에러나서 왓챠 src 가져옴 */}
         <SwiperSlide>
