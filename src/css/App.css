@@ -18,7 +18,7 @@ html {
 body {
   margin: 0;
   height: 100vh;
-  background: #000000;
+  /* background: #000000; */
   font-size: 1.6rem;
   font-family: Roboto, "Noto Sans KR", "Apple SD Gothic Neo", "Nanum Gothic",
     "Malgun Gothic", sans-serif;
