@@ -26,6 +26,7 @@ const Landing = () => {
         modules={[Navigation, Pagination, Mousewheel]}
         mousewheel={true}
         navigation={true}
+        loop={true}
         direction={"vertical"}
         pagination={{
           clickable: true,
@@ -33,7 +34,7 @@ const Landing = () => {
       >
         {/* 로컬에 있는 이미지 삽입하려 할 경우 에러나서 왓챠 src 가져옴 */}
         <SwiperSlide>
-          <Header>
+          <Header id="layer1">
             <img
               src="https://an2-img.amz.wtchn.net/image/v2/6AF4PWk5LWGhVy264_GsoQ.jpg?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1KbklsMHNJbkFpT2lJdmRqSXZjM1J2Y21VdmFXMWhaMlV2TVRZeU5USXlNakExTURjMU1ESXhNemt4TWlKOS5jZUV1c3IwckFiVnBHb29sRi1xSjRMNG1xZ2FuejV6cE1ydmxrRDZrQjV3"
               alt=""
@@ -120,7 +121,14 @@ const Landing = () => {
               <a href="" onClick={() => history.push("/signup")}>
                 2주 무료 이용 시작
               </a>
-              <div></div>
+              <div>
+                <button
+                  style={{
+                    transform: "rotate3d(0, 0, 1, 90deg)",
+                    cursor: "pointer",
+                  }}
+                ></button>
+              </div>
             </section>
           </Header>
           <div>
@@ -250,9 +258,6 @@ const Header = styled.div`
     border-radius: 40px;
     font-size: 1.3888888888888888vw;
     font-weight: 700;
-    -webkit-letter-spacing: -0.0625vw;
-    -moz-letter-spacing: -0.0625vw;
-    -ms-letter-spacing: -0.0625vw;
     letter-spacing: -0.0625vw;
     line-height: 4.166666666666666vw;
     width: auto;
@@ -264,12 +269,10 @@ const Header = styled.div`
 
   div {
     position: absolute;
-    top: 450px;
+    top: 40rem;
     left: 50%;
-    bottom: 100px;
     z-index: 100;
     transform: translate(-50%, 0);
-    background-color: red;
   }
 
   div button {
@@ -283,22 +286,7 @@ const Header = styled.div`
     border: 1px solid rgba(255, 255, 255, 0.8);
     border-radius: 50%;
   }
-
-  div Topbutton {
-    cursor: pointer;
-    display: inline-block;
-    transform: rotate3d(0, 0, 1, -90deg);
-    background: red;
-    background-size: 1.7361111111111112vw 1.7361111111111112vw;
-    width: 3.3333333333333335vw;
-    height: 3.3333333333333335vw;
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    border-radius: 50%;
-    z-index: 101;
-  }
 `;
-
-const Topbutton = styled.button``;
 
 const Footer = styled.div`
   position: absolute;
