@@ -78,3 +78,28 @@ body {
   opacity: 1;
   cursor: pointer;
 }
+
+/* navigation swiper-button */
+
+.swiper-button-prev {
+  display: none;
+}
+
+.swiper-button-next {
+  display: none;
+  cursor: pointer;
+  display: inline-block;
+  transform: rotate3d(0, 0, 1, -90deg);
+  background-size: 1.7361111111111112vw 1.7361111111111112vw;
+
+  width: 3.3333333333333335vw;
+  height: 3.3333333333333335vw;
+
+  left: 48.4%;
+  top: 91%;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  display: none;
+}

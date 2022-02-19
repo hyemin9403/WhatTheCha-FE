@@ -14,7 +14,7 @@ import "swiper/css/navigation";
 import "./Landing.css";
 
 // import required modules
-import { Mousewheel, Pagination } from "swiper";
+import { Mousewheel, Pagination, Navigation } from "swiper";
 
 const Landing = () => {
   return (
@@ -23,8 +23,9 @@ const Landing = () => {
         className="mySwiper"
         // install Swiper modules
         slidesPerView={1}
-        modules={[Pagination, Mousewheel]}
+        modules={[Navigation, Pagination, Mousewheel]}
         mousewheel={true}
+        navigation={true}
         direction={"vertical"}
         pagination={{
           clickable: true,
@@ -65,6 +66,9 @@ const Landing = () => {
               <a href="" onClick={() => history.push("/signup")}>
                 2주 무료 이용 시작
               </a>
+              <div>
+                <button></button>
+              </div>
             </section>
           </Header>
         </SwiperSlide>
@@ -80,6 +84,9 @@ const Landing = () => {
               <a href="" onClick={() => history.push("/signup")}>
                 2주 무료 이용 시작
               </a>
+              <div>
+                <button></button>
+              </div>
             </section>
           </Header>
         </SwiperSlide>
@@ -95,6 +102,9 @@ const Landing = () => {
               <a href="" onClick={() => history.push("/signup")}>
                 2주 무료 이용 시작
               </a>
+              <div>
+                <button></button>
+              </div>
             </section>
           </Header>
         </SwiperSlide>
@@ -110,13 +120,74 @@ const Landing = () => {
               <a href="" onClick={() => history.push("/signup")}>
                 2주 무료 이용 시작
               </a>
+              <div></div>
             </section>
           </Header>
+          <div>
+            <Footer>
+              <span class="css-loei9u">
+                <a
+                  href="/zendesk/login"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  style={{ fontWeight: "bold" }}
+                >
+                  고객센터(이용 및 결제 문의)
+                </a>
+                &nbsp;&nbsp;
+                <a
+                  href="mailto:cs@watcha.co.kr"
+                  rel="noreferrer noopener"
+                  target="_blank"
+                >
+                  cs@watcha.co.kr
+                </a>
+                <span> • </span>02-515-9985 (유료) &nbsp;&nbsp;
+                <span> / </span>
+                &nbsp;&nbsp;
+                <span style={{ fontWeight: "bold" }}>제휴 및 대외 협력</span>
+                &nbsp;&nbsp;
+                <a
+                  href="https://watcha.team/contact"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  https://watcha.team/contact
+                </a>
+              </span>
+              <ul class="css-0">
+                <li class="css-sp1qhw">
+                  주식회사 왓챠&nbsp;<span>/</span>&nbsp;
+                </li>
+                <li class="css-sp1qhw">
+                  대표 박태훈&nbsp;<span>/</span>&nbsp;
+                </li>
+                <li class="css-sp1qhw">
+                  서울특별시 서초구 강남대로 343 신덕빌딩 3층&nbsp;
+                  <span>/</span>&nbsp;
+                </li>
+                <li class="css-sp1qhw">
+                  사업자등록번호 211-88-66013&nbsp;<span>/</span>&nbsp;
+                </li>
+                <li class="css-sp1qhw">
+                  통신판매업 신고번호 제 2019-서울서초-0965호&nbsp;
+                  <span>/</span>&nbsp;
+                </li>
+                <li class="css-sp1qhw">
+                  대표번호 02-515-9985&nbsp;<span>/</span>&nbsp;
+                </li>
+                <li class="css-shc8b1" style={{ fontWeight: "bold" }}>
+                  개인정보 처리 방침
+                </li>
+                <span>/</span>
+                <li class="css-shc8b1" style={{ fontWeight: "bold" }}>
+                  청소년 보호정책
+                </li>
+              </ul>
+            </Footer>
+          </div>
         </SwiperSlide>
       </Swiper>
-      <div>
-        <footer></footer>
-      </div>
     </div>
   );
 };
@@ -170,9 +241,7 @@ const Header = styled.div`
     color: #ffffff;
     font-size: 15px;
     font-weight: 700;
-    -webkit-letter-spacing: -0.1px;
-    -moz-letter-spacing: -0.1px;
-    -ms-letter-spacing: -0.1px;
+
     letter-spacing: -0.1px;
     line-height: 51px;
     text-align: center;
@@ -204,7 +273,6 @@ const Header = styled.div`
   }
 
   div button {
-    cursor: pointer;
     display: inline-block;
     transform: rotate3d(0, 0, 1, -90deg);
     background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8IS0tIEdlbmVyYXRvcjogU2tldGNoIDU2LjMgKDgxNzE2KSAtIGh0dHBzOi8vc2tldGNoLmNvbSAtLT4KICAgIDx0aXRsZT5BcnRib2FyZDwvdGl0bGU+CiAgICA8ZGVzYz5DcmVhdGVkIHdpdGggU2tldGNoLjwvZGVzYz4KICAgIDxnIGlkPSJBcnRib2FyZCIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBvbHlnb24gaWQ9IlBhdGgiIGZpbGw9IiNGRkZGRkYiIGZpbGwtcnVsZT0ibm9uemVybyIgcG9pbnRzPSIxOS42OTM2MTY4IDExLjIxODg4IDQuOTU1ODk4OTUgMTEuMjE4ODggMTEuMTk2NzA3NCAxNy4zOTU0MTg5IDkuNDgxNDQgMTkuMDkyNDk2OCAwLjMgMTAuMDA1NjQyMSAyLjAxNTI2NzM3IDguMzA4NTY0MjEgMi4wMTU4NzM2OCA4LjMwOTE3MDUzIDkuNDgxNDQgMC45MiAxMS4xOTY3MDc0IDIuNjE3MDc3ODkgNC45NTU4OTg5NSA4Ljc5MzYxNjg0IDE5LjY5MzYxNjggOC43OTM2MTY4NCI+PC9wb2x5Z29uPgogICAgPC9nPgo8L3N2Zz4=)
@@ -214,5 +282,46 @@ const Header = styled.div`
     height: 3.3333333333333335vw;
     border: 1px solid rgba(255, 255, 255, 0.8);
     border-radius: 50%;
+  }
+
+  div Topbutton {
+    cursor: pointer;
+    display: inline-block;
+    transform: rotate3d(0, 0, 1, -90deg);
+    background: red;
+    background-size: 1.7361111111111112vw 1.7361111111111112vw;
+    width: 3.3333333333333335vw;
+    height: 3.3333333333333335vw;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    z-index: 101;
+  }
+`;
+
+const Topbutton = styled.button``;
+
+const Footer = styled.div`
+  position: absolute;
+  right: 0;
+  bottom: 2vw;
+  left: 0;
+  z-index: 100;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 0.8333333333333334vw;
+  font-weight: 400;
+  letter-spacing: -0.034722222222222224vw;
+  text-align: center;
+  padding: 0 3.4722222222222223vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  & a {
+    color: white;
+  }
+
+  & ul {
+    display: flex;
+    justify-content: center;
   }
 `;
