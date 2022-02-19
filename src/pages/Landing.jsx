@@ -11,7 +11,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
-import "./Landing.css";
+import "../css/Landing.css";
 
 // import required modules
 import { Mousewheel, Pagination, Navigation } from "swiper";
