@@ -18,7 +18,7 @@ const logOut = createAction(LOG_OUT, (username) => ({ username }));
 const initialState = {
     user: null,
     cur_profile: {},
-    is_Login: false,
+    is_login: false,
 };
 
 //  middleware Actions
@@ -165,11 +165,11 @@ export default handleActions({
     [SET_USER] : (state, action) => {
         sessionStorage.setItem("profile", action.payload.user);
         state.user = action.payload.user;
-        state.is_Login = true;
+        state.is_login = true;
     },
     [LOG_OUT] : (state, action) => {
         state.user = null;
-        state.is_Login = false;
+        state.is_login = false;
     },
     [SET_PROFILE] : (state, action) => {
         sessionStorage(action.payload.user, action.payload.info);
