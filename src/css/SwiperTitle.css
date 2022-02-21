@@ -1,29 +1,27 @@
-.main.swiper {
+.title.swiper {
   width: 100%;
   height: 100%;
 }
 
-.main.mySwiper {
+.title.mySwiper {
   width: 100%;
   height: 27rem;
 }
 
-.main .swiper-slide {
+.title .swiper-slide {
   width: 100%;
 
   /* Center slide text vertically */
   display: flex;
   justify-content: center;
   align-items: center;
-
-  overflow: hidden;
 }
 
-.main .swiper-slide :hover {
+.title .swiper-slide :hover {
   cursor: pointer;
 }
 
-.main .swiper-slide img {
+.title .swiper-slide img {
   display: block;
   width: 100%;
   height: 100%;
@@ -31,8 +29,7 @@
   border-radius: 4px;
 }
 
-/* 물어볼거 4: 왜 title은 검은색이 되는데 얜 하얀색이 되지? */
-.main .swiper-slide img:hover {
+.title .swiper-slide img:hover {
   position: absolute;
   top: 0;
   width: 100%;
@@ -44,6 +41,6 @@
   display: block;
 }
 
-.main .swiper-pagination-bullet {
+.title .swiper-pagination-bullet {
   display: none;
 }
