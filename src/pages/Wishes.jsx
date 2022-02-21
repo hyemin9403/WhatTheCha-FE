@@ -7,7 +7,7 @@ const Wishes = () => {
   return (
     <Padding>
       <h2>학새님이 보고싶어요한 작품</h2>
-      <SwiperMain></SwiperMain>
+      <SwiperMain _loop={false}></SwiperMain>
     </Padding>
   );
 };

@@ -39,6 +39,10 @@ const SwiperParty = () => {
               slidesPerView: 3,
               slidesPerGroup: 3,
             },
+            1551: {
+              slidesPerView: 4,
+              slidesPerGroup: 4,
+            },
           }}
         >
           <SwiperSlide>

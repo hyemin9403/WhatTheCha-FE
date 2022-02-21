@@ -7,7 +7,7 @@ const Watched = () => {
   return (
     <Padding>
       <h2>다 본 작품</h2>
-      <SwiperMain></SwiperMain>
+      <SwiperMain _loop={false}></SwiperMain>
     </Padding>
   );
 };

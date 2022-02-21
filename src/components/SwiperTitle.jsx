@@ -43,6 +43,10 @@ const SwiperTitle = () => {
               slidesPerView: 2,
               slidesPerGroup: 2,
             },
+            1551: {
+              slidesPerView: 3,
+              slidesPerGroup: 3,
+            },
           }}
         >
           <SwiperSlide>

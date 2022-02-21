@@ -7,7 +7,7 @@ const Ratings = () => {
   return (
     <Padding>
       <h2>평가한 작품</h2>
-      <SwiperMain></SwiperMain>
+      <SwiperMain _loop={false}></SwiperMain>
     </Padding>
   );
 };

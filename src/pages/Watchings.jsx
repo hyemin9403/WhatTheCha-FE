@@ -7,7 +7,7 @@ const Watchings = () => {
   return (
     <Padding>
       <h2>이어보기</h2>
-      <SwiperMain></SwiperMain>
+      <SwiperMain _loop={false}></SwiperMain>
     </Padding>
   );
 };

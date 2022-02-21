@@ -12,7 +12,8 @@ import "../css/SwiperMain.css";
 // import required modules
 import { Pagination, Navigation } from "swiper";
 
-const SwiperMain = () => {
+const SwiperMain = (props) => {
+  const { _loop } = props;
   return (
     <div>
       {/* 물어볼거 2 media쿼리로 사이즈는 유지하고 개수만 줄어들도록 해야함. @@이하면 6개 보여주고 */}
@@ -25,7 +26,7 @@ const SwiperMain = () => {
         observeParents={true}
         modules={[Pagination, Navigation]}
         spaceBetween={10}
-        loop={true}
+        loop={_loop}
         loopFillGroupWithBlank={true}
         pagination={{
           clickable: true,

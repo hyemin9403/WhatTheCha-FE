@@ -1,12 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-
-import "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { Sidebar } from "../components";
 
 const Layout = ({ children }) => {
-  console.log(children);
-  return <Wrapper>{children}</Wrapper>;
+  return (
+    <>
+      <Wrapper>{children}</Wrapper>
+    </>
+  );
 };
 
 export default Layout;
