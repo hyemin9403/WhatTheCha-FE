@@ -20,6 +20,10 @@ const SwiperMain = () => {
       <Swiper
         className="mySwiper main"
         // install Swiper modules
+        slidesPerView={8}
+        slidesPerGroup={8}
+        observer={true}
+        observeParents={true}
         modules={[Pagination, Navigation]}
         spaceBetween={10}
         loop={true}
@@ -31,33 +35,33 @@ const SwiperMain = () => {
         breakpoints={{
           // when window width is >= 640px
           500: {
-            width: 500,
+            //width: 500,
             slidesPerView: 3,
             slidesPerGroup: 3,
           },
           // when window width is >= 768px
           896: {
-            width: 896,
+            //width: 896,
             slidesPerView: 4,
             slidesPerGroup: 4,
           },
           993: {
-            width: 993,
+            //width: 993,
             slidesPerView: 5,
             slidesPerGroup: 5,
           },
           1135: {
-            width: 1135,
+            //width: 1135,
             slidesPerView: 5,
             slidesPerGroup: 5,
           },
           1551: {
-            width: 1551,
+            //width: 1551,
             slidesPerView: 6,
             slidesPerGroup: 6,
           },
           1648: {
-            width: 1648,
+            //width: 1648,
             slidesPerView: 8,
             slidesPerGroup: 8,
           },
