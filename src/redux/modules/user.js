@@ -18,14 +18,15 @@ const logOut = createAction(LOG_OUT, (username) => ({ username }));
 const initialState = {
   user: null,
   cur_profile: {},
-  is_login: true,
+  is_login: false,
 };
 
 //  middleware Actions
 const loginFB = (id, pwd) => {
   return function (dispatch, getState, { history }) {
     //axious id, pwd전송/ 토큰요청
-    // console.log("id : " + id,  "pwd : " + pwd)
+    //console.log("id : " + id,  "pwd : " + pwd)
+
     instance
       .post("/user/login", {
         email: id,
@@ -46,6 +47,7 @@ const loginFB = (id, pwd) => {
                 .then((res) => {
                   setUser(res.data.profile);
                   window.alert("환영합니다");
+                  history.push("/manage_profiles")
                 })
                 .catch((error) => {
                   console.log("프로파일 set중 에러발생", error);
@@ -65,26 +67,27 @@ const loginFB = (id, pwd) => {
   };
 };
 
-const signupFb = (id, nickname, pwd) => {
-  return function (dispatch, getState) {
-    console.log("id : " + id, "pwd : " + pwd, "nick : " + nickname);
+const signupFb = (name, email, pwd) => {
+  return function (dispatch, getState, { history }) {
+    console.log("id : " + name, "pwd : " + pwd, "email : " + email);
     instance
       .post("/user/signup", {
-        username: id,
-        nickname: nickname,
+        username: name,
+        email: email,
         password: pwd,
       })
       .then((res) => {
         console.log(res);
-        if (res.data.statusHttp === "NG") {
-          console.log("회원데이터기입 오류");
-          window.alert(
-            "아이디/닉네임/비밀번호를 확인해주세요\n아이디/닉네임 중복확인이 필요합니다."
-          );
-        } else {
+        if (res.data.ok) {
           console.log("회원가입 성공");
-          window.alert("환영합니다!\n회원가입이 완료되셨습니다");
+          window.alert(
+            "회원가입성공"
+          );
+          history.replace("/login")
+        } else {
+          console.log("회원가입 실패");
           //window.location.replace('/login');
+          window.alert("아이디/닉네임/비밀번호를 확인해주세요");
         }
       })
       .catch((error) => {
@@ -106,7 +109,7 @@ const loginCheckFB = (token) => {
     //     },
     // })
     instance
-      .get("user/check", {
+      .get("/users/me", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -114,7 +117,7 @@ const loginCheckFB = (token) => {
       .then((res) => {
         //console.log(res);
         if (res.data.ok) {
-          console.log("로그인유지중");
+          console.log(res.data.message);
         } else {
           dispatch(logOut());
           console.log("로그아웃 되었어요");

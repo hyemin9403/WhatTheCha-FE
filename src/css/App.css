@@ -201,6 +201,11 @@ textarea {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+input::placeholder{
+  font-size: 1.6rem;
+  font-family: Noto Sans KR, "Apple SD Gothic Neo", "Nanum Gothic",
+    "Malgun Gothic", sans-serif;
+}
 input[type="radio"] {
   margin: 0;
   -webkit-appearance: none;
@@ -230,6 +235,7 @@ button {
   -moz-osx-font-smoothing: grayscale;
   font-family: Roboto, "Noto Sans KR", "Apple SD Gothic Neo", "Nanum Gothic",
     "Malgun Gothic", sans-serif;
+  cursor: pointer;
 }
 .hidden {
   display: none;

@@ -31,13 +31,13 @@ const Header = (props) => {
       </a>
       <div className="head-menu">
         {(() => {
-          if((path === "/") || (path === "/signup")){
+          if((path === "/") || (path === "/sign_up")){
             return(
-              <button onClick={() => history.push("/signin")} className="btn">로그인</button>
+              <button onClick={() => history.push("/sign_in")} className="btn">로그인</button>
             )
-          }else if(path === "/signin"){
+          }else if(path === "/sign_in"){
             return(
-              <button onClick={() => history.push("/signup")} className="btn">회원가입</button>
+              <button onClick={() => history.push("/sign_up")} className="btn">회원가입</button>
             )
           }else {
             return;

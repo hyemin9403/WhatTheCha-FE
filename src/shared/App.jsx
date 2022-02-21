@@ -41,8 +41,8 @@ function App() {
         <div className="container">
           <Sidebar />
           <Route path="/" exact component={Landing} />
-          <Route path="/signup" exact component={Signup} />
-          <Route path="/signin" exact component={Signin} />
+          <Route path="/sign_up" exact component={Signup} />
+          <Route path="/sign_in" exact component={Signin} />
           <Route path="/manage_profiles" exact component={ManageProfile} />
           <Layout>
             <Route path="/browse/video" exact component={Main} />
