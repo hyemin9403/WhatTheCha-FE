@@ -139,6 +139,12 @@ const logoutFB = () => {
     };
 };
 
+const makeProfileFB = () => {
+    return function (dispatch, getState, {history}) {
+
+    };
+}
+
 const checkProfileFB = (select) => {
     return function (dispatch, getState, {history}) {
         instance.post(
@@ -180,7 +186,7 @@ export default handleActions({
 
 // action creator export
 const actionCreator = {
-    setUser, logOut, signupFb, loginFB, loginCheckFB, logoutFB, checkProfileFB
+    setUser, logOut, signupFb, loginFB, loginCheckFB, logoutFB, checkProfileFB, makeProfileFB
 }   
 
 export {actionCreator}

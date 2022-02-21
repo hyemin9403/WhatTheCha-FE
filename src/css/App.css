@@ -1,3 +1,5 @@
+@import "./font.css";
+
 /* CSS 초기화*/
 *,
 *::before,
@@ -13,6 +15,7 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: transparent;
+  font-family: Roboto, "Noto Sans KR", "Apple SD Gothic Neo", "Nanum Gothic", "Malgun Gothic", sans-serif;
   font-size: 10px;
 }
 body {
@@ -172,6 +175,7 @@ img {
 a {
   display: inline-block;
   text-decoration: none;
+  color: inherit;
   cursor: pointer;
 }
 a:active,
@@ -248,10 +252,11 @@ button {
   border-radius: 4px;
   background: #fff;
   color: #121218;
-  font-size: 13px;
+  font-size: 1.3rem;
   font-weight: 700;
   letter-spacing: -0.3px;
   padding: 5px 18px 6px;
   border-radius: 40px;
   margin: 23px 0 0;
 }
+
