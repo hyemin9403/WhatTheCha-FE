@@ -20,7 +20,7 @@ const Landing = () => {
   return (
     <div>
       <Swiper
-        className="mySwiper"
+        className="mySwiper landing"
         // install Swiper modules
         slidesPerView={1}
         modules={[Navigation, Pagination, Mousewheel]}

@@ -20,6 +20,7 @@ import Ratings from "../pages/Ratings";
 
 /* COMPONENT */
 import { Header, Sidebar, Footer } from "../components/index";
+import Layout from "../pages/Layout";
 
 function App() {
   const dispatch = useDispatch();
@@ -43,11 +44,13 @@ function App() {
           <Route path="/signup" exact component={Signup} />
           <Route path="/signin" exact component={Signin} />
           <Route path="/manage_profiles" exact component={ManageProfile} />
-          <Route path="/browse/video" exact component={Main} />
-          <Route path="/wishes" exact component={Wishes} />
-          <Route path="/watchings" exact component={Watchings} />
-          <Route path="/watched" exact component={Watched} />
-          <Route path="/ratings" exact component={Ratings} />
+          <Layout>
+            <Route path="/browse/video" exact component={Main} />
+            <Route path="/wishes" exact component={Wishes} />
+            <Route path="/watchings" exact component={Watchings} />
+            <Route path="/watched" exact component={Watched} />
+            <Route path="/ratings" exact component={Ratings} />
+          </Layout>
           <Footer />
         </div>
       </ConnectedRouter>
