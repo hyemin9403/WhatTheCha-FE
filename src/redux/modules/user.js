@@ -20,7 +20,7 @@ const createProfile = createAction(CREATE_PROFILE, (profile) => ({profile}))
 const initialState = {
   user: null,
   cur_profile: {},
-  is_login: false,
+  is_login: true,
 };
 
 //  middleware Actions
@@ -35,6 +35,7 @@ const loginFB = (id, pwd) => {
         "password": pwd,
       })
       .then((res) => {
+<<<<<<< HEAD
           const accessToken = res.data.token;
           console.log(accessToken)
           setCookie("is_login", accessToken);
@@ -54,6 +55,35 @@ const loginFB = (id, pwd) => {
           sessionStorage.setItem("profile", accessToken);
           window.alert("환영합니다");
           history.replace("/manage_profiles");
+=======
+        if (res.data.ok) {
+          console.log(res.data.message);
+          const accessToken = res.headers.authorization.split(" ")[1];
+          setCookie("is_login", accessToken)
+            .then(() => {
+              instance
+                .get("/profile", {
+                  headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                  },
+                })
+                .then((res) => {
+                  setUser(res.data.profile);
+                  window.alert("환영합니다");
+                  history.push("/manage_profiles");
+                })
+                .catch((error) => {
+                  console.log("프로파일 set중 에러발생", error);
+                });
+            })
+            .catch((error) => {
+              console.log("쿠키세팅중 에러발생", error);
+            });
+        } else {
+          console.log(res.data.errorMessage);
+          window.alert("이메일과 비밀번호를 확인해주세요");
+        }
+>>>>>>> 3829c0c06fbf9dbfb82d76f57787f986c173ad85
       })
       .catch((error) => {
         console.log("로그인 통신중 에러발생", error);
@@ -74,10 +104,15 @@ const signupFb = (name, email, pwd) => {
         console.log(res);
         if (res.data.ok) {
           console.log("회원가입 성공");
+<<<<<<< HEAD
           window.alert(
             "회원가입성공"
           );
           history.replace("/sign_in")
+=======
+          window.alert("회원가입성공");
+          history.replace("/login");
+>>>>>>> 3829c0c06fbf9dbfb82d76f57787f986c173ad85
         } else {
           console.log("회원가입 실패");
           window.alert("아이디/닉네임/비밀번호를 확인해주세요");
@@ -132,6 +167,7 @@ const logoutFB = () => {
   };
 };
 
+<<<<<<< HEAD
 const makeProfileFB = (name, image) => {
     return function (dispatch, getState, {history}) {
       console.log("프로파일 이름", name)
@@ -159,6 +195,11 @@ const makeProfileFB = (name, image) => {
       })
     };
 }
+=======
+const makeProfileFB = () => {
+  return function (dispatch, getState, { history }) {};
+};
+>>>>>>> 3829c0c06fbf9dbfb82d76f57787f986c173ad85
 
 const checkProfileFB = (select) => {
   return function (dispatch, getState, { history }) {
@@ -209,7 +250,14 @@ export default handleActions(
 
 // action creator export
 const actionCreator = {
-    setUser, logOut, signupFb, loginFB, loginCheckFB, logoutFB, checkProfileFB, makeProfileFB
-}   
+  setUser,
+  logOut,
+  signupFb,
+  loginFB,
+  loginCheckFB,
+  logoutFB,
+  checkProfileFB,
+  makeProfileFB,
+};
 
 export { actionCreator };

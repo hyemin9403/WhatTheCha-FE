@@ -1,11 +1,14 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
 
 import SwiperMain from "../components/SwiperMain";
 import SwiperTitle from "../components/SwiperTitle";
 import SwiperTop10 from "../components/SwiperTop10";
 import SwiperParty from "../components/SwiperParty";
 import SwiperOnly from "../components/SwiperOnly";
+
+import { actionCreator as movieActions } from "../redux/modules/movie";
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -19,6 +22,31 @@ import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper";
 
 const Main = () => {
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    console.log("Main에서 전체 영화리스트 요청을 dispatch 했습니다.");
+
+    dispatch(movieActions.allListM());
+  }, []);
+
+  const movie_list = useSelector((state) => state.movie.movie_list);
+  const listTop10 = useSelector((state) => state.movie.movie_list.listTop);
+  const listAction = useSelector(
+    (state) => state.movie.movie_list?.categoryList?.action
+  );
+  const listComedy = useSelector(
+    (state) => state.movie.movie_list?.categoryList?.comedy
+  );
+  const listDrama = useSelector(
+    (state) => state.movie.movie_list?.categoryList?.drama
+  );
+  const listFantasy = useSelector(
+    (state) => state.movie.movie_list?.categoryList?.fantasy
+  );
+
+  console.log("listAction");
+
   return (
     <Padding>
       <HomeContainer>
@@ -44,15 +72,15 @@ const Main = () => {
       </section>
       <SwiperContainer>
         <h2>왓고리즘</h2>
-        <SwiperMain></SwiperMain>
+        <SwiperMain list={listAction} _loop={false}></SwiperMain>
       </SwiperContainer>
       <SwiperContainer>
         <h2>왓챠 영화 TOP 10</h2>
-        <SwiperTop10></SwiperTop10>
+        <SwiperTop10 listTop10={listTop10} _loop={false}></SwiperTop10>
       </SwiperContainer>
       <SwiperContainer>
         <h2>이어보기</h2>
-        <SwiperMain></SwiperMain>
+        <SwiperMain list={listComedy} _loop={true}></SwiperMain>
       </SwiperContainer>
       <SwiperContainer>
         <SwiperParty></SwiperParty>
@@ -61,7 +89,6 @@ const Main = () => {
         <h2>오직 왓챠에서!</h2>
         <SwiperOnly></SwiperOnly>
       </SwiperContainer>
-      {/* 물어볼거 3: 여기 밑에 추가하면 이상하게 됨 */}
     </Padding>
   );
 };

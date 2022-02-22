@@ -14,10 +14,10 @@ import "../css/SwiperMain.css";
 import { Pagination, Navigation } from "swiper";
 
 const SwiperMain = (props) => {
+  const list = props.list;
   const { _loop } = props;
   return (
     <div>
-      {/* 물어볼거 2 media쿼리로 사이즈는 유지하고 개수만 줄어들도록 해야함. @@이하면 6개 보여주고 */}
       <Swiper
         className="mySwiper main"
         // install Swiper modules
@@ -68,54 +68,14 @@ const SwiperMain = (props) => {
           },
         }}
       >
-        <SwiperSlide>
-          <img
-            src="https://an2-img.amz.wtchn.net/image/v2/DUCq6nXsHwW1erY_izC8Cw.jpg?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1SZk5ETXllRFkwTUhFNE1DSmRMQ0p3SWpvaUwzWXlMM04wYjNKbEwybHRZV2RsTHpFMk16RXpNek0xTWpNd05ERTBPRFEwTVRnaWZRLl9oTk1NdExFZjJLNWZvOW5EWFlZdFk4VmxPX3pibDVzZlVJZ2l6SVZiNE0"
-            alt=""
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src="https://an2-img.amz.wtchn.net/image/v2/pRphEVAzJOsojJtqXff8sQ.jpg?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1SZk5ETXllRFkwTUhFNE1DSmRMQ0p3SWpvaUwzWXlMM04wYjNKbEwybHRZV2RsTHpFMk16RXpNekk1T1RneU1URTBNamc0TVRraWZRLnBROXJqYWlOdTFwd2IxTkdjUGMxUXZpZmJzb2VDQmtVY3NBMi1IaTRRdjQ"
-            alt=""
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src="https://an2-img.amz.wtchn.net/image/v2/ihW3GXmjdts-f5VvEPshMA.jpg?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1SZk5ETXllRFkwTUhFNE1DSmRMQ0p3SWpvaUwzWXlMM04wYjNKbEwybHRZV2RsTHpFMk16RXpNek13TVRNd01UQXhOVGc1TXpVaWZRLkZjVWp5c0dWdlRPZkoybkVwc3lwSF92VWU3SlZzaEFzbm5WcGkyTFpMcXc"
-            alt=""
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src="https://an2-img.amz.wtchn.net/image/v2/R73YeAh8-bLvg9fnn30lmQ.jpg?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1SZk5ETXllRFkwTUhFNE1DSmRMQ0p3SWpvaUwzWXlMM04wYjNKbEwybHRZV2RsTHpFMk16Y3pNVFF6TURReE1UazJPRGc0TXpraWZRLk5EVlNickVCVjBXaVZRalpmclFpWTlVR18zakxWYjFLV2RJWnFHU2xXazQ"
-            alt=""
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src="https://an2-img.amz.wtchn.net/image/v2/tK5GUxavHyCrBGaR6NfOaw.jpg?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1SZk5ETXllRFkwTUhFNE1DSmRMQ0p3SWpvaUwzWXlMM04wYjNKbEwybHRZV2RsTHpFMk5ERTBORGszTVRjME9UQXdORFU0TXpNaWZRLlB6OTl3S2hQMXBqMnptdEpJWldDSGVkY3dzaE15ZDFMT1ZUXy1kcEo1UVU"
-            alt=""
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src="https://an2-img.amz.wtchn.net/image/v2/rY3O-Sw2fXaUtX4oPcFDEA.jpg?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1SZk5ETXllRFkwTUhFNE1DSmRMQ0p3SWpvaUwzWXlMM04wYjNKbEwybHRZV2RsTHpFMk16YzJNekEyTXpZMk5UUTVNVGt6TVRBaWZRLi1iMEpyX0JxeGFtRzlPQnBETHBsZ3lxQ21ZU1FZTUkwVHhlc1ljaFRmYjg"
-            alt=""
-          />
-        </SwiperSlide>
-        <SwiperSlide>Slide 7</SwiperSlide>
-        <SwiperSlide>Slide 8</SwiperSlide>
-        <SwiperSlide>Slide 9</SwiperSlide>
-        <SwiperSlide>Slide 10</SwiperSlide>
-        <SwiperSlide>Slide 11</SwiperSlide>
-        <SwiperSlide>Slide 12</SwiperSlide>
-        <SwiperSlide>Slide 13</SwiperSlide>
-        <SwiperSlide>Slide 14</SwiperSlide>
-        <SwiperSlide>Slide 15</SwiperSlide>
-        <SwiperSlide>Slide 16</SwiperSlide>
-        <SwiperSlide>Slide 17</SwiperSlide>
-        <SwiperSlide>Slide 18</SwiperSlide>
+        {list &&
+          list.map((movie) => {
+            return (
+              <SwiperSlide key={movie.movieId}>
+                <img src={movie.card_image} alt="" />
+              </SwiperSlide>
+            );
+          })}
       </Swiper>
       <div>
         <DetailCard/>

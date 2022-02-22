@@ -16,11 +16,11 @@ import "../css/SwiperMain.css";
 // import required modules
 import { Pagination, Navigation } from "swiper";
 
-const SwiperTop10 = () => {
+const SwiperTop10 = ({ listTop10 }) => {
   const swiperRef = React.useRef(null);
 
   return (
-    <div>
+    <Container>
       <Swiper
         style={{ height: "30rem" }}
         className="mySwiper main"
@@ -31,8 +31,9 @@ const SwiperTop10 = () => {
         observeParents={true}
         modules={[Pagination, Navigation]}
         spaceBetween={20}
-        loop={true}
-        loopFillGroupWithBlank={true}
+        // 루프 키면 새로고침 했을때 왜 1이아니라 6부터 나올까...
+        // loop={true}
+        // loopFillGroupWithBlank={true}
         pagination={{
           clickable: true,
         }}
@@ -73,92 +74,47 @@ const SwiperTop10 = () => {
           },
         }}
       >
-        <SwiperSlide>
-          <RankNumber>1</RankNumber>
-          <img
-            style={{ margin: "0 0 0 2rem" }}
-            src="https://an2-img.amz.wtchn.net/image/v2/26zF3ghoKpVGE3yEUOFLpg.jpg?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1SZk5ETXllRFkwTUhFNE1DSmRMQ0p3SWpvaUwzWXlMM04wYjNKbEwybHRZV2RsTHpFMk16ZzRORGN5TkRReU5UazNPVFUxT1RraWZRLmwycHNWRnFnSGlzWkZxVVpseVRBb3B6MTRFMDU2S3dNcUtOVXlLWmJPSXc"
-            alt=""
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <RankNumber>2</RankNumber>
-          <img
-            style={{ padding: "0 0 0 2rem" }}
-            src="https://an2-img.amz.wtchn.net/image/v2/N4GLg4h3adD9kv_jJL1nzg.jpg?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1SZk5ETXllRFkwTUhFNE1DSmRMQ0p3SWpvaUwzWXlMM04wYjNKbEwybHRZV2RsTHpFMk16ZzNPRE0xTXpNeE1USTNOVFk1T1RnaWZRLkhwMnZnNVJjRDctd0xkZXQ1Q212VUp3R2tlMHhmS1JSTkkycG5Jb0ZBa2c"
-            alt=""
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <RankNumber>3</RankNumber>
-          <img
-            style={{ padding: "0 0 0 2rem" }}
-            src="https://an2-img.amz.wtchn.net/image/v2/wg8IoYjTlIW1ZycWylVT2A.jpg?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1SZk5ETXllRFkwTUhFNE1DSmRMQ0p3SWpvaUwzWXlMM04wYjNKbEwybHRZV2RsTHpFMk16RXdPVGN4TXpnek1qTXlNVGM0TmpNaWZRLmNfcV84bnoybmNkdXZCUUt4Y0t2b2dCLTYwa0pXS1pWMVh6eE5oLW4wZFU
-        "
-            alt=""
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <RankNumber>4</RankNumber>
-          <img
-            style={{ padding: "0 0 0 2rem" }}
-            src="https://an2-img.amz.wtchn.net/image/v2/_IKnC8p5MxLUujxsJekHzw.jpg?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1SZk5ETXllRFkwTUhFNE1DSmRMQ0p3SWpvaUwzWXlMM04wYjNKbEwybHRZV2RsTHpFMk5EUTBOalk0TnpZeE5UazRNVGczTkRNaWZRLklsUnhaZkRPbTFvN05MRFVlQllRNG9rRk14RFR5ZVk4ZzQzUExGNFJyRWM"
-            alt=""
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <RankNumber>5</RankNumber>
-          <img
-            style={{ padding: "0 0 0 2rem" }}
-            src="https://an2-img.amz.wtchn.net/image/v2/Gny7INF90X9ogxxVVHc0Cw.jpg?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1SZk5ETXllRFkwTUhFNE1DSmRMQ0p3SWpvaUwzWXlMM04wYjNKbEwybHRZV2RsTHpFMk5ESTFOek13T0Rjd05EVXhPVGMyTXpraWZRLmtZS3VJOE9iWEZkVzdybXJvaDlMV19VUFRMRDdRNlBxOVF1aHd5UkU2NjA"
-            alt=""
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src="https://an2-img.amz.wtchn.net/image/v2/26zF3ghoKpVGE3yEUOFLpg.jpg?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1SZk5ETXllRFkwTUhFNE1DSmRMQ0p3SWpvaUwzWXlMM04wYjNKbEwybHRZV2RsTHpFMk16ZzRORGN5TkRReU5UazNPVFUxT1RraWZRLmwycHNWRnFnSGlzWkZxVVpseVRBb3B6MTRFMDU2S3dNcUtOVXlLWmJPSXc"
-            alt=""
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src="https://an2-img.amz.wtchn.net/image/v2/N4GLg4h3adD9kv_jJL1nzg.jpg?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1SZk5ETXllRFkwTUhFNE1DSmRMQ0p3SWpvaUwzWXlMM04wYjNKbEwybHRZV2RsTHpFMk16ZzNPRE0xTXpNeE1USTNOVFk1T1RnaWZRLkhwMnZnNVJjRDctd0xkZXQ1Q212VUp3R2tlMHhmS1JSTkkycG5Jb0ZBa2c"
-            alt=""
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src="https://an2-img.amz.wtchn.net/image/v2/wg8IoYjTlIW1ZycWylVT2A.jpg?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1SZk5ETXllRFkwTUhFNE1DSmRMQ0p3SWpvaUwzWXlMM04wYjNKbEwybHRZV2RsTHpFMk16RXdPVGN4TXpnek1qTXlNVGM0TmpNaWZRLmNfcV84bnoybmNkdXZCUUt4Y0t2b2dCLTYwa0pXS1pWMVh6eE5oLW4wZFU
-        "
-            alt=""
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src="https://an2-img.amz.wtchn.net/image/v2/_IKnC8p5MxLUujxsJekHzw.jpg?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1SZk5ETXllRFkwTUhFNE1DSmRMQ0p3SWpvaUwzWXlMM04wYjNKbEwybHRZV2RsTHpFMk5EUTBOalk0TnpZeE5UazRNVGczTkRNaWZRLklsUnhaZkRPbTFvN05MRFVlQllRNG9rRk14RFR5ZVk4ZzQzUExGNFJyRWM"
-            alt=""
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src="https://an2-img.amz.wtchn.net/image/v2/Gny7INF90X9ogxxVVHc0Cw.jpg?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1SZk5ETXllRFkwTUhFNE1DSmRMQ0p3SWpvaUwzWXlMM04wYjNKbEwybHRZV2RsTHpFMk5ESTFOek13T0Rjd05EVXhPVGMyTXpraWZRLmtZS3VJOE9iWEZkVzdybXJvaDlMV19VUFRMRDdRNlBxOVF1aHd5UkU2NjA"
-            alt=""
-          />
-        </SwiperSlide>
+        {listTop10 &&
+          listTop10.map((movie, i) => {
+            return (
+              <SwiperSlide key={movie.movieId}>
+                <RankNumber>{i + 1}</RankNumber>
+                <img
+                  className="img-top10"
+                  style={{ margin: "0 0 0 2rem" }}
+                  src={movie.card_image}
+                  alt=""
+                />
+              </SwiperSlide>
+            );
+          })}
       </Swiper>
-      <ControlContainer>
-        <prevControl onClick={() => swiperRef.current.swiper.slidePrev()}>
+      <div className="test">
+        <Prev onClick={() => swiperRef.current.swiper.slidePrev()}>
           <SvgPrevBtn />
-        </prevControl>
-        <div onClick={() => swiperRef.current.swiper.slideNext()}>
+        </Prev>
+        <Next onClick={() => swiperRef.current.swiper.slideNext()}>
           <SvgNextBtn />
-        </div>
-      </ControlContainer>
-    </div>
+        </Next>
+      </div>
+    </Container>
   );
 };
 
 export default SwiperTop10;
+
+const Container = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  &:hover {
+    .test {
+      div:last-child {
+        opacity: 1;
+      }
+    }
+  }
+`;
 
 const RankNumber = styled.span`
   display: block;
@@ -177,12 +133,33 @@ const RankNumber = styled.span`
   line-height: 56px;
 `;
 
-const ControlContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  position: relative;
-`;
-
-const prevControl = styled.div`
+const Prev = styled.div`
+  z-index: 101;
+  cursor: pointer;
   position: absolute;
+  top: 0;
+  left: -2rem;
+  width: 2vw;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: 0.2s;
+  &:hover {
+    opacity: 1;
+  }
+`;
+const Next = styled.div`
+  z-index: 101;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: -2.5rem;
+  width: 2vw;
+  height: 100%;
+  opacity: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
