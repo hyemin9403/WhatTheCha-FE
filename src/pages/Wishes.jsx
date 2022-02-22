@@ -7,16 +7,17 @@ import SwiperGrid from "../components/SwiperGrid";
 
 const Wishes = () => {
   const dispatch = useDispatch();
-  const listTop10 = useSelector((state) => state.movie.movie_list.listTop);
+  const user = useSelector((state) => state.user);
+  console.log(user);
 
   React.useEffect(() => {
-    dispatch(movieActions.allListM());
+    dispatch(movieActions.getWishesM());
   }, []);
 
   return (
     <Padding>
       <h2>학새님이 보고싶어요한 작품</h2>
-      <SwiperGrid list={listTop10}></SwiperGrid>
+      {/* <SwiperGrid list={listTop10}></SwiperGrid> */}
     </Padding>
   );
 };

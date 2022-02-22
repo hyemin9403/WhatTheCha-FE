@@ -5,12 +5,13 @@ import instance from "../../shared/request";
 
 // actions
 const LOAD_MOVIE = "LOAD_MOVIE";
-// 디테일은 하나씩 불러와야함
 const SET_MOVIE_DETAIL = "SET_MOVIE_DETAIL";
+const SET_WANT = "SET_WANT";
 
 // Action Creators
 const loadMovie = createAction(LOAD_MOVIE, (movie_list) => ({ movie_list }));
 const setMovieDetail = createAction(SET_MOVIE_DETAIL, (movie) => ({ movie }));
+const setWantList = createAction(SET_WANT, (want_list) => ({ want_list }));
 
 // initialState
 const initialState = {
@@ -48,7 +49,7 @@ const detailListM = (movieId) => {
   console.log(movieId, typeof movieId);
   return function (dispatch, getState, { history }) {
     instance
-      .post(`/content/detail/:${movieId}`, { movieId: movieId })
+      .post("/content/detail", { movieId: movieId })
       .then((res) => {
         console.log(res);
         const movie_detail = res.data.content;
@@ -68,10 +69,74 @@ const addWishesM = (movieId) => {
     instance
       .post("/content/detail/movieId/want", {
         movieId: movieId,
-        profileName: "",
+        profileName: "유저1",
       })
       .then((res) => {
         console.log(res);
+      })
+      .catch((res) => console.log(res));
+  };
+};
+
+const getWishesM = () => {
+  return function (dispatch, getState, { history }) {
+    console.log("getWishesM에서 받았습니다");
+
+    instance
+      .get("/content/want", {
+        profileName: "유저1",
+      })
+      .then((res) => {
+        console.log(res);
+        dispatch(setWantList(res.data));
+      })
+      .catch((res) => console.log(res));
+  };
+};
+
+const getRatingsM = () => {
+  return function (dispatch, getState, { history }) {
+    console.log("getWishesM에서 받았습니다");
+
+    instance
+      .get("/content/want", {
+        profileName: "유저1",
+      })
+      .then((res) => {
+        console.log(res);
+        // dispatch(setWantList(res.data));
+      })
+      .catch((res) => console.log(res));
+  };
+};
+
+const getWatchedM = () => {
+  return function (dispatch, getState, { history }) {
+    console.log("getWishesM에서 받았습니다");
+
+    instance
+      .get("/content/want", {
+        profileName: "유저1",
+      })
+      .then((res) => {
+        console.log(res);
+        // dispatch(setWantList(res.data));
+      })
+      .catch((res) => console.log(res));
+  };
+};
+
+const getWatchingsM = () => {
+  return function (dispatch, getState, { history }) {
+    console.log("getWishesM에서 받았습니다");
+
+    instance
+      .get("/content/want", {
+        profileName: "유저1",
+      })
+      .then((res) => {
+        console.log(res);
+        // dispatch(setWantList(res.data));
       })
       .catch((res) => console.log(res));
   };
@@ -85,6 +150,10 @@ export default handleActions(
     [SET_MOVIE_DETAIL]: (state, action) => {
       return { ...state, detail_movie_list: action.payload.movie };
     },
+    [SET_WANT]: (state, action) => {
+      const new_want_list = action.payload.want_list;
+      return { ...state.movie_list, wantList: new_want_list };
+    },
   },
   initialState
 );
@@ -94,6 +163,7 @@ const actionCreator = {
   allListM,
   detailListM,
   addWishesM,
+  getWishesM,
 };
 
 export { actionCreator };

@@ -22,7 +22,7 @@ const createProfile = createAction(CREATE_PROFILE, (profile) => ({ profile }));
 const initialState = {
   user: null,
   cur_profile: {},
-  is_login: false,
+  is_login: true,
 };
 
 //  middleware Actions
@@ -49,7 +49,7 @@ const loginFB = (id, pwd) => {
           })
           .then((res) => {
             console.log("프로파일", res);
-            setUser(res.data.profile);
+            dispatch(setUser(res.data.profile));
           })
           .catch((error) => {
             console.log("프로파일 set중 에러발생", error);

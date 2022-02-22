@@ -99,9 +99,9 @@ const DetailCard = ({ onClose, movieId }) => {
                     </button>
                     <button
                       className="btn-text"
-                      onClick={() =>
-                        dispatch(movieActions.addWishesM(d.movieId))
-                      }
+                      onClick={() => {
+                        dispatch(movieActions.addWishesM(movieId));
+                      }}
                     >
                       <SvgPlus />
                       <span>보고싶어요</span>
