@@ -2,7 +2,7 @@ import axios from "axios";
 import { getCookie } from "../shared/cookie";
 
 const instance = axios.create({
-  baseURL: "http://52.78.172.253", // 요청을 www.aa.com/user로 보낸다면, www.aa.com까지 기록
+  baseURL: "http://54.180.101.21", // 요청을 www.aa.com/user로 보낸다면, www.aa.com까지 기록
 });
 
 const token_cookie = getCookie("is_login");
@@ -12,8 +12,5 @@ const token_cookie = getCookie("is_login");
 if (token_cookie) {
   instance.defaults.headers.common["Authorization"] = `Bearer ${token_cookie}`;
 }
-
-// cookie => is_login : token  /
-// session => user : profilename, 보고싶은~~~~movieid들~~
 
 export default instance;

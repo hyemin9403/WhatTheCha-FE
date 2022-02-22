@@ -13,23 +13,18 @@ import "../css/SwiperTitle.css";
 // import required modules
 import { Pagination, Navigation } from "swiper";
 
-const SwiperTitle = () => {
+const SwiperTitle = (props) => {
+  const list = props.list;
   return (
     <Container>
-      <TextContainer>
-        <span>왓챠 오리지널</span>
-        <h4>시맨틱 에러</h4>
-        <p>가슴 뛰는 ‘에러’의 시작! 매주 수/목 5시 공개</p>
-      </TextContainer>
-
       <div>
-        {/* 물어볼거 2 media쿼리로 사이즈는 유지하고 개수만 줄어들도록 해야함. @@이하면 6개 보여주고 */}
         <Swiper
           style={{ height: "32rem" }}
           className="mySwiper title"
           // install Swiper modules
           modules={[Pagination, Navigation]}
           spaceBetween={10}
+          // autoHeight={true}
           loop={true}
           loopFillGroupWithBlank={true}
           pagination={{
@@ -49,24 +44,28 @@ const SwiperTitle = () => {
             },
           }}
         >
-          <SwiperSlide>
-            <img
-              src="https://an2-img.amz.wtchn.net/image/v2/95rT5ndgMw3ZbhvDKDK0qg.jpg?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1KbklsMHNJbkFpT2lJdmRqSXZjM1J2Y21VdmFXMWhaMlV2TVRZME5Ea3dOemsxTmpJME1EUXhNamMxT0NJc0luRWlPamd3ZlEuc1ZFWlJkVlhwZFc1Y2ZYYmxoTzJ4ODFBNEhmNWc3cW9TRVl6Qm1nODR5VQ"
-              alt=""
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img
-              src="https://an2-img.amz.wtchn.net/image/v2/suuG2oEEVGKuaf5DioihvQ.jpg?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1KbklsMHNJbkFpT2lJdmRqSXZjM1J2Y21VdmFXMWhaMlV2TVRZME5UQXdNRFEwTVRNeE1EZ3dOREV3T1NJc0luRWlPamd3ZlEuNGJYZjVqN2FkTmJWVThuNEFrbjZtV29sTTFYMHZQWEJoTGs2T0hwQzVwQQ"
-              alt=""
-            />
-          </SwiperSlide>
-          <SwiperSlide>Slide 3</SwiperSlide>
-          <SwiperSlide>Slide 4</SwiperSlide>
-          <SwiperSlide>Slide 5</SwiperSlide>
-          <SwiperSlide>Slide 6</SwiperSlide>
-          <SwiperSlide>Slide 7</SwiperSlide>
-          <SwiperSlide>Slide 8</SwiperSlide>
+          {list &&
+            list.map((movie) => {
+              return (
+                <>
+                  <TextContainer>
+                    <span>{movie.status}</span>
+                    <h4>{movie.movieName}</h4>
+                    <p>{movie.detail_text}</p>
+                  </TextContainer>
+                  <SwiperSlide
+                    key={movie.movieId}
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    <img src={movie.card_image} alt="" />
+                  </SwiperSlide>
+                </>
+              );
+            })}
         </Swiper>
       </div>
     </Container>
@@ -76,6 +75,8 @@ const SwiperTitle = () => {
 export default SwiperTitle;
 
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
   span {
     font-size: 12px;
     font-weight: 400;

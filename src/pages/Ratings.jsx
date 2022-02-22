@@ -1,13 +1,21 @@
 import React from "react";
 import styled from "styled-components";
-
+import { useDispatch, useSelector } from "react-redux";
+import { actionCreator as movieActions } from "../redux/modules/movie";
 import SwiperGrid from "../components/SwiperGrid";
 
 const Ratings = () => {
+  const dispatch = useDispatch();
+  const listTop10 = useSelector((state) => state.movie.movie_list.listTop);
+
+  React.useEffect(() => {
+    dispatch(movieActions.allListM());
+  }, []);
+
   return (
     <Padding>
       <h2>평가한 작품</h2>
-      <SwiperGrid></SwiperGrid>
+      <SwiperGrid list={listTop10}></SwiperGrid>
     </Padding>
   );
 };

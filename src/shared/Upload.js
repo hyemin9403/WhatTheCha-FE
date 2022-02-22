@@ -1,59 +1,49 @@
-import React from 'react';
-import {useDispatch, useSelector} from "react-redux";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 /* Source */
-import {actionCreator as imgActions} from '../redux/modules/image';
+import { actionCreator as imgActions } from "../redux/modules/image";
 
 const Upload = (props) => {
-    const dispatch = useDispatch();
-    const uploading = useSelector((state) => state.image.uploading);
-    const fileInput = React.useRef();
+  const dispatch = useDispatch();
+  const uploading = useSelector((state) => state.image.uploading);
+  const fileInput = React.useRef();
 
-    const selectFile = (e) => {
-        const reader = new FileReader();
-        const currentFile = fileInput.current.files[0]
-        // console.log(formData.entries())
-        // console.log("진행중")
-        // for(var pair of formData.entries()) {
-        //     console.log(pair[0]+ ', '+ pair[1]); 
-        //     console.log(...pair[1])
-        // }
+  const selectFile = (e) => {
+    const reader = new FileReader();
+    const currentFile = fileInput.current.files[0];
+    let formData = new FormData();
 
-        reader.readAsDataURL(currentFile);
+    formData.append("file", currentFile);
 
-        reader.onloadend = () => {
-            // console.log(reader.result)
-            // console.log(typeof(reader.result))
-            //console.log(fileInput.current.files[0])
-            dispatch(imgActions.setPreview(reader.result, currentFile))
-        }
-    } 
-    const uploadFB = () => {
-        if (!fileInput.current || fileInput.current.files.length === 0) {
-          window.alert("파일을 선택해주세요!");
-          return;
-        }
-    
-        dispatch(imgActions.uploadImgFB(fileInput.current.files[0]));
+    // 파일 내용을 읽어옵니다.
+    reader.readAsDataURL(currentFile);
+
+    // 읽기가 끝나면 발생하는 이벤트 핸들러예요! :)
+    reader.onloadend = () => {
+      // reader.result는 파일의 컨텐츠(내용물)입니다!
+      //   for (const keyValue of formData)
+      dispatch(imgActions.setPreview(reader.result, formData));
     };
+  };
 
-    return (
-        <React.Fragment>
-            <StyleUpload>
-                <label className='upload-layer'>
-                    <span className="upload-layer-btn">이미지 변경</span>
-                    <input
-                        type="file"
-                        onChange={selectFile}
-                        ref={fileInput}
-                        disabled={uploading}
-                    />
-                </label>
-            </StyleUpload>
-            {/* <Btn eventType={"click"} event={uploadFB} text={"업로드하기"}/> */}
-        </React.Fragment>
-    );
+  return (
+    <React.Fragment>
+      <StyleUpload>
+        <label className="upload-layer">
+          <span className="upload-layer-btn">이미지 변경</span>
+          <input
+            type="file"
+            ref={fileInput}
+            type="file"
+            onChange={selectFile}
+            disabled={uploading}
+          />
+        </label>
+      </StyleUpload>
+    </React.Fragment>
+  );
 };
 const StyleUpload = styled.div`
   .upload-layer {

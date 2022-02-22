@@ -25,27 +25,32 @@ const Main = () => {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    console.log("Main에서 전체 영화리스트 요청을 dispatch 했습니다.");
-
     dispatch(movieActions.allListM());
   }, []);
 
   const movie_list = useSelector((state) => state.movie.movie_list);
+  const title_list = useSelector((state) => state.movie.movie_list.titleList);
+  const exclusive_list = useSelector(
+    (state) => state.movie.movie_list.exclusiveList
+  );
+  const watcha_party_list = useSelector(
+    (state) => state.movie.movie_list.watchaPartyList
+  );
   const listTop10 = useSelector((state) => state.movie.movie_list.listTop);
   const listAction = useSelector(
-    (state) => state.movie.movie_list?.categoryList?.action
+    (state) => state.movie.movie_list?.categoryList?.action_war
   );
   const listComedy = useSelector(
-    (state) => state.movie.movie_list?.categoryList?.comedy
+    (state) => state.movie.movie_list?.categoryList?.comedy_adventure__biography
   );
   const listDrama = useSelector(
     (state) => state.movie.movie_list?.categoryList?.drama
   );
   const listFantasy = useSelector(
-    (state) => state.movie.movie_list?.categoryList?.fantasy
+    (state) => state.movie.movie_list?.categoryList?.fantasy_crime_romance_etc
   );
 
-  console.log("listAction");
+  // console.log("listComedy", listComedy);
 
   return (
     <Padding>
@@ -55,7 +60,7 @@ const Main = () => {
       </HomeContainer>
 
       <SwiperContainer>
-        <SwiperTitle></SwiperTitle>
+        <SwiperTitle list={title_list}></SwiperTitle>
       </SwiperContainer>
       <section>
         <ButtonUL>
@@ -80,14 +85,14 @@ const Main = () => {
       </SwiperContainer>
       <SwiperContainer>
         <h2>이어보기</h2>
-        <SwiperMain list={listComedy} _loop={true}></SwiperMain>
+        <SwiperMain list={listComedy} _loop={false}></SwiperMain>
       </SwiperContainer>
       <SwiperContainer>
-        <SwiperParty></SwiperParty>
+        <SwiperParty list={watcha_party_list}></SwiperParty>
       </SwiperContainer>
       <SwiperContainer>
         <h2>오직 왓챠에서!</h2>
-        <SwiperOnly></SwiperOnly>
+        <SwiperOnly list={exclusive_list}></SwiperOnly>
       </SwiperContainer>
     </Padding>
   );

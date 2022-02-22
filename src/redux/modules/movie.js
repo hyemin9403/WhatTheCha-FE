@@ -17,7 +17,6 @@ const initialState = {
 
 //  middleware Actions
 const allListM = () => {
-  console.log("allListM에서 요청을 받았습니다.");
   return function (dispatch, getState, { history }) {
     instance
       .post("/content/list", {
@@ -41,10 +40,18 @@ const allListM = () => {
   };
 };
 
+const detailListM = (movieId) => {
+  return function (dispatch, getState, { history }) {
+    instance
+      .post(`/content/detail/:${movieId}`, { movieId })
+      .then((res) => console.log(res))
+      .catch((res) => console.log(res));
+  };
+};
+
 export default handleActions(
   {
     [LOAD_MOVIE]: (state = initialState, action = {}) => {
-      console.log("LOAD_MOVIE 리듀서로 도착했습니다");
       return { ...state, movie_list: action.payload.movie_list };
     },
   },
@@ -54,6 +61,7 @@ export default handleActions(
 // action creator export
 const actionCreator = {
   allListM,
+  detailListM,
 };
 
 export { actionCreator };

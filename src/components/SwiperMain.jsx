@@ -3,6 +3,8 @@ import React, { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { DetailCard } from "./index";
 
+import { actionCreator as movieActions } from "../redux/modules/movie";
+
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
@@ -12,8 +14,11 @@ import "../css/SwiperMain.css";
 
 // import required modules
 import { Pagination, Navigation } from "swiper";
+import { useDispatch } from "react-redux";
 
 const SwiperMain = (props) => {
+  const dispatch = useDispatch();
+
   const list = props.list;
   const { _loop } = props;
   return (
@@ -71,14 +76,19 @@ const SwiperMain = (props) => {
         {list &&
           list.map((movie) => {
             return (
-              <SwiperSlide key={movie.movieId}>
+              <SwiperSlide
+                key={movie.movieId}
+                onClick={() =>
+                  dispatch(movieActions.detailListM(movie.movieId))
+                }
+              >
                 <img src={movie.card_image} alt="" />
               </SwiperSlide>
             );
           })}
       </Swiper>
       <div>
-        <DetailCard/>
+        <DetailCard />
       </div>
     </div>
   );

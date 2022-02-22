@@ -4,63 +4,64 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Upload from "../shared/Upload";
 import { actionCreator as userActions } from "../redux/modules/user";
-import { actionCreator as imgActions } from '../redux/modules/image';
-import imgProfile from "../img/profile/img_profile_01.jpg"
-import plus from "../img/profile/btn_plus.svg"
+import { actionCreator as imgActions } from "../redux/modules/image";
+import imgProfile from "../img/profile/img_profile_01.jpg";
+import plus from "../img/profile/btn_plus.svg";
 //import { DivideLine } from "../elements/index"
 // 하나 만들어놓고 맵돌려서 정보 받아오는 개수 만큼 불러주기
 
 const ManageProfile = () => {
   const dispatch = useDispatch();
-  const profile = useSelector(state => state.user.user);
-  const preview = useSelector(state => state.image.preview);
-  const ImgData = useSelector(state => state.image.data);
+  const profile = useSelector((state) => state.user.user);
+  const preview = useSelector((state) => state.image.preview);
+  const ImgData = useSelector((state) => state.image.data);
   const [is_edit, setEdit] = React.useState(false);
   const [name, setName] = React.useState("");
-  console.log(profile)
+  // console.log("profile", profile);
 
   const changeName = (e) => {
-    setName(e.target.value)
+    setName(e.target.value);
+    console.log(e.target.value);
     const length = e.target.value.length;
 
-    if(length >= 2 & length <= 20){
+    if ((length >= 2) & (length <= 20)) {
       e.target.classList.add("correct");
-    }else{
+    } else {
       e.target.classList.remove("correct");
     }
   };
 
   const cancelProfile = () => {
-    setEdit(false); 
+    setEdit(false);
     dispatch(imgActions.setPreview(null));
-  }
+  };
 
   const createProfile = () => {
-    dispatch(userActions.makeProfileFB(name, ImgData))
+    dispatch(userActions.makeProfileFB(name, ImgData));
     //cancelProfile();
-  }
+  };
 
   const selectProfile = (e) => {
-    console.log(e.target)
-    //dispatch(userActions.checkProfileFB())
-  }
+    console.log(e.target);
+    dispatch(userActions.checkProfileFB());
+  };
   return (
     <Section>
       <ProfileTitle>
-        {!is_edit? "감상할 프로필을 선택해주세요" : "새 프로필"}
+        {!is_edit ? "감상할 프로필을 선택해주세요" : "새 프로필"}
       </ProfileTitle>
       {(() => {
-        if(is_edit){
-          return(
+        if (is_edit) {
+          return (
             <React.Fragment>
               <EditInfo>
                 <div className="edit-left">
                   <div className="edit-img">
                     <div className="img-wrap">
-                      <img src={preview ? preview :imgProfile} alt="" />
+                      <img src={preview ? preview : imgProfile} alt="" />
                     </div>
                   </div>
-                  <Upload/>
+                  <Upload />
                   <button className="btn-img--delete">이미지 삭제</button>
                 </div>
                 <div className="edit-right">
@@ -69,30 +70,34 @@ const ManageProfile = () => {
                   <span>• 이름은 최소 2자, 최대 20자 까지 입력이 가능해요</span>
                 </div>
               </EditInfo>
-              <DivideLine/>
+              <DivideLine />
               <EditBtnGroup>
                 <BtnEdit onClick={createProfile}>프로필 생성</BtnEdit>
                 <BtnEdit onClick={cancelProfile}>취소</BtnEdit>
               </EditBtnGroup>
             </React.Fragment>
-          )
-        }else{
-          return(
+          );
+        } else {
+          return (
             <React.Fragment>
               <Profiles>
-                {profile !== null && profile.map((list) => {
-                  return (
-                    <Profile>
-                      <ProfileCircle name={list.profileName} onClick={selectProfile}>
-                        <img
-                          src={list.profileImage}
-                          alt="프로파일 설정 이미지"
-                        />
-                      </ProfileCircle>
-                      <ProfileText>{list.profileName}</ProfileText>
-                    </Profile>
-                  )
-                })}
+                {profile !== null &&
+                  profile.map((list) => {
+                    return (
+                      <Profile>
+                        <ProfileCircle
+                          name={list.profileName}
+                          onClick={selectProfile}
+                        >
+                          <img
+                            src={list.profileImage}
+                            alt="프로파일 설정 이미지"
+                          />
+                        </ProfileCircle>
+                        <ProfileText>{list.profileName}</ProfileText>
+                      </Profile>
+                    );
+                  })}
                 <Profile>
                   <ProfileCircle onClick={() => setEdit(true)}>
                     <img className="plus" src={plus} alt="" />
@@ -102,7 +107,7 @@ const ManageProfile = () => {
               </Profiles>
               <ProfileEdit>프로필 편집</ProfileEdit>
             </React.Fragment>
-          )
+          );
         }
       })()}
     </Section>
@@ -169,10 +174,10 @@ const ProfileCircle = styled.div`
   :hover:after {
     border: 0.46875vw solid #ffffff !important;
   }
-  img{
+  img {
     border-radius: 50%;
   }
-  .plus{
+  .plus {
     vertical-align: top;
     width: 100%;
     height: 100%;
@@ -204,7 +209,8 @@ const ProfileEdit = styled.button`
   color: rgb(219, 219, 219);
   padding: 0.625vw 1.875vw 0.703125vw 3.59375vw;
   white-space: nowrap;
-  background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIj4KICAgIDxwYXRoIGZpbGw9IiNEQkRCREIiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTMuODkzIDEzLjYwNGwyLjU3NiAyLjU3NS0zLjAwNi40My40My0zLjAwNXptNy43MjctNy43MjhsMi41NzYgMi41NzYtNi44NjkgNi44NjktMi41NzYtMi41NzYgNi44Ny02Ljg3ek0xNC4xOTYgMy4zbDIuNTc2IDIuNTc2LTEuNzE3IDEuNzE3LTIuNTc2LTIuNTc2TDE0LjE5NiAzLjN6Ii8+Cjwvc3ZnPgo=) left 1.48438vw top 0.9375vw / 1.5625vw 1.5625vw no-repeat rgb(34, 35, 36);
+  background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIj4KICAgIDxwYXRoIGZpbGw9IiNEQkRCREIiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTMuODkzIDEzLjYwNGwyLjU3NiAyLjU3NS0zLjAwNi40My40My0zLjAwNXptNy43MjctNy43MjhsMi41NzYgMi41NzYtNi44NjkgNi44NjktMi41NzYtMi41NzYgNi44Ny02Ljg3ek0xNC4xOTYgMy4zbDIuNTc2IDIuNTc2LTEuNzE3IDEuNzE3LTIuNTc2LTIuNTc2TDE0LjE5NiAzLjN6Ii8+Cjwvc3ZnPgo=)
+    left 1.48438vw top 0.9375vw / 1.5625vw 1.5625vw no-repeat rgb(34, 35, 36);
 
   :hover {
     background-color: white;
@@ -219,25 +225,25 @@ const ProfileEdit = styled.button`
 
 const EditInfo = styled.div`
   display: flex;
-  .edit-left{
+  .edit-left {
     margin: 0 1.875vw 0 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    .edit-img{
+    .edit-img {
       margin: 0 0 1.5625vw 0;
       position: relative;
       width: 11.0938vw;
       height: 11.0938vw;
       border-radius: 50%;
-      .img-wrap{
+      .img-wrap {
         border-radius: 50%;
         border: 0.46875vw solid transparent;
         position: relative;
         z-index: 1;
         width: 100%;
         height: 100%;
-        img{
+        img {
           vertical-align: top;
           width: 100%;
           height: 100%;
@@ -246,7 +252,7 @@ const EditInfo = styled.div`
           transition: opacity 420ms ease 0s;
           border-radius: 50%;
         }
-        :after{
+        :after {
           content: "";
           display: block;
           position: absolute;
@@ -257,7 +263,7 @@ const EditInfo = styled.div`
           box-sizing: content-box;
           width: 100%;
           height: 100%;
-          background:  0% 0% / 5vw 5vw transparent;
+          background: 0% 0% / 5vw 5vw transparent;
           border-radius: 50%;
           border-width: 0.46875vw !important;
           border-style: solid !important;
@@ -266,7 +272,7 @@ const EditInfo = styled.div`
         }
       }
     }
-    .btn-img--delete{
+    .btn-img--delete {
       margin: 7rem 0rem 0rem;
       padding: 0.3125vw 2.73438vw 0.46875vw;
       border: 0.078125vw solid rgb(64, 64, 66);
@@ -279,17 +285,17 @@ const EditInfo = styled.div`
       visibility: hidden;
     }
   }
-  .edit-right{
+  .edit-right {
     padding: 1.01562vw 0px 0px;
     font-size: 1.40625vw;
-    p{
+    p {
       margin: 0 0 0.703125vw 0;
       font-size: 1.40625vw;
       font-weight: 400;
       color: rgb(255, 255, 255);
       letter-spacing: -0.0390625vw;
     }
-    input{
+    input {
       margin: 0 0 0.78125vw 0;
       padding: 0.78125vw 0.9375vw;
       width: 29.5312vw;
@@ -298,17 +304,17 @@ const EditInfo = styled.div`
       border: 0.078125vw solid rgb(219, 24, 24);
       font-size: 100%;
       color: rgb(255, 255, 255);
-      &:focus{
+      &:focus {
         outline: 0;
       }
-      &.correct{
+      &.correct {
         border: 0.078125vw solid rgb(51, 52, 53);
       }
-      &.correct + span{
+      &.correct + span {
         color: rgb(93, 94, 95);
       }
     }
-    span{
+    span {
       color: rgb(219, 24, 24);
       font-size: 1.09375vw;
       font-weight: 400;
@@ -328,7 +334,6 @@ const DivideLine = styled.hr`
 const EditBtnGroup = styled.div`
   width: 100%;
   display: flex;
-
 `;
 
 const BtnEdit = styled.button`
@@ -340,7 +345,7 @@ const BtnEdit = styled.button`
   color: rgb(219, 219, 219);
   letter-spacing: -0.0390625vw;
   line-height: 2.10938vw;
-  :hover{
+  :hover {
     background-color: #ffffff;
     color: #000000;
   }

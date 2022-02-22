@@ -1,8 +1,10 @@
 import { createAction, handleActions } from "redux-actions";
-import { setCookie, deleteCookie } from "../../shared/cookie";
+import { setCookie, deleteCookie, getCookie } from "../../shared/cookie";
 import axios from "axios";
 
 import instance from "../../shared/request";
+
+const accessToken = getCookie("is_login");
 
 // actions
 const SET_USER = "SET_USER";
@@ -42,6 +44,7 @@ const loginFB = (id, pwd) => {
           .get("/profile", {
             headers: {
               Authorization: `Bearer ${accessToken}`,
+              email: id,
             },
           })
           .then((res) => {
@@ -134,29 +137,33 @@ const makeProfileFB = (name, image) => {
   return function (dispatch, getState, { history }) {
     console.log("프로파일 이름", name);
     console.log("프로파일 이미지", image);
-    const formData = new FormData();
-    formData.append("profileName", name);
-    formData.append("profileImage", image);
-    // console.log(formData.entries())
-    // console.log("진행중")
-    // for(var pair of formData.entries()) {
-    //     console.log(pair[0]+ ', '+ pair[1]);
-    //     console.log(...pair[1])
-    // }
+    let formData = image;
+    // for (const keyValue of formData) console.log(keyValue);
+
     instance
       .post(
         "/profile/create",
         {
-          data: formData,
+          profileName: name,
+          profileImage: "formData",
         },
         {
           headers: {
             "Content-Type": `multipart/form-data`,
+            Authorization: `Bearer ${accessToken}`,
           },
         }
       )
       .then((res) => {
         console.log(res);
+        //profile 갯수 업데이트 -> 어떻게? -> 이름이랑 img 보내서
+        dispatch(
+          createProfile({
+            profileName: name,
+            profileImage: "",
+          })
+        );
+        history.replace("/manage_profiles");
       })
       .catch((error) => {
         console.log("axios 통신에러 발생", error);
@@ -200,6 +207,7 @@ export default handleActions(
       state.is_login = false;
     },
     [SET_PROFILE]: (state, action) => {
+      console.log(action.payload.user, action.payload.info);
       sessionStorage(action.payload.user, action.payload.info);
       state.cur_profile = { [action.payload.user]: action.payload.info };
     },
