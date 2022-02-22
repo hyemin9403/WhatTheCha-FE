@@ -22,7 +22,6 @@ const Signup = () => {
   const changePwd = (e) => {
     setPwd(e.target.value)
   }
-
   const submitBtn = React.useRef();
   const ids = ["age", "agree01", "agree02", "agree03", "choose"]
   const needIds = ["age", "agree01", "agree02", "agree03"]

@@ -8,11 +8,13 @@ import instance from "../../shared/request";
 const SET_USER = "SET_USER";
 const SET_PROFILE = "SET_PROFILE";
 const LOG_OUT = "LOG_OUT";
+const CREATE_PROFILE = "Create_PROFILE";
 
 // Action Creators
 const setUser = createAction(SET_USER, (user) => ({ user }));
 const setProfile = createAction(SET_PROFILE, (user, info) => ({ user, info }));
 const logOut = createAction(LOG_OUT, (username) => ({ username }));
+const createProfile = createAction(CREATE_PROFILE, (profile) => ({profile}))
 
 // initialState
 const initialState = {
@@ -72,9 +74,10 @@ const signupFb = (name, email, pwd) => {
     console.log("id : " + name, "pwd : " + pwd, "email : " + email);
     instance
       .post("/user/signup", {
-        username: name,
+        //username: name,
         email: email,
         password: pwd,
+        confirmPassword: pwd
       })
       .then((res) => {
         console.log(res);
@@ -166,6 +169,12 @@ const checkProfileFB = (select) => {
   };
 };
 
+const createProfileFB = () => {
+  return function () {
+
+  }
+}
+
 export default handleActions(
   {
     [SET_USER]: (state, action) => {
@@ -181,6 +190,8 @@ export default handleActions(
       sessionStorage(action.payload.user, action.payload.info);
       state.cur_profile = { [action.payload.user]: action.payload.info };
     },
+    [CREATE_PROFILE]: (state, action) => {
+    }
   },
   initialState
 );

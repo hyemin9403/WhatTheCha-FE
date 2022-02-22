@@ -4,13 +4,14 @@ import { useSelector } from "react-redux";
 import { history } from "../redux/configureStore";
 
 import logo from "../img/header/logo.svg";
+import { useHistory, useLocation, match } from "react-router-dom";
 
 const Header = (props) => {
-
   const is_login = useSelector((state) => state.user.is_login);
-  let pagePath = ""
-  const [path, setPath] = React.useState(pagePath)
-  console.log(pagePath)
+  const [path, setPath] = React.useState("")
+  //console.log(pagePath)
+  let pagePath = history.location.pathname
+  console.log("1")
 
   const [scrollPosition, setScrollPosition] = React.useState(0);
   const updateScroll = () => {
@@ -18,11 +19,10 @@ const Header = (props) => {
   }
 
   React.useEffect(()=>{
-    pagePath = history.location.pathname
     setPath(pagePath)
     window.addEventListener('scroll', updateScroll);
     return () => window.removeEventListener('scroll', updateScroll);
-  }, [history]);
+  }, [pagePath, is_login]);
 
   return (
     <StyleHeader className={scrollPosition < 10 ? "" : "active"}>
@@ -45,35 +45,37 @@ const Header = (props) => {
         })()}
         {(() => {
           if(is_login){
-            <button onClick={null}>
-              <img src="../img/profile/img_profile_01.jpg"/>
-            </button>
+            <React.Fragment>
+              <button onClick={null}>
+                <img src="../img/profile/img_profile_01.jpg"/>
+              </button>
+              <div className="box-menu">
+                <ul className="menu-group">
+                  <li className="menu-li"></li>
+                  <li className="menu-li"></li>
+                  <hr/>
+                  <li className="menu-li"></li>
+                  <hr/>
+                  <li className="menu-li">
+                    <button>설정</button>
+                  </li>
+                  <li className="menu-li">
+                    <button>공지사항</button>
+                  </li>
+                  <li className="menu-li">
+                    <button>초대하기</button>
+                  </li>
+                  <li className="menu-li">
+                    <button>고객센터</button>
+                  </li>
+                  <li className="menu-li">
+                    <button>로그아웃</button>
+                  </li>
+                </ul>
+              </div>
+            </React.Fragment>
           }
         })()}
-        <div className="box-menu">
-          <ul className="menu-group">
-            <li className="menu-li"></li>
-            <li className="menu-li"></li>
-            <hr/>
-            <li className="menu-li"></li>
-            <hr/>
-            <li className="menu-li">
-              <button>설정</button>
-            </li>
-            <li className="menu-li">
-              <button>공지사항</button>
-            </li>
-            <li className="menu-li">
-              <button>초대하기</button>
-            </li>
-            <li className="menu-li">
-              <button>고객센터</button>
-            </li>
-            <li className="menu-li">
-              <button>로그아웃</button>
-            </li>
-          </ul>
-        </div>
       </div>
     </StyleHeader>
   )
