@@ -12,9 +12,12 @@ import plus from "../img/profile/btn_plus.svg"
 
 const ManageProfile = () => {
   const dispatch = useDispatch();
-  const preview = useSelector((state) => state.image.preview)
+  const profile = useSelector(state => state.user.user);
+  const preview = useSelector(state => state.image.preview);
+  const ImgData = useSelector(state => state.image.data);
   const [is_edit, setEdit] = React.useState(false);
   const [name, setName] = React.useState("");
+  console.log(profile)
 
   const changeName = (e) => {
     setName(e.target.value)
@@ -30,6 +33,11 @@ const ManageProfile = () => {
   const cancelProfile = () => {
     setEdit(false); 
     dispatch(imgActions.setPreview(null));
+  }
+
+  const createProfile = () => {
+    dispatch(userActions.makeProfileFB(name, ImgData))
+    //cancelProfile();
   }
 
   const selectProfile = (e) => {
@@ -49,10 +57,7 @@ const ManageProfile = () => {
                 <div className="edit-left">
                   <div className="edit-img">
                     <div className="img-wrap">
-                      <img
-                        src={preview ? preview :imgProfile}
-                        alt=""
-                      />
+                      <img src={preview ? preview :imgProfile} alt="" />
                     </div>
                   </div>
                   <Upload/>
@@ -66,7 +71,7 @@ const ManageProfile = () => {
               </EditInfo>
               <DivideLine/>
               <EditBtnGroup>
-                <BtnEdit>프로필 생성</BtnEdit>
+                <BtnEdit onClick={createProfile}>프로필 생성</BtnEdit>
                 <BtnEdit onClick={cancelProfile}>취소</BtnEdit>
               </EditBtnGroup>
             </React.Fragment>
@@ -75,21 +80,22 @@ const ManageProfile = () => {
           return(
             <React.Fragment>
               <Profiles>
-                <Profile>
-                  <ProfileCircle name="학새" onClick={selectProfile}>
-                    <img
-                      src="https://an2-img.amz.wtchn.net/image/v2/emPiR9QK3LtRUgwlwAE0Pg.jpg?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1SZk16QXdlRE13TUNKZExDSndJam9pTDNZeUwzTjBiM0psTDNWelpYSXZaR1ZtWVhWc2RGOXdjbTltYVd4bFgybHRZV2RsTDNCeWIyWnBiR1ZmTURRdWNHNW5JbjAua1BKeFk1LUZnYWN3dVJmQWVyb0U1THRoSjdNQl9tNkdocTAweTNlZ0FHbw"
-                      alt=""
-                    />
-                  </ProfileCircle>
-                  <ProfileText>학새</ProfileText>
-                </Profile>
+                {profile !== null && profile.map((list) => {
+                  return (
+                    <Profile>
+                      <ProfileCircle name={list.profileName} onClick={selectProfile}>
+                        <img
+                          src={list.profileImage}
+                          alt="프로파일 설정 이미지"
+                        />
+                      </ProfileCircle>
+                      <ProfileText>{list.profileName}</ProfileText>
+                    </Profile>
+                  )
+                })}
                 <Profile>
                   <ProfileCircle onClick={() => setEdit(true)}>
-                    <img className="plus"
-                      src={plus}
-                      alt=""
-                    />
+                    <img className="plus" src={plus} alt="" />
                   </ProfileCircle>
                   <ProfileText>새 프로필</ProfileText>
                 </Profile>

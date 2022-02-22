@@ -2,6 +2,9 @@ import { createAction, handleActions } from "redux-actions";
 import instance from "../../shared/request";
 import { produce } from "immer";
 
+import profileImg from "../../img/profile/img_profile_01.jpg"
+
+
 // actions
 const UPLODING = "UPLODING";
 const UPLOAD_IMG = "UPLOAD_IMG";
@@ -10,13 +13,14 @@ const SET_PREVIEW = "SET_PREVIEW";
 // action creators
 const uploading = createAction(UPLODING, (uploading) => ({ uploading }));
 const uploadImg = createAction(UPLOAD_IMG, (image) => ({ image }));
-const setPreview = createAction(SET_PREVIEW, (preview) => ({ preview }));
+const setPreview = createAction(SET_PREVIEW, (preview, data) => ({ preview, data }));
 
 // initialState
 const initialState = {
   image: "",
   uploading: false,
-  preview: null,
+  preview: profileImg,
+  DataImg: null,
 };
 
 // const uploadImgFB = (image) => {
@@ -62,6 +66,7 @@ export default handleActions(
       }),
     [SET_PREVIEW]: (state, action) =>
       produce(state, (draft) => {
+        draft.data = action.payload.data
         draft.preview = action.payload.preview;
       }),
   },

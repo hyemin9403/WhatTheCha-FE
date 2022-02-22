@@ -9,25 +9,24 @@ const Upload = (props) => {
     const dispatch = useDispatch();
     const uploading = useSelector((state) => state.image.uploading);
     const fileInput = React.useRef();
-    console.log("파일이름", fileInput)
-
 
     const selectFile = (e) => {
-        // console.log(e);
-        // console.log(e.target);
-        // console.log(e.target.files[0]);
-        //console.log(fileInput.current.files[0]);
         const reader = new FileReader();
         const currentFile = fileInput.current.files[0]
-        console.log(typeof(currentFile))
+        // console.log(formData.entries())
+        // console.log("진행중")
+        // for(var pair of formData.entries()) {
+        //     console.log(pair[0]+ ', '+ pair[1]); 
+        //     console.log(...pair[1])
+        // }
 
         reader.readAsDataURL(currentFile);
 
         reader.onloadend = () => {
-            console.log(reader.result)
-            console.log(typeof(reader.result))
-            dispatch(imgActions.setPreview(reader.result))
-            console.log(fileInput.current.files[0])
+            // console.log(reader.result)
+            // console.log(typeof(reader.result))
+            //console.log(fileInput.current.files[0])
+            dispatch(imgActions.setPreview(reader.result, currentFile))
         }
     } 
     const uploadFB = () => {

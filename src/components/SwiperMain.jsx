@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
+import { DetailCard } from "./index";
 
 // Import Swiper styles
 import "swiper/css";
@@ -116,6 +117,9 @@ const SwiperMain = (props) => {
         <SwiperSlide>Slide 17</SwiperSlide>
         <SwiperSlide>Slide 18</SwiperSlide>
       </Swiper>
+      <div>
+        <DetailCard/>
+      </div>
     </div>
   );
 };

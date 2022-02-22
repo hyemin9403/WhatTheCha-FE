@@ -2,30 +2,25 @@ import React from "react";
 import styled from "styled-components"
 import { useSelector } from "react-redux";
 import { history } from "../redux/configureStore";
+import { debounce } from "lodash"
 
 import logo from "../img/header/logo.svg";
 import { useHistory, useLocation, match } from "react-router-dom";
 
 const Header = (props) => {
+  const location = useSelector(state => state.router.location)
   const is_login = useSelector((state) => state.user.is_login);
   const [path, setPath] = React.useState("")
-  //console.log(pagePath)
-  let pagePath = history.location.pathname
-  console.log("1")
 
-  const [scrollPosition, setScrollPosition] = React.useState(0);
-  const updateScroll = () => {
-      setScrollPosition(window.scrollY || document.documentElement.scrollTop);
-  }
+  let landing = document.getElementById("layer1")?.parentNode.className;
+  //console.log(landing)
 
   React.useEffect(()=>{
-    setPath(pagePath)
-    window.addEventListener('scroll', updateScroll);
-    return () => window.removeEventListener('scroll', updateScroll);
-  }, [pagePath, is_login]);
+    setPath(history.location.pathname)
+  }, [history.location.pathname, is_login, landing]);
 
   return (
-    <StyleHeader className={scrollPosition < 10 ? "" : "active"}>
+    <StyleHeader className={landing === "swiper-slide swiper-slide-active" ? "active" : ""}>
       <a href="/" className="logo">
         <img src={logo} alt="왓챠로고"/>
       </a>
