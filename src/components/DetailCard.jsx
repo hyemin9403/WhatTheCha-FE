@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { history } from '../redux/configureStore';
 import { SvgPlay, SvgWith, SvgBeta, SvgPlus, SvgShared, SvgCancel } from "../img/card/svg_card"
 
 const DetailCard = (props) => {
@@ -60,7 +61,7 @@ const DetailCard = (props) => {
                                         </li>
                                     </ul>
                                     <CardBtnGroup>
-                                        <button className='btn-play'>
+                                        <button onClick={() => history.push('/video')} className='btn-play'>
                                             <SvgPlay/>
                                             <span>재생</span>
                                         </button>

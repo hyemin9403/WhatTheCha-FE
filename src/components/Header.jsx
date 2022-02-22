@@ -6,6 +6,7 @@ import { debounce } from "lodash"
 
 import logo from "../img/header/logo.svg";
 import { useHistory, useLocation, match } from "react-router-dom";
+import { HeadMenu } from "./index";
 
 const Header = (props) => {
   const location = useSelector(state => state.router.location)
@@ -19,6 +20,9 @@ const Header = (props) => {
     setPath(history.location.pathname)
   }, [history.location.pathname, is_login, landing]);
 
+  if(path === "/video"){
+    return null;
+  }
   return (
     <StyleHeader className={landing === "swiper-slide swiper-slide-active" ? "active" : ""}>
       <a href="/" className="logo">
@@ -40,36 +44,9 @@ const Header = (props) => {
         })()}
         {(() => {
           if(is_login){
-            <React.Fragment>
-              <button onClick={null}>
-                <img src="../img/profile/img_profile_01.jpg"/>
-              </button>
-              <div className="box-menu">
-                <ul className="menu-group">
-                  <li className="menu-li"></li>
-                  <li className="menu-li"></li>
-                  <hr/>
-                  <li className="menu-li"></li>
-                  <hr/>
-                  <li className="menu-li">
-                    <button>설정</button>
-                  </li>
-                  <li className="menu-li">
-                    <button>공지사항</button>
-                  </li>
-                  <li className="menu-li">
-                    <button>초대하기</button>
-                  </li>
-                  <li className="menu-li">
-                    <button>고객센터</button>
-                  </li>
-                  <li className="menu-li">
-                    <button>로그아웃</button>
-                  </li>
-                </ul>
-              </div>
-            </React.Fragment>
+            <HeadMenu/>
           }
+          return null;
         })()}
       </div>
     </StyleHeader>
@@ -103,9 +80,6 @@ const StyleHeader = styled.header`
     img{
 
     }
-  }
-  .box-menu{
-    display: none;
   }
 `
 export default Header;

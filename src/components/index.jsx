@@ -5,5 +5,6 @@ import MakeProfile from "./MakeProfile";
 import SignForm from "./SignForm";
 import Background from "./Background";
 import DetailCard from "./DetailCard";
+import HeadMenu from "./HeadMenu";
 
-export { Footer, Header, Sidebar, MakeProfile, SignForm, Background, DetailCard };
+export { Footer, Header, Sidebar, MakeProfile, SignForm, Background, DetailCard, HeadMenu };

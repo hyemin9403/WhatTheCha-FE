@@ -17,6 +17,7 @@ import Watched from "../pages/Watched";
 import Watchings from "../pages/Watchings";
 import Wishes from "../pages/Wishes";
 import Ratings from "../pages/Ratings";
+import Video from "../pages/Video"
 
 /* COMPONENT */
 import { Header, Sidebar, Footer } from "../components/index";
@@ -37,7 +38,7 @@ function App() {
 
   return (
     <div className="App">
-      {/* <Header hitory={hitory}/> */}
+      <Header hitory={hitory}/>
       <ConnectedRouter history={history}>
         <div className="container">
           <Sidebar />
@@ -53,6 +54,7 @@ function App() {
             <Route path="/ratings" exact component={Ratings} />
             <Footer />
           </Layout>
+          <Route path="/video" exact component={Video} />
         </div>
       </ConnectedRouter>
     </div>
