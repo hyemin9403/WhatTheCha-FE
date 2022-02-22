@@ -6,16 +6,17 @@ import SwiperGrid from "../components/SwiperGrid";
 
 const Watchings = () => {
   const dispatch = useDispatch();
-  const listTop10 = useSelector((state) => state.movie.movie_list.listTop);
+  const watchingList = useSelector((state) => state.movie.movie_list);
+  console.log(watchingList);
 
   React.useEffect(() => {
-    dispatch(movieActions.allListM());
+    dispatch(movieActions.getWatchingsM());
   }, []);
 
   return (
     <Padding>
       <h2>이어보기</h2>
-      <SwiperGrid list={listTop10}></SwiperGrid>
+      {/* <SwiperGrid list={listTop10}></SwiperGrid> */}
     </Padding>
   );
 };

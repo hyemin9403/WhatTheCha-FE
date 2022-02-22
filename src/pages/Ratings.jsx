@@ -6,10 +6,10 @@ import SwiperGrid from "../components/SwiperGrid";
 
 const Ratings = () => {
   const dispatch = useDispatch();
-  const listTop10 = useSelector((state) => state.movie.movie_list.listTop);
+  const listTop10 = useSelector((state) => state.movie.movie_list);
 
   React.useEffect(() => {
-    dispatch(movieActions.allListM());
+    dispatch(movieActions.getRatingsM());
   }, []);
 
   return (
