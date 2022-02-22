@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
-import SwiperMain from "../components/SwiperMain";
+import SwiperGrid from "../components/SwiperGrid";
 
 const Watchings = () => {
   return (
     <Padding>
       <h2>이어보기</h2>
-      <SwiperMain _loop={false}></SwiperMain>
+      <SwiperGrid></SwiperGrid>
     </Padding>
   );
 };

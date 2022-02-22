@@ -201,7 +201,7 @@ textarea {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-input::placeholder{
+input::placeholder {
   font-size: 1.6rem;
   font-family: Noto Sans KR, "Apple SD Gothic Neo", "Nanum Gothic",
     "Malgun Gothic", sans-serif;

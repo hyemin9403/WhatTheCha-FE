@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
-import SwiperMain from "../components/SwiperMain";
+import SwiperGrid from "../components/SwiperGrid";
 
 const Ratings = () => {
   return (
     <Padding>
       <h2>평가한 작품</h2>
-      <SwiperMain _loop={false}></SwiperMain>
+      <SwiperGrid></SwiperGrid>
     </Padding>
   );
 };

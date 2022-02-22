@@ -23,7 +23,7 @@ import { Header, Sidebar, Footer } from "../components/index";
 import Layout from "../pages/Layout";
 
 function App() {
-  const hitory = history.location.pathname
+  const hitory = history.location.pathname;
   const dispatch = useDispatch();
   const token = getCookie("is_login");
 
@@ -37,7 +37,7 @@ function App() {
 
   return (
     <div className="App">
-      <Header hitory={hitory}/>
+      {/* <Header hitory={hitory}/> */}
       <ConnectedRouter history={history}>
         <div className="container">
           <Sidebar />

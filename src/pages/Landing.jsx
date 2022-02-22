@@ -133,7 +133,7 @@ const Landing = () => {
           </Header>
           <div>
             <Footer>
-              <span class="css-loei9u">
+              <span className="css-loei9u">
                 <a
                   href="/zendesk/login"
                   rel="noopener noreferrer"
@@ -163,32 +163,32 @@ const Landing = () => {
                   https://watcha.team/contact
                 </a>
               </span>
-              <ul class="css-0">
-                <li class="css-sp1qhw">
+              <ul className="css-0">
+                <li className="css-sp1qhw">
                   주식회사 왓챠&nbsp;<span>/</span>&nbsp;
                 </li>
-                <li class="css-sp1qhw">
+                <li className="css-sp1qhw">
                   대표 박태훈&nbsp;<span>/</span>&nbsp;
                 </li>
-                <li class="css-sp1qhw">
+                <li className="css-sp1qhw">
                   서울특별시 서초구 강남대로 343 신덕빌딩 3층&nbsp;
                   <span>/</span>&nbsp;
                 </li>
-                <li class="css-sp1qhw">
+                <li className="css-sp1qhw">
                   사업자등록번호 211-88-66013&nbsp;<span>/</span>&nbsp;
                 </li>
-                <li class="css-sp1qhw">
+                <li className="css-sp1qhw">
                   통신판매업 신고번호 제 2019-서울서초-0965호&nbsp;
                   <span>/</span>&nbsp;
                 </li>
-                <li class="css-sp1qhw">
+                <li className="css-sp1qhw">
                   대표번호 02-515-9985&nbsp;<span>/</span>&nbsp;
                 </li>
-                <li class="css-shc8b1" style={{ fontWeight: "bold" }}>
+                <li className="css-shc8b1" style={{ fontWeight: "bold" }}>
                   개인정보 처리 방침
                 </li>
                 <span>/</span>
-                <li class="css-shc8b1" style={{ fontWeight: "bold" }}>
+                <li className="css-shc8b1" style={{ fontWeight: "bold" }}>
                   청소년 보호정책
                 </li>
               </ul>

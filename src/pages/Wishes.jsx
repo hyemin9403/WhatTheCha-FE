@@ -1,13 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import { actionCreator as movieActions } from "../redux/modules/movie";
 
-import SwiperMain from "../components/SwiperMain";
+import SwiperGrid from "../components/SwiperGrid";
 
 const Wishes = () => {
+  const dispatch = useDispatch();
+  const listTop10 = useSelector((state) => state.movie.movie_list.listTop);
+
+  React.useEffect(() => {
+    dispatch(movieActions.allListM());
+  }, []);
+
   return (
     <Padding>
       <h2>학새님이 보고싶어요한 작품</h2>
-      <SwiperMain _loop={false}></SwiperMain>
+      <SwiperGrid list={listTop10}></SwiperGrid>
     </Padding>
   );
 };

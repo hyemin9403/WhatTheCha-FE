@@ -20,7 +20,7 @@ const createProfile = createAction(CREATE_PROFILE, (profile) => ({profile}))
 const initialState = {
   user: null,
   cur_profile: {},
-  is_login: false,
+  is_login: true,
 };
 
 //  middleware Actions
@@ -49,7 +49,7 @@ const loginFB = (id, pwd) => {
                 .then((res) => {
                   setUser(res.data.profile);
                   window.alert("환영합니다");
-                  history.push("/manage_profiles")
+                  history.push("/manage_profiles");
                 })
                 .catch((error) => {
                   console.log("프로파일 set중 에러발생", error);
@@ -83,10 +83,8 @@ const signupFb = (name, email, pwd) => {
         console.log(res);
         if (res.data.ok) {
           console.log("회원가입 성공");
-          window.alert(
-            "회원가입성공"
-          );
-          history.replace("/login")
+          window.alert("회원가입성공");
+          history.replace("/login");
         } else {
           console.log("회원가입 실패");
           //window.location.replace('/login');
@@ -143,10 +141,8 @@ const logoutFB = () => {
 };
 
 const makeProfileFB = () => {
-    return function (dispatch, getState, {history}) {
-
-    };
-}
+  return function (dispatch, getState, { history }) {};
+};
 
 const checkProfileFB = (select) => {
   return function (dispatch, getState, { history }) {
@@ -198,7 +194,14 @@ export default handleActions(
 
 // action creator export
 const actionCreator = {
-    setUser, logOut, signupFb, loginFB, loginCheckFB, logoutFB, checkProfileFB, makeProfileFB
-}   
+  setUser,
+  logOut,
+  signupFb,
+  loginFB,
+  loginCheckFB,
+  logoutFB,
+  checkProfileFB,
+  makeProfileFB,
+};
 
 export { actionCreator };
