@@ -84,7 +84,7 @@ const Signin = () => {
               />
             </InputSign>
           </SignForm>
-          <button type="click" onClick={login} ref={submitBtn} className="btn">
+          <button type="click" onClick={login} ref={submitBtn} className="btn btn-login">
             로그인
           </button>
         </div>
@@ -194,6 +194,9 @@ const StyleLogin = styled.div`
     justify-content: space-between;
   }
   .social-link {
+  }
+  .btn-login{
+    margin-top: 2.3rem;
   }
 `;
 const SignForm = styled.div``;

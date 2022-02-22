@@ -26,7 +26,6 @@ const Landing = () => {
         modules={[Navigation, Pagination, Mousewheel]}
         mousewheel={true}
         navigation={true}
-        loop={true}
         direction={"vertical"}
         pagination={{
           clickable: true,

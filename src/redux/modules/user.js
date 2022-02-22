@@ -23,7 +23,7 @@ const initialState = {
   user: null,
   profile: null, 
   cur_profile: {},
-  is_login: true,
+  is_login: false,
 };
 
 //  middleware Actions
@@ -132,7 +132,7 @@ const logoutFB = () => {
     deleteCookie("is_login");
     sessionStorage.removeItem("user");
     dispatch(logOut());
-    //window.location.replace("/");
+    history.replace("/");
   };
 };
 

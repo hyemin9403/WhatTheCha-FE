@@ -41,8 +41,8 @@ const ManageProfile = () => {
   }
 
   const selectProfile = (e) => {
-    console.log(e.target)
-    //dispatch(userActions.checkProfileFB())
+    //console.log(e.target.name)
+    dispatch(userActions.checkProfileFB(e.target.name))
   }
   return (
     <Section>
