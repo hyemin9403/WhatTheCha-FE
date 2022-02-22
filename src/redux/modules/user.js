@@ -14,76 +14,46 @@ const CREATE_PROFILE = "Create_PROFILE";
 const setUser = createAction(SET_USER, (user) => ({ user }));
 const setProfile = createAction(SET_PROFILE, (user, info) => ({ user, info }));
 const logOut = createAction(LOG_OUT, (username) => ({ username }));
-const createProfile = createAction(CREATE_PROFILE, (profile) => ({profile}))
+const createProfile = createAction(CREATE_PROFILE, (profile) => ({ profile }));
 
 // initialState
 const initialState = {
   user: null,
   cur_profile: {},
-  is_login: true,
+  is_login: false,
 };
 
 //  middleware Actions
 const loginFB = (id, pwd) => {
   return function (dispatch, getState, { history }) {
     //axious id, pwd전송/ 토큰요청
-    console.log("id : " + id,  "pwd : " + pwd)
-    
+    console.log("id : " + id, "pwd : " + pwd);
+
     instance
       .post("/users/login", {
-        "email": id,
-        "password": pwd,
+        email: id,
+        password: pwd,
       })
       .then((res) => {
-<<<<<<< HEAD
-          const accessToken = res.data.token;
-          console.log(accessToken)
-          setCookie("is_login", accessToken);
-          instance
+        const accessToken = res.data.token;
+        console.log(accessToken);
+        setCookie("is_login", accessToken);
+        instance
           .get("/profile", {
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
           })
           .then((res) => {
-            console.log("프로파일", res)
+            console.log("프로파일", res);
             setUser(res.data.profile);
           })
           .catch((error) => {
             console.log("프로파일 set중 에러발생", error);
           });
-          sessionStorage.setItem("profile", accessToken);
-          window.alert("환영합니다");
-          history.replace("/manage_profiles");
-=======
-        if (res.data.ok) {
-          console.log(res.data.message);
-          const accessToken = res.headers.authorization.split(" ")[1];
-          setCookie("is_login", accessToken)
-            .then(() => {
-              instance
-                .get("/profile", {
-                  headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                  },
-                })
-                .then((res) => {
-                  setUser(res.data.profile);
-                  window.alert("환영합니다");
-                  history.push("/manage_profiles");
-                })
-                .catch((error) => {
-                  console.log("프로파일 set중 에러발생", error);
-                });
-            })
-            .catch((error) => {
-              console.log("쿠키세팅중 에러발생", error);
-            });
-        } else {
-          console.log(res.data.errorMessage);
-          window.alert("이메일과 비밀번호를 확인해주세요");
-        }
->>>>>>> 3829c0c06fbf9dbfb82d76f57787f986c173ad85
+        sessionStorage.setItem("profile", accessToken);
+        window.alert("환영합니다");
+        history.replace("/manage_profiles");
       })
       .catch((error) => {
         console.log("로그인 통신중 에러발생", error);
@@ -96,23 +66,16 @@ const signupFb = (name, email, pwd) => {
     console.log("id : " + name, "pwd : " + pwd, "email : " + email);
     instance
       .post("/users/signup", {
-        "email": email,
-        "password": pwd,
-        "confirmpassword": pwd
+        email: email,
+        password: pwd,
+        confirmpassword: pwd,
       })
       .then((res) => {
         console.log(res);
         if (res.data.ok) {
           console.log("회원가입 성공");
-<<<<<<< HEAD
-          window.alert(
-            "회원가입성공"
-          );
-          history.replace("/sign_in")
-=======
           window.alert("회원가입성공");
-          history.replace("/login");
->>>>>>> 3829c0c06fbf9dbfb82d76f57787f986c173ad85
+          history.replace("/sign_in");
         } else {
           console.log("회원가입 실패");
           window.alert("아이디/닉네임/비밀번호를 확인해주세요");
@@ -167,39 +130,39 @@ const logoutFB = () => {
   };
 };
 
-<<<<<<< HEAD
 const makeProfileFB = (name, image) => {
-    return function (dispatch, getState, {history}) {
-      console.log("프로파일 이름", name)
-      console.log("프로파일 이미지", image)
-      const formData = new FormData()
-      formData.append('profileName', name)
-      formData.append('profileImage', image)
-      // console.log(formData.entries())
-      // console.log("진행중")
-      // for(var pair of formData.entries()) {
-      //     console.log(pair[0]+ ', '+ pair[1]); 
-      //     console.log(...pair[1])
-      // }
-      instance
-      .post("/profile/create", {
-        data: formData
-      },{
-        headers: {
-          "Content-Type": `multipart/form-data`,
+  return function (dispatch, getState, { history }) {
+    console.log("프로파일 이름", name);
+    console.log("프로파일 이미지", image);
+    const formData = new FormData();
+    formData.append("profileName", name);
+    formData.append("profileImage", image);
+    // console.log(formData.entries())
+    // console.log("진행중")
+    // for(var pair of formData.entries()) {
+    //     console.log(pair[0]+ ', '+ pair[1]);
+    //     console.log(...pair[1])
+    // }
+    instance
+      .post(
+        "/profile/create",
+        {
+          data: formData,
+        },
+        {
+          headers: {
+            "Content-Type": `multipart/form-data`,
+          },
         }
-      }).then((res) => {
-        console.log(res)
-      }).catch((error) => {
-        console.log("axios 통신에러 발생", error)
+      )
+      .then((res) => {
+        console.log(res);
       })
-    };
-}
-=======
-const makeProfileFB = () => {
-  return function (dispatch, getState, { history }) {};
+      .catch((error) => {
+        console.log("axios 통신에러 발생", error);
+      });
+  };
 };
->>>>>>> 3829c0c06fbf9dbfb82d76f57787f986c173ad85
 
 const checkProfileFB = (select) => {
   return function (dispatch, getState, { history }) {
@@ -223,10 +186,8 @@ const checkProfileFB = (select) => {
 };
 
 const createProfileFB = () => {
-  return function () {
-
-  }
-}
+  return function () {};
+};
 
 export default handleActions(
   {
@@ -242,8 +203,7 @@ export default handleActions(
       sessionStorage(action.payload.user, action.payload.info);
       state.cur_profile = { [action.payload.user]: action.payload.info };
     },
-    [CREATE_PROFILE]: (state, action) => {
-    }
+    [CREATE_PROFILE]: (state, action) => {},
   },
   initialState
 );
