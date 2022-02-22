@@ -3,6 +3,10 @@ import styled from "styled-components";
 
 import SwiperMain from "../components/SwiperMain";
 import SwiperTitle from "../components/SwiperTitle";
+import SwiperTop10 from "../components/SwiperTop10";
+import SwiperParty from "../components/SwiperParty";
+import SwiperOnly from "../components/SwiperOnly";
+
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -17,11 +21,14 @@ import { Pagination, Navigation } from "swiper";
 const Main = () => {
   return (
     <Padding>
-      <h1 style={{ color: "white" }}>홈</h1>
-      <hr style={{ border: "1px solid white" }} />
-      <div style={{ color: "white" }}>
+      <HomeContainer>
+        <h1 style={{ color: "white" }}>홈</h1>
+        <Hr />
+      </HomeContainer>
+
+      <SwiperContainer>
         <SwiperTitle></SwiperTitle>
-      </div>
+      </SwiperContainer>
       <section>
         <ButtonUL>
           <li>
@@ -35,16 +42,26 @@ const Main = () => {
           </li>
         </ButtonUL>
       </section>
-      <div style={{ color: "white" }}>
+      <SwiperContainer>
+        <h2>왓고리즘</h2>
         <SwiperMain></SwiperMain>
-      </div>
+      </SwiperContainer>
+      <SwiperContainer>
+        <h2>왓챠 영화 TOP 10</h2>
+        <SwiperTop10></SwiperTop10>
+      </SwiperContainer>
+      <SwiperContainer>
+        <h2>이어보기</h2>
+        <SwiperMain></SwiperMain>
+      </SwiperContainer>
+      <SwiperContainer>
+        <SwiperParty></SwiperParty>
+      </SwiperContainer>
+      <SwiperContainer>
+        <h2>오직 왓챠에서!</h2>
+        <SwiperOnly></SwiperOnly>
+      </SwiperContainer>
       {/* 물어볼거 3: 여기 밑에 추가하면 이상하게 됨 */}
-      <div style={{ color: "white" }}>
-        <SwiperMain></SwiperMain>
-      </div>
-      <div style={{ color: "white" }}>
-        <SwiperMain></SwiperMain>
-      </div>
     </Padding>
   );
 };
@@ -54,6 +71,15 @@ const Padding = styled.div`
   padding-left: 40px;
   padding-right: 40px;
   background-color: black;
+
+  h2 {
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0px;
+    line-height: 26px;
+    margin-bottom: 5px;
+  }
 `;
 
 const ButtonUL = styled.ul`
@@ -86,4 +112,31 @@ const Button = styled.button`
     color: rgb(0, 0, 0);
     border: 2px solid rgb(255, 255, 255);
   }
+`;
+
+const HomeContainer = styled.div`
+  margin: 4rem 0px 1.8rem;
+
+  h1 {
+    color: rgb(255, 255, 255);
+    margin: 0px 0px 12px;
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: 0px;
+    line-height: 40px;
+  }
+`;
+
+const Hr = styled.hr`
+  background-color: rgb(27, 28, 29);
+  width: 100%;
+  height: 1px;
+  padding: 0px;
+  border: none;
+  margin: 0px;
+`;
+
+const SwiperContainer = styled.div`
+  color: white;
+  margin-bottom: 3rem;
 `;

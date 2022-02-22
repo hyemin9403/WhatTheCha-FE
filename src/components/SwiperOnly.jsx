@@ -12,12 +12,12 @@ import "../css/SwiperMain.css";
 // import required modules
 import { Pagination, Navigation } from "swiper";
 
-const SwiperMain = (props) => {
-  const { _loop } = props;
+const SwiperOnly = () => {
   return (
     <div>
       {/* 물어볼거 2 media쿼리로 사이즈는 유지하고 개수만 줄어들도록 해야함. @@이하면 6개 보여주고 */}
       <Swiper
+        style={{ height: "39rem" }}
         className="mySwiper main"
         // install Swiper modules
         slidesPerView={8}
@@ -26,7 +26,7 @@ const SwiperMain = (props) => {
         observeParents={true}
         modules={[Pagination, Navigation]}
         spaceBetween={10}
-        loop={_loop}
+        loop={true}
         loopFillGroupWithBlank={true}
         pagination={{
           clickable: true,
@@ -36,64 +36,58 @@ const SwiperMain = (props) => {
           // when window width is >= 640px
           500: {
             //width: 500,
-            slidesPerView: 3,
-            slidesPerGroup: 3,
+            slidesPerView: 2,
+            slidesPerGroup: 2,
           },
           // when window width is >= 768px
           896: {
             //width: 896,
-            slidesPerView: 4,
-            slidesPerGroup: 4,
+            slidesPerView: 3,
+            slidesPerGroup: 3,
           },
           993: {
             //width: 993,
-            slidesPerView: 5,
-            slidesPerGroup: 5,
+            slidesPerView: 4,
+            slidesPerGroup: 4,
           },
           1135: {
             //width: 1135,
-            slidesPerView: 6,
-            slidesPerGroup: 6,
+            slidesPerView: 5,
+            slidesPerGroup: 5,
           },
           1551: {
             //width: 1551,
-            slidesPerView: 7,
-            slidesPerGroup: 7,
+            slidesPerView: 6,
+            slidesPerGroup: 6,
           },
           1648: {
             //width: 1648,
-            slidesPerView: 8,
-            slidesPerGroup: 8,
+            slidesPerView: 7,
+            slidesPerGroup: 7,
           },
         }}
       >
         <SwiperSlide>
           <img
-            src="https://an2-img.amz.wtchn.net/image/v2/DUCq6nXsHwW1erY_izC8Cw.jpg?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1SZk5ETXllRFkwTUhFNE1DSmRMQ0p3SWpvaUwzWXlMM04wYjNKbEwybHRZV2RsTHpFMk16RXpNek0xTWpNd05ERTBPRFEwTVRnaWZRLl9oTk1NdExFZjJLNWZvOW5EWFlZdFk4VmxPX3pibDVzZlVJZ2l6SVZiNE0"
+            src="https://an2-img.amz.wtchn.net/image/v2/CVJFKgFGK_DaS3sQztpt5A.jpg?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1SZk16WXdlRFkwTUhFNE1DSmRMQ0p3SWpvaUwzWXlMM04wYjNKbEwybHRZV2RsTHpFMk5EUTVNakF4TlRJeE16VXhNVFExTmpNaWZRLjMyUk9Ed1l4RFpiZWdQeU5OVFdGNTE2X1owUE5lOUZwaFlrSTRXRlgybzA"
             alt=""
           />
         </SwiperSlide>
         <SwiperSlide>
           <img
-            src="https://an2-img.amz.wtchn.net/image/v2/pRphEVAzJOsojJtqXff8sQ.jpg?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1SZk5ETXllRFkwTUhFNE1DSmRMQ0p3SWpvaUwzWXlMM04wYjNKbEwybHRZV2RsTHpFMk16RXpNekk1T1RneU1URTBNamc0TVRraWZRLnBROXJqYWlOdTFwd2IxTkdjUGMxUXZpZmJzb2VDQmtVY3NBMi1IaTRRdjQ"
+            src="https://an2-img.amz.wtchn.net/image/v2/rP9eJNa46liJatCFjb_wgQ.jpg?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1SZk16WXdlRFkwTUhFNE1DSmRMQ0p3SWpvaUwzWXlMM04wYjNKbEwybHRZV2RsTHpFMk5EUTFOVGc1TURFMU9EQTJPREkzTURJaWZRLk9SY29TT09USXc1NS00bUFNZld1aU82cl9Ob3o3aENaX1czZ2hLbkphNlk"
             alt=""
           />
         </SwiperSlide>
         <SwiperSlide>
           <img
-            src="https://an2-img.amz.wtchn.net/image/v2/ihW3GXmjdts-f5VvEPshMA.jpg?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1SZk5ETXllRFkwTUhFNE1DSmRMQ0p3SWpvaUwzWXlMM04wYjNKbEwybHRZV2RsTHpFMk16RXpNek13TVRNd01UQXhOVGc1TXpVaWZRLkZjVWp5c0dWdlRPZkoybkVwc3lwSF92VWU3SlZzaEFzbm5WcGkyTFpMcXc"
+            src="https://an2-img.amz.wtchn.net/image/v2/V2GEWmnHQ41AVkxWW2Z5Zw.jpg?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1SZk16WXdlRFkwTUhFNE1DSmRMQ0p3SWpvaUwzWXlMM04wYjNKbEwybHRZV2RsTHpFMk5ETXlOamM0T0RJME1Ea3dOelE1TURZaWZRLjZGSFNhdHdrbEpfd3RWNk1DTmk0YktUTWdQOGlWX2k5bm5RWEJrTkZHRkk"
             alt=""
           />
         </SwiperSlide>
         <SwiperSlide>
           <img
-            src="https://an2-img.amz.wtchn.net/image/v2/R73YeAh8-bLvg9fnn30lmQ.jpg?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1SZk5ETXllRFkwTUhFNE1DSmRMQ0p3SWpvaUwzWXlMM04wYjNKbEwybHRZV2RsTHpFMk16Y3pNVFF6TURReE1UazJPRGc0TXpraWZRLk5EVlNickVCVjBXaVZRalpmclFpWTlVR18zakxWYjFLV2RJWnFHU2xXazQ"
-            alt=""
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src="https://an2-img.amz.wtchn.net/image/v2/tK5GUxavHyCrBGaR6NfOaw.jpg?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1SZk5ETXllRFkwTUhFNE1DSmRMQ0p3SWpvaUwzWXlMM04wYjNKbEwybHRZV2RsTHpFMk5ERTBORGszTVRjME9UQXdORFU0TXpNaWZRLlB6OTl3S2hQMXBqMnptdEpJWldDSGVkY3dzaE15ZDFMT1ZUXy1kcEo1UVU"
+            src="https://an2-img.amz.wtchn.net/image/v2/4w4DZNqmtESDWARsS87BGg.jpg?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1SZk16WXdlRFkwTUhFNE1DSmRMQ0p3SWpvaUwzWXlMM04wYjNKbEwybHRZV2RsTHpFMk5ETXlOamN5TVRVM09ESTRNVEV3TlRJaWZRLml1TE9HclZ0U2dCSmdRZnhuVW1VdG5PNjRqWklNQjVjejJjREtMTVRQa1U"
             alt=""
           />
         </SwiperSlide>
@@ -120,4 +114,4 @@ const SwiperMain = (props) => {
   );
 };
 
-export default SwiperMain;
+export default SwiperOnly;

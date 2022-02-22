@@ -10,12 +10,12 @@ html {
   margin: 0;
   padding: 0;
   height: 100vh;
-  background: #ffffff;
   -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: transparent;
-  font-family: Roboto, "Noto Sans KR", "Apple SD Gothic Neo", "Nanum Gothic", "Malgun Gothic", sans-serif;
+  font-family: Roboto, "Noto Sans KR", "Apple SD Gothic Neo", "Nanum Gothic",
+    "Malgun Gothic", sans-serif;
   font-size: 10px;
 }
 body {
@@ -265,4 +265,3 @@ button {
   border-radius: 40px;
   margin: 23px 0 0;
 }
-

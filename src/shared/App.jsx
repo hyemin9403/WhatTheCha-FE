@@ -51,8 +51,8 @@ function App() {
             <Route path="/watchings" exact component={Watchings} />
             <Route path="/watched" exact component={Watched} />
             <Route path="/ratings" exact component={Ratings} />
+            <Footer />
           </Layout>
-          <Footer />
         </div>
       </ConnectedRouter>
     </div>
