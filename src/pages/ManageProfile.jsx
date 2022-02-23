@@ -7,8 +7,6 @@ import { actionCreator as userActions } from "../redux/modules/user";
 import { actionCreator as imgActions } from "../redux/modules/image";
 import imgProfile from "../img/profile/img_profile_01.jpg";
 import plus from "../img/profile/btn_plus.svg";
-//import { DivideLine } from "../elements/index"
-// 하나 만들어놓고 맵돌려서 정보 받아오는 개수 만큼 불러주기
 
 const ManageProfile = () => {
   const dispatch = useDispatch();
@@ -17,7 +15,6 @@ const ManageProfile = () => {
   const ImgData = useSelector((state) => state.image.data);
   const [is_edit, setEdit] = React.useState(false);
   const [name, setName] = React.useState("");
-  // console.log("profile", profile);
 
   const changeName = (e) => {
     setName(e.target.value);
@@ -43,8 +40,8 @@ const ManageProfile = () => {
 
   const selectProfile = (e) => {
     //console.log(e.target.name)
-    dispatch(userActions.checkProfileFB(e.target.name))
-  }
+    dispatch(userActions.checkProfileFB(e.target.name));
+  };
   return (
     <Section>
       <ProfileTitle>
@@ -81,7 +78,7 @@ const ManageProfile = () => {
           return (
             <React.Fragment>
               <Profiles>
-                {profile !== null &&
+                {/* {profile !== null &&
                   profile.map((list) => {
                     return (
                       <Profile>
@@ -97,7 +94,7 @@ const ManageProfile = () => {
                         <ProfileText>{list.profileName}</ProfileText>
                       </Profile>
                     );
-                  })}
+                  })} */}
                 <Profile>
                   <ProfileCircle onClick={() => setEdit(true)}>
                     <img className="plus" src={plus} alt="" />

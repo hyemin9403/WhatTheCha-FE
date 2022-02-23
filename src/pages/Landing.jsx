@@ -44,7 +44,7 @@ const Landing = () => {
               <h4>
                 매주 5백 여편의 신작이 업데이트 되며, 추가 요금은 전혀 없어요.
               </h4>
-              <a href="" onClick={() => history.push("/signup")}>
+              <a href="" onClick={() => history.push("/sign_up")}>
                 2주 무료 이용 시작
               </a>
               <div>
