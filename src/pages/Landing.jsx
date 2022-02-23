@@ -15,6 +15,7 @@ import "../css/Landing.css";
 
 // import required modules
 import { Mousewheel, Pagination, Navigation } from "swiper";
+import Spinner from "../components/Spinner";
 
 const Landing = () => {
   return (
