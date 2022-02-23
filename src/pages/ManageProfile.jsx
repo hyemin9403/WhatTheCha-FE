@@ -8,13 +8,25 @@ import { actionCreator as imgActions } from "../redux/modules/image";
 import imgProfile from "../img/profile/img_profile_01.jpg";
 import plus from "../img/profile/btn_plus.svg";
 
-const ManageProfile = () => {
+const ManageProfile = ({ location }) => {
   const dispatch = useDispatch();
-  const profile = useSelector((state) => state.user.user);
+  const profile = useSelector((state) => state.user.profile);
   const preview = useSelector((state) => state.image.preview);
   const ImgData = useSelector((state) => state.image.data);
   const [is_edit, setEdit] = React.useState(false);
   const [name, setName] = React.useState("");
+  const [history, setHistory] = React.useState(false);
+
+  // 로그인하고 바로 이동했을때
+  React.useEffect(() => {
+    if (location?.props?.history) {
+      setHistory(location.props.history);
+    }
+  }, []);
+
+  React.useEffect(() => {
+    dispatch(userActions.getProfileFB());
+  }, [is_edit]);
 
   const changeName = (e) => {
     setName(e.target.value);
@@ -35,12 +47,12 @@ const ManageProfile = () => {
 
   const createProfile = () => {
     dispatch(userActions.makeProfileFB(name, ImgData));
-    //cancelProfile();
+    setEdit(false);
   };
 
-  const selectProfile = (e) => {
-    //console.log(e.target.name)
-    dispatch(userActions.checkProfileFB(e.target.name));
+  const selectProfile = (profileName) => {
+    console.log(profileName);
+    dispatch(userActions.checkProfileFB(profileName));
   };
   return (
     <Section>
@@ -78,13 +90,13 @@ const ManageProfile = () => {
           return (
             <React.Fragment>
               <Profiles>
-                {/* {profile !== null &&
+                {profile &&
                   profile.map((list) => {
                     return (
                       <Profile>
                         <ProfileCircle
                           name={list.profileName}
-                          onClick={selectProfile}
+                          onClick={() => selectProfile(list.profileName)}
                         >
                           <img
                             src={list.profileImage}
@@ -94,7 +106,7 @@ const ManageProfile = () => {
                         <ProfileText>{list.profileName}</ProfileText>
                       </Profile>
                     );
-                  })} */}
+                  })}
                 <Profile>
                   <ProfileCircle onClick={() => setEdit(true)}>
                     <img className="plus" src={plus} alt="" />

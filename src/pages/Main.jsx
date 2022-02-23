@@ -50,6 +50,8 @@ const Main = () => {
     (state) => state.movie.movie_list?.categoryList?.fantasy_crime_romance_etc
   );
 
+  // const cur_profile = useSelector((state)=> state.user.cur_profile)
+
   // console.log("listComedy", listComedy);
 
   return (
