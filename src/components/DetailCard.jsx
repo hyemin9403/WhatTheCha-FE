@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import { history } from '../redux/configureStore';
 import { SvgPlay, SvgWith, SvgBeta, SvgPlus, SvgShared, SvgCancel } from "../img/card/svg_card"
+import Star from './Star';
 
 const DetailCard = (props) => {
     const [is_type, setBasic] = React.useState("info");
@@ -79,9 +80,7 @@ const DetailCard = (props) => {
                                             <span>공유하기</span>
                                         </button>
                                     </CardBtnGroup>
-                                    <CardStar>
-                                        <p>이미 본 작품인가요?</p>
-                                    </CardStar>
+                                    <Star/>
                                 </CardInfo>
                             )
                         }else if(is_type === "detail"){
@@ -309,12 +308,7 @@ const CardDetail = styled.div`
         color: rgba(255, 255, 255, 0.5);
     }
 `
-{/* <div className='movie-staff'>
-                                            <span className='staff-posit'>감독</span>
-                                            <ul className='staff-gorup'>
-                                                <li className='staff-list'>이정범</li>
-                                            </ul>
-                                        </div> */}
+
 const CardBtnGroup = styled.div`
     position: relative;
     z-index: 101;
@@ -412,21 +406,6 @@ const CardBtnGroup = styled.div`
     }
     .btn-text + .btn-text{
         margin-left: 0.390625vw;
-    }
-`
-
-const CardStar = styled.div`
-    position: relative;
-    z-index: 1;
-    margin-top: 1.40625vw;
-    display: flex;
-    p{
-        width: 11.7188vw;
-        font-size: 1.09375vw;
-        font-weight: 700;
-        color: rgba(255, 255, 255, 0.7);
-        letter-spacing: -0.03125vw;
-        line-height: 1.5625vw;
     }
 `
 

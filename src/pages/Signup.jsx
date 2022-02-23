@@ -6,21 +6,53 @@ import { actionCreator as userActions } from "../redux/modules/user";
 import { Background } from "../components/index";
 import { Input } from '../elements';
 import svg from "../img/signup/btn_radio_check.svg"
+import Corret from "../img/login&signup/btn_check.svg"
+import Wrong from "../img/login&signup/btn_wrong.svg"
 
 const Signup = () => {
   const dispatch = useDispatch();
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [pwd, setPwd] = React.useState("");
+  const [nameCheck, setNameCheck] = React.useState("");
+  const [emailCheck, setEmailCheck] = React.useState("");
+  const [pwdCheck, setPwdCheck] = React.useState("");
 
   const changeName = (e) => {
     setName(e.target.value)
+    const regExp = /^[0-9a-zA-Z]{2,16}$/i
+
+    if (regExp.test(e.target.value)) {
+      setNameCheck(true);
+    } else if(e.target.value.length === 0) {
+      setNameCheck("")
+    } else{
+      setNameCheck(false);
+    }
   }
   const changeEmail = (e) => {
     setEmail(e.target.value)
+    const regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
+
+    if (regExp.test(e.target.value)) {
+      setEmailCheck(true);
+    } else if(e.target.value.length === 0) {
+      setEmailCheck("")
+    } else{
+      setEmailCheck(false);
+    }
   }
   const changePwd = (e) => {
     setPwd(e.target.value)
+    const regExp = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
+
+    if (regExp.test(e.target.value)) {
+      setPwdCheck(true);
+    } else if(e.target.value.length === 0) {
+      setPwdCheck("")
+    } else{
+      setPwdCheck(false);
+    }
   }
   const submitBtn = React.useRef();
   const ids = ["age", "agree01", "agree02", "agree03", "choose"]
@@ -52,7 +84,7 @@ const Signup = () => {
   }
   
   React.useEffect(() => {
-    if(checkList.length === ids.length){
+    if(checkList.length === ids.length & nameCheck & emailCheck & pwdCheck){
       submitBtn.current.disabled = false;
     }else{
       submitBtn.current.disabled = true;
@@ -68,7 +100,7 @@ const Signup = () => {
             <h3>회원가입</h3>
           </div>
             <SignForm>
-              <div className="input-sign" valid={null}>
+              <InputSign className={nameCheck === true ? "correct" : nameCheck === false ? "wrong" : ""}>
                 <Input 
                   _onChange={changeName}
                   _type="text" 
@@ -78,8 +110,8 @@ const Signup = () => {
                   _placeholder="이름 (2자 이상)" 
                   width="100%"
                 />
-              </div>
-              <div className="input-sign" valid={null}>
+              </InputSign>
+              <InputSign className={emailCheck === true ? "correct" : emailCheck === false ? "wrong" : ""}>
                 <Input 
                   _onChange={changeEmail}
                   _type="email" 
@@ -89,8 +121,8 @@ const Signup = () => {
                   _placeholder="이메일 (example@gmail.com)" 
                   width="100%"
                 />
-              </div>
-              <div className="input-sign" valid={null}>
+              </InputSign>
+              <InputSign className={pwdCheck === true ? "correct" : pwdCheck === false ? "wrong" : ""}>
                 <Input 
                   _onChange={changePwd}
                   _type="password" 
@@ -100,7 +132,7 @@ const Signup = () => {
                   _placeholder="영문, 숫자, 특문 중 2개 조합 10자 이상"
                   width="100%" 
                 /> 
-              </div>
+              </InputSign>
             </SignForm>
         </div>
         <div className="box-login-bottom">
@@ -206,50 +238,50 @@ const StyleLogin = styled.div`
     }
   }
 `
-const SignForm = styled.div`
-    .input-sign{
-      position: relative;
 
-      &:first-child{
-        input{
-            border-radius: 0.4rem 0.4rem 0rem 0rem;
-        }
-      }
-      &:last-child{
-        input{
-            border-radius: 0rem 0rem 0.4rem 0.4rem;
-        }
-      }
-      &:after{
-        ${props => props.valid === true ? css`
-          content: "";
-          display: inline-block;
-          background: url("../img/login&signup/btn_check.svg");
-          position: absolute;
-          top: 50%;
-          right: 1.2rem;
-          bottom: auto;
-          width: 2.0rem;
-          height: 2.0rem;
-          margin-top: -1.0rem;
-        ` : props.valid === false 
-        ? css`
-          content: "";
-          display: inline-block;
-          background: url("../img/login&signup/btn_wrong.svg") no-repeat;
-          position: absolute;
-          top: 50%;
-          right: 1.2rem;
-          bottom: auto;
-          width: 2.0rem;
-          height: 2.0rem;
-          margin-top: -1.0rem;
-        ` : css`
-          display: none;
-        `}
-      }
-    }
+const SignForm = styled.div`
 `
+
+const InputSign = styled.div`
+  position: relative;
+
+  &:first-child{
+    input{
+        border-radius: 0.4rem 0.4rem 0rem 0rem;
+    }
+  }
+  &:last-child{
+    input{
+        border-radius: 0rem 0rem 0.4rem 0.4rem;
+    }
+  }
+  &.correct:after {
+    content: "";
+    display: inline-block;
+    background: url(${Corret});
+    position: absolute;
+    top: 50%;
+    right: 1.2rem;
+    bottom: auto;
+    width: 2rem;
+    height: 2rem;
+    margin-top: -1rem;
+  }
+  &.wrong:after {
+    content: "";
+    display: inline-block;
+    background: url(${Wrong})
+      no-repeat;
+    position: absolute;
+    top: 50%;
+    right: 1.2rem;
+    bottom: auto;
+    width: 2rem;
+    height: 2rem;
+    margin-top: -1rem;
+  }
+`
+
 const SignupCheck = styled.div`
   margin: 1.6rem 0rem 0rem;
     .signup-check-list{

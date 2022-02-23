@@ -41,7 +41,7 @@ const loginFB = (id, pwd) => {
           const accessToken = res.data.token;
           console.log(accessToken)
           setCookie("is_login", accessToken);
-          setUser(id);
+          dispatch(setUser(id));
           localStorage.setItem("id", id);
           instance
           .get("/profile", {
@@ -53,7 +53,7 @@ const loginFB = (id, pwd) => {
           .then((res) => {
             console.log("프로파일", res);
             sessionStorage.setItem("profile", res.data.profile);
-            setProfile(res.data.profile);
+            dispatch(setProfile(res.data.profile));
           })
           .catch((error) => {
             console.log("프로파일 set중 에러발생", error);
@@ -94,7 +94,7 @@ const signupFb = (name, email, pwd) => {
   };
 };
 
-const loginCheckFB = (token) => {
+const loginCheckFB = (token, id) => {
   return function (dispatch, getState, { history }) {
     // axios({
     //     method: "post",
@@ -115,6 +115,7 @@ const loginCheckFB = (token) => {
         //console.log(res);
         if (res.data.ok) {
           console.log("로그인 유지중", res.data.message);
+          dispatch(setUser(id))
         } else {
           dispatch(logOut());
           console.log("로그아웃 되었어요");
@@ -129,10 +130,8 @@ const loginCheckFB = (token) => {
 
 const logoutFB = () => {
   return function (dispatch, { history }) {
-    deleteCookie("is_login");
-    sessionStorage.removeItem("user");
     dispatch(logOut());
-    history.replace("/");
+    window.location.replace("/");
   };
 };
 
@@ -197,6 +196,9 @@ export default handleActions(
       state.is_login = true;
     },
     [LOG_OUT]: (state, action) => {
+      deleteCookie("is_login");
+      sessionStorage.removeItem("profile");
+      localStorage.removeItem("id");
       state.user = null;
       state.is_login = false;
     },

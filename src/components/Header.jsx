@@ -53,7 +53,7 @@ const Header = (props) => {
     setPath(history.location.pathname);
   }, [history.location.pathname, is_login]);
 
-  if(path === "/video"){
+  if(path === "/video" & path === "/manage_profiles"){
     return null;
   }
   return (

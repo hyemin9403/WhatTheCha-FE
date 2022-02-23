@@ -13,30 +13,47 @@ import {
   SvgApple,
   SvgLine,
 } from "../img/login/svg_login";
+import Corret from "../img/login&signup/btn_check.svg"
+import Wrong from "../img/login&signup/btn_wrong.svg"
 
 const Signin = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = React.useState("");
   const [pwd, setPwd] = React.useState("");
+  const [emailCheck, setEmailCheck] = React.useState("");
+  const [pwdCheck, setPwdCheck] = React.useState("");
   const submitBtn = React.useRef();
+  // 이메일 유효성 검사
+  // const checkEmail = (e) => {
+  //   const regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
+  //   // 형식에 맞는 경우 true 리턴
+  //   console.log('이메일 유효성 검사 :: ', regExp.test(e.target.value))
+  // }
 
   const changeEmail = (e) => {
     setEmail(e.target.value);
-    if (e.target.value.length <= 5) {
-      e.currentTarget.parentNode.valid = false;
-    } else {
-      e.currentTarget.parentNode.valid = true;
+    const regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
+
+    if (regExp.test(e.target.value)) {
+      setEmailCheck(true);
+    } else if(e.target.value.length === 0) {
+      setEmailCheck("")
+    } else{
+      setEmailCheck(false);
     }
-    console.log(e.currentTarget.parentNode.valid);
   };
+
   const changePwd = (e) => {
     setPwd(e.target.value);
-    if (e.target.value.length <= 5) {
-      e.currentTarget.parentNode.valid = false;
-    } else {
-      e.currentTarget.parentNode.valid = true;
+    const regExp = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
+
+    if (regExp.test(e.target.value)) {
+      setPwdCheck(true);
+    } else if(e.target.value.length === 0) {
+      setPwdCheck("")
+    } else{
+      setPwdCheck(false);
     }
-    console.log(e.currentTarget.parentNode.valid);
   };
 
   const login = () => {
@@ -63,7 +80,7 @@ const Signin = () => {
             </a>
           </div>
           <SignForm>
-            <InputSign valid={null}>
+            <InputSign className={emailCheck === true ? "correct" : emailCheck === false ? "wrong" : ""}>
               <Input
                 _onChange={changeEmail}
                 _type="email"
@@ -73,7 +90,7 @@ const Signin = () => {
                 _placeholder="이메일 (example@gmail.com)"
               />
             </InputSign>
-            <InputSign valid={null}>
+            <InputSign className={pwdCheck === true ? "correct" : pwdCheck === false ? "wrong" : ""}>
               <Input
                 _onChange={changePwd}
                 _type="password"
@@ -213,38 +230,30 @@ const InputSign = styled.div`
       border-radius: 0rem 0rem 0.4rem 0.4rem;
     }
   }
-  &:after {
-    ${(props) =>
-      props.valid === true
-        ? css`
-            content: "";
-            display: inline-block;
-            background: url("../img/login&signup/btn_check.svg");
-            position: absolute;
-            top: 50%;
-            right: 1.2rem;
-            bottom: auto;
-            width: 2rem;
-            height: 2rem;
-            margin-top: -1rem;
-          `
-        : props.valid === false
-        ? css`
-            content: "";
-            display: inline-block;
-            background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8IS0tIEdlbmVyYXRvcjogU2tldGNoIDU1LjIgKDc4MTgxKSAtIGh0dHBzOi8vc2tldGNoYXBwLmNvbSAtLT4KICAgIDx0aXRsZT5JY29ucyAvIFNldHRpbmdzIC8gSW52YWxpZDwvdGl0bGU+CiAgICA8ZGVzYz5DcmVhdGVkIHdpdGggU2tldGNoLjwvZGVzYz4KICAgIDxnIGlkPSJJY29ucy0vLVNldHRpbmdzLS8tSW52YWxpZCIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPGcgaWQ9IngtY2lyY2xlLWYiIGZpbGw9IiNEQjQyNDEiIGZpbGwtcnVsZT0ibm9uemVybyI+CiAgICAgICAgICAgIDxwYXRoIGQ9Ik0xNy4wNzA1NTU2LDE3LjA3IEMxMy4xODE2NjY3LDIwLjk1ODg4ODkgNi44MTgzMzMzMywyMC45NTg4ODg5IDIuOTI5NDQ0NDQsMTcuMDcgQy0wLjk1ODg4ODg4OSwxMy4xODE2NjY3IC0wLjk1ODg4ODg4OSw2LjgxODMzMzMzIDIuOTI5NDQ0NDQsMi45Mjk0NDQ0NCBDNi44MTgzMzMzMywtMC45NTg4ODg4ODkgMTMuMTgxNjY2NywtMC45NTg4ODg4ODkgMTcuMDcsMi45Mjk0NDQ0NCBDMjAuOTU4ODg4OSw2LjgxODMzMzMzIDIwLjk1ODg4ODksMTMuMTgxNjY2NyAxNy4wNzA1NTU2LDE3LjA3IEwxNy4wNzA1NTU2LDE3LjA3IFogTTEzLjg5Mzg4ODksNy42NjM4ODg4OSBMMTIuMzM2MTExMSw2LjEwNjExMTExIEwxMCw4LjQ0Mjc3Nzc4IEw3LjY2Mzg4ODg5LDYuMTA2MTExMTEgTDYuMTA2NjY2NjcsNy42NjM4ODg4OSBMOC40NDI3Nzc3OCwxMCBMNi4xMDY2NjY2NywxMi4zMzYxMTExIEw3LjY2Mzg4ODg5LDEzLjg5Mzg4ODkgTDEwLDExLjU1NzIyMjIgTDEyLjMzNjExMTEsMTMuODkzODg4OSBMMTMuODkzODg4OSwxMi4zMzYxMTExIEwxMS41NTcyMjIyLDEwIEwxMy44OTM4ODg5LDcuNjYzODg4ODkgTDEzLjg5Mzg4ODksNy42NjM4ODg4OSBaIiBpZD0iU2hhcGUiPjwvcGF0aD4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPg==)
-              no-repeat;
-            position: absolute;
-            top: 50%;
-            right: 1.2rem;
-            bottom: auto;
-            width: 2rem;
-            height: 2rem;
-            margin-top: -1rem;
-          `
-        : css`
-            display: none;
-          `}
+  &.correct:after {
+    content: "";
+    display: inline-block;
+    background: url(${Corret});
+    position: absolute;
+    top: 50%;
+    right: 1.2rem;
+    bottom: auto;
+    width: 2rem;
+    height: 2rem;
+    margin-top: -1rem;
+  }
+  &.wrong:after {
+    content: "";
+    display: inline-block;
+    background: url(${Wrong})
+      no-repeat;
+    position: absolute;
+    top: 50%;
+    right: 1.2rem;
+    bottom: auto;
+    width: 2rem;
+    height: 2rem;
+    margin-top: -1rem;
   }
 `;
 export default Signin;

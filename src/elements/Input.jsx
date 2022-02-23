@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Input = (props) => {
-    const {_name, _autocomplete, _type, _placeholder, _value, _onChange, width} = props
+    const {_name, _autocomplete, _type, _placeholder, _value, _onChange, width } = props
     return (
         <React.Fragment>
             <StyleInput 

@@ -27,13 +27,14 @@ function App() {
   const hitory = history.location.pathname;
   const dispatch = useDispatch();
   const token = getCookie("is_login");
+  const id = sessionStorage.getItem("id");
 
   React.useEffect(() => {
     if (!token) {
       dispatch(userActions.logOut);
       return;
     }
-    dispatch(userActions.loginCheckFB(token));
+    dispatch(userActions.loginCheckFB(token, id));
   }, []);
 
   return (

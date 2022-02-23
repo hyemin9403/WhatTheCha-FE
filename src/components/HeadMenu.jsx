@@ -58,7 +58,7 @@ const HeadMenu = () => {
                                 </button>
                             </li>
                             <li className="menu-li">
-                                <button onClick={()=>dispatch(userActions.logOut)}>
+                                <button onClick={() => dispatch(userActions.logoutFB())}>
                                     <div className='btn-menu-text'>로그아웃</div>
                                 </button>
                             </li>

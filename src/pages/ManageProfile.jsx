@@ -12,13 +12,13 @@ import plus from "../img/profile/btn_plus.svg"
 
 const ManageProfile = () => {
   const dispatch = useDispatch();
-  const profile = useSelector(state => state.user.user);
+  const profile = useSelector(state => state.user.profile);
   const preview = useSelector(state => state.image.preview);
   const ImgData = useSelector(state => state.image.data);
   const [is_edit, setEdit] = React.useState(false);
   const [name, setName] = React.useState("");
   console.log(profile)
-
+  
   const changeName = (e) => {
     setName(e.target.value)
     const length = e.target.value.length;
