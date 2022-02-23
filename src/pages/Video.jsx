@@ -1,9 +1,13 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import YouTube from 'react-youtube';
 import styled from 'styled-components';
 
 // https://youtu.be/nFwR7Qk0VKg
-const Video = () => {
+const Video = (props) => {
+    const location = useLocation();
+    const youtubeId = location.state;
+    console.log(youtubeId)
     const opts = {
         height: '100%',
         width: '100%',
@@ -19,7 +23,7 @@ const Video = () => {
     }
     return (
         <StyleVideo>
-            <YouTube videoId="nFwR7Qk0VKg" opts={opts} onReady={onReady} />
+            <YouTube videoId={youtubeId !== "" ? youtubeId : "nFwR7Qk0VKg"} opts={opts} onReady={onReady} />
         </StyleVideo>
     );
 };

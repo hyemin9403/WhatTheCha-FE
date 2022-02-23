@@ -1,5 +1,6 @@
 import { createAction, handleActions } from "redux-actions";
 import { setCookie, deleteCookie, getCookie } from "../../shared/cookie";
+import { history } from "../configureStore";
 import axios from "axios";
 
 import instance from "../../shared/request";
@@ -53,8 +54,8 @@ const loginFB = (id, pwd) => {
             },
           })
           .then((res) => {
-            console.log("프로파일", res);
-            sessionStorage.setItem("profile", res.data.profile);
+            console.log("프로파일", res.data.profile);
+            // sessionStorage.setItem("profile", res.data.profile);
             dispatch(setProfile(res.data.profile));
           })
           .catch((error) => {
@@ -119,7 +120,7 @@ const loginCheckFB = (token, id) => {
           console.log("로그인 유지중", res.data.message);
           dispatch(setUser(id))
         } else {
-          dispatch(logOut());
+          dispatch(logoutFB());
           console.log("로그아웃 되었어요");
         }
       })
@@ -131,9 +132,11 @@ const loginCheckFB = (token, id) => {
 };
 
 const logoutFB = () => {
-  return function (dispatch, { history }) {
+  return function (dispatch) {
+    sessionStorage.removeItem("profile");
+    localStorage.removeItem("id");
     dispatch(logOut());
-    window.location.replace("/");
+    history.replace('/');
   };
 };
 
@@ -198,11 +201,9 @@ export default handleActions(
       state.is_login = true;
     },
     [LOG_OUT]: (state, action) => {
-      deleteCookie("is_login");
-      sessionStorage.removeItem("profile");
-      localStorage.removeItem("id");
       state.user = null;
       state.is_login = false;
+      deleteCookie("is_login");
     },
     [SET_PROFILE]: (state, action) => {
       const tmp = sessionStorage.getItem("profile");

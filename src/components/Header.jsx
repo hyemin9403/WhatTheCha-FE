@@ -9,6 +9,7 @@ import { useHistory, useLocation, match } from "react-router-dom";
 import { HeadMenu } from "./index";
 
 const Header = (props) => {
+  //const { is_login } = props
   const location = useSelector(state => state.router.location);
   const is_login = useSelector((state) => state.user.is_login);
   const [path, setPath] = React.useState("");
@@ -50,10 +51,10 @@ const Header = (props) => {
   observDom();
 
   React.useEffect(()=>{
-    setPath(history.location.pathname);
-  }, [history.location.pathname, is_login]);
+    setPath(location.pathname);
+  }, [location.pathname]);
 
-  if(path === "/video" & path === "/manage_profiles"){
+  if(path === '/video' || path === "/manage_profiles"){
     return null;
   }
   return (
@@ -75,14 +76,7 @@ const Header = (props) => {
             return;
           }
         })()}
-        {(() => {
-          if(is_login){
-            return (
-              <HeadMenu/>
-            )
-          }
-          return null;
-        })()}
+        {is_login && (<HeadMenu/>)}
       </div>
     </StyleHeader>
   )

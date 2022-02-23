@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { throttle } from "lodash"
 
-const Star = () => {
+const Star = (props) => {
+    const { is_score } = props
+    const ref = React.useRef();
     const [score, setScore] = React.useState("0%");
     const [starText, setText] = React.useState("이미 본 작품인가요?");
     const target = document.getElementById('star');
@@ -10,11 +11,11 @@ const Star = () => {
     //console.log("변화감지", score, starText)
 
     const targetOffset = (e) => {
-        target?.addEventListener('mousemove', (e) => {
+        ref?.current.addEventListener('mousemove', (e) => {
             // console.log(target.childNodes[0].offsetWidth)
             // console.log("오프셋 좌표", e.offsetX)
             // console.log(e.offsetX / e.target.offsetWidth * 100)
-            const base_width = target.childNodes[0].offsetWidth;
+            const base_width = ref?.current.childNodes[0].offsetWidth;
             let star_offsetX = e.offsetX;
             let star_width = "";
             let star_text = "";
@@ -59,33 +60,35 @@ const Star = () => {
                 star_width = "100%";
                 star_text = "최고예요!";
             }
-            target.previousSibling.textContent = star_text
-            target.childNodes[1].style.width = star_width
+            ref.current.previousSibling.textContent = star_text
+            ref.current.childNodes[1].style.width = star_width
         })
-        target?.addEventListener('click', () => {
-            setScore(target.childNodes[1].style.width)
-            setText(target.previousSibling.textContent)
+        ref?.current.addEventListener('click', () => {
+            setScore(ref.current.childNodes[1].style.width)
+            setText(ref.current.previousSibling.textContent)
             console.log("클릭", score, starText)
         })
-        target?.addEventListener('mouseleave', (e) => {
-            target.previousSibling.textContent = starText
-            target.childNodes[1].style.width = score
+        ref?.current.addEventListener('mouseleave', (e) => {
+            ref.current.previousSibling.textContent = starText
+            ref.current.childNodes[1].style.width = score
             console.log("리브", score, starText)
         })
     }
     
     React.useEffect(() => {
-        target?.addEventListener('mouseenter', targetOffset)
-    })
+        if(!is_score){
+            ref?.current.addEventListener('mouseenter', targetOffset)
+        }
+    });
 
     let style = {
-        width : score
+        width : !is_score ? score : is_score * 20 + "%"
     }
 
     return (
-        <StyleStar>
-            <p>{starText}</p>
-            <div className='star-wrap' id="star">
+        <StyleStar className={is_score ? "edit" : ""}>
+            {!is_score && (<p>{starText}</p>)}
+            <div ref={ref} className='star-wrap' id="star">
                 <div className="star-empty">☆☆☆☆☆</div>
                 <div className="star-check" style={style}>★★★★★</div>
             </div>
@@ -97,10 +100,14 @@ const StyleStar = styled.div`
     z-index: 1;
     margin-top: 1.40625vw;
     display: flex;
+    align-items: center;
     line-height: 1em;
     text-align: center;
     user-select: none;
     font-size: 1.5625vw;
+    &.edit{
+        font-size: 1.25vw;
+    }
     p{
         width: 11.7188vw;
         font-size: 1.09375vw;
@@ -108,8 +115,10 @@ const StyleStar = styled.div`
         color: rgba(255, 255, 255, 0.7);
         letter-spacing: -0.03125vw;
         line-height: 1.5625vw;
+        text-align: left;
     }
     .star-wrap{
+        padding-bottom: 0.3vw;
         position: relative;
         display: inline-block;
         cursor: pointer;

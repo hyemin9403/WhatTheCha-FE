@@ -22,7 +22,7 @@ const SwiperTop10 = ({ listTop10 }) => {
   return (
     <Container>
       <Swiper
-        style={{ height: "30rem" }}
+        style={{  }}
         className="mySwiper main"
         // install Swiper modules
         slidesPerView={7}
@@ -79,12 +79,17 @@ const SwiperTop10 = ({ listTop10 }) => {
             return (
               <SwiperSlide key={movie.movieId}>
                 <RankNumber>{i + 1}</RankNumber>
-                <img
-                  className="img-top10"
-                  style={{ margin: "0 0 0 2rem" }}
-                  src={movie.card_image}
-                  alt=""
-                />
+                <article className="card-info-view">
+                  <img
+                    className="img-top10"
+                    style={{ margin: "0 0 0 2rem" }}
+                    src={movie.card_image}
+                    alt=""
+                  />
+                </article>
+                <article className="card-info-hover">
+                  <img className="img-top10" src={movie.card_image} alt=""/>
+                </article>
               </SwiperSlide>
             );
           })}
@@ -111,6 +116,41 @@ const Container = styled.div`
     .test {
       div:last-child {
         opacity: 1;
+      }
+    }
+  }
+  .main{
+    .swiper-slide{
+      overflow: visible;
+    } 
+    .swiper-slide:hover{
+      width: 14vw!important;
+      .card-info-view{
+        opacity: 0;
+        img{
+          heigth: 60%;
+        }
+      }
+      .card-info-hover{
+        z-index: 11;
+        display: block;
+      }
+    }
+    // .card-info-view{
+    //   display: none;
+    // }
+    .card-info-hover{
+      display: none;
+      width: 25rem;
+      height: 108.43%;
+      position: fixed;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      img{
+        width: 100%;
+        heigth: 100%;
+        object-fit: cover;
       }
     }
   }

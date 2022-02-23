@@ -1,6 +1,6 @@
 import React from "react";
 import "../css/App.css";
-import { Route } from "react-router-dom";
+import { Route, useLocation } from "react-router-dom";
 import { history } from "../redux/configureStore";
 import { ConnectedRouter } from "connected-react-router";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,24 +25,23 @@ import { Header, Sidebar, Footer } from "../components/index";
 import Layout from "../pages/Layout";
 
 function App() {
+  const is_login = useSelector((state) => state.user.is_login);
   const hitory = history.location.pathname;
   const dispatch = useDispatch();
   const token = getCookie("is_login");
   const id = sessionStorage.getItem("id");
-
   const is_loaded = useSelector((state) => state.movie.is_loading);
 
   React.useEffect(() => {
     if (!token) {
-      dispatch(userActions.logOut);
+      dispatch(userActions.logoutFB());
       return;
     }
     dispatch(userActions.loginCheckFB(token, id));
   }, []);
-
   return (
     <div className="App">
-      <Header hitory={hitory}/>
+      <Header/>
       <ConnectedRouter history={history}>
         <div className="container">
           <Sidebar />

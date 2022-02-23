@@ -45,7 +45,7 @@ const Signup = () => {
   const changePwd = (e) => {
     setPwd(e.target.value)
     const regExp = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
-
+    
     if (regExp.test(e.target.value)) {
       setPwdCheck(true);
     } else if(e.target.value.length === 0) {
@@ -89,7 +89,7 @@ const Signup = () => {
     }else{
       submitBtn.current.disabled = true;
     }
-  }, [checkList])
+  }, [checkList, nameCheck, emailCheck, pwdCheck])
 
   return (
     <StyleLogin>

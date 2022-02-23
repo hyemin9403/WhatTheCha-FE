@@ -49,9 +49,9 @@
 .main .swiper-slide .img-top10 {
   width: calc(100% - 2rem);
 }
-.main .swiper-slide .img-top10:hover {
-  width: 120%;
-}
+/* .main .swiper-slide .img-top10:hover {
+  display: none;
+} */
 
 .main .swiper-pagination-bullet {
   display: none;

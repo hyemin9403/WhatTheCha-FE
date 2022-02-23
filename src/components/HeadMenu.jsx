@@ -7,18 +7,30 @@ import { ReactComponent as Plus } from "../img/header/plus.svg";
 import profileTmp from "../img/profile/img_profile_01.jpg"
 
 const HeadMenu = () => {
+    const ref = React.useRef();
+    const btnRef = React.useRef();
     const dispatch = useDispatch();
     const [active, setActive] = React.useState(false)
     //console.log(active)
 
+    const handleCloseMenu= (e) => {
+        if(!ref.current.contains(e.target) & !btnRef.current.contains(e.target)) setActive(false);
+    }
+       
+    React.useEffect(() => {
+        window.addEventListener('click', handleCloseMenu);
+        return () => {
+        window.removeEventListener('click', handleCloseMenu);
+        };
+    });
     return (
         <React.Fragment>
-            <BtnProfile onClick={() => setActive(!active)}>
+            <BtnProfile ref={btnRef} onClick={() => setActive(!active)}>
                 <img src={profileTmp}/>
             </BtnProfile>
             {
                 active && (
-                    <BoxMenu>
+                    <BoxMenu ref={ref}>
                         <ul className="menu-group">
                             <li className="menu-li">
                                 <button>

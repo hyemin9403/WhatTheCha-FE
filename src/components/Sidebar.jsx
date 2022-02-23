@@ -7,6 +7,7 @@ import logo from "../img/header/logo.svg"
 import { SvgHome, SvgFavor, SvgComple, SvgRelay, SvgEval } from "../img/nav_side/svg_side"
 
 const Sidebar = () => {
+  //const location = useSelector(state => state.router.location);
   const is_login = useSelector((state) => state.user.is_login);
 
   if(is_login){
@@ -72,20 +73,20 @@ const Section = styled.section`
   padding: 0 1.6rem;
   ul{
     margin: 0 0 1.6rem;
-    &:before{
-      content: attr(aria-label);
-      color: #84868d;
-      padding: 0 1.2rem 0.2rem;
-      font-size: 1.2rem;
-      font-weight: 400;
-      -webkit-letter-spacing: 0rem;
-      -moz-letter-spacing: 0rem;
-      -ms-letter-spacing: 0rem;
-      letter-spacing: 0rem;
-      -webkit-text-decoration: none;
-      text-decoration: none;
-      line-height: 1.8rem;
-    }
+    // &:before{
+    //   content: attr(aria-label);
+    //   color: #84868d;
+    //   padding: 0 1.2rem 0.2rem;
+    //   font-size: 1.2rem;
+    //   font-weight: 400;
+    //   -webkit-letter-spacing: 0rem;
+    //   -moz-letter-spacing: 0rem;
+    //   -ms-letter-spacing: 0rem;
+    //   letter-spacing: 0rem;
+    //   -webkit-text-decoration: none;
+    //   text-decoration: none;
+    //   line-height: 1.8rem;
+    // }
     li{
       padding: 0.8rem 1.2rem;
       width: 100%;
