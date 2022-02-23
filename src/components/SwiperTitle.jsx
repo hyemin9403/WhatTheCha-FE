@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import styled from "styled-components";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
+import { SvgPrevBtn, SvgNextBtn } from "../img/main/svg_main";
 
 // Import Swiper styles
 import "swiper/css";
@@ -14,12 +15,13 @@ import "../css/SwiperTitle.css";
 import { Pagination, Navigation } from "swiper";
 
 const SwiperTitle = (props) => {
+  const swiperRef = React.useRef(null);
+
   const list = props.list;
   return (
     <Container>
       <div>
         <Swiper
-          style={{ height: "32rem" }}
           className="mySwiper title"
           // install Swiper modules
           modules={[Pagination, Navigation]}
@@ -48,11 +50,6 @@ const SwiperTitle = (props) => {
             list.map((movie) => {
               return (
                 <>
-                  <TextContainer>
-                    <span>{movie.status}</span>
-                    <h4>{movie.movieName}</h4>
-                    <p>{movie.detail_text}</p>
-                  </TextContainer>
                   <SwiperSlide
                     key={movie.movieId}
                     style={{
@@ -61,12 +58,25 @@ const SwiperTitle = (props) => {
                       alignItems: "flex-start",
                     }}
                   >
+                    <TextContainer>
+                      <span>{movie.status}</span>
+                      <h4>{movie.movieName}</h4>
+                      <p>{movie.detail_text}</p>
+                    </TextContainer>
                     <img src={movie.card_image} alt="" />
                   </SwiperSlide>
                 </>
               );
             })}
         </Swiper>
+      </div>
+      <div className="test">
+        <Prev onClick={() => swiperRef.current.swiper.slidePrev()}>
+          <SvgPrevBtn />
+        </Prev>
+        <Next onClick={() => swiperRef.current.swiper.slideNext()}>
+          <SvgNextBtn />
+        </Next>
       </div>
     </Container>
   );
@@ -75,8 +85,10 @@ const SwiperTitle = (props) => {
 export default SwiperTitle;
 
 const Container = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
+
   span {
     font-size: 12px;
     font-weight: 400;
@@ -117,4 +129,35 @@ const Container = styled.div`
 
 const TextContainer = styled.div`
   margin-bottom: 5px;
+`;
+
+const Prev = styled.div`
+  z-index: 101;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: -2rem;
+  width: 2vw;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: 0.2s;
+  &:hover {
+    opacity: 1;
+  }
+`;
+const Next = styled.div`
+  z-index: 101;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: -2.5rem;
+  width: 2vw;
+  height: 100%;
+  opacity: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

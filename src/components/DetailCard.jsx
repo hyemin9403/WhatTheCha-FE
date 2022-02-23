@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 import {
   SvgPlay,
@@ -27,6 +27,21 @@ const DetailCard = ({ onClose, movieId }) => {
 
   const d = useSelector((state) => state.movie.detail_movie_list);
 
+  // 문자열 파싱하는거 왜 잘 안되지...
+  // let director = [];
+  // JSON.stringify(d.director).map((cur) => {
+  //   return director.push(cur);
+  // });
+  const director = d;
+  const actors = JSON.stringify(d.actors);
+  console.log("배열", director);
+  console.log(typeof director);
+  // .replace(/\"/gi, "")
+  // .replace(/\[/gi, "")
+  // .replace(/\]/gi, "");
+
+  console.log(actors);
+  //["황정민","차승원","한지혜","백성현","김창완","송영창"]
   return (
     <StyleCard className="on-enter">
       <div className="card-movie">
@@ -64,15 +79,30 @@ const DetailCard = ({ onClose, movieId }) => {
             if (is_type === "info") {
               return (
                 <CardInfo>
-                  <p className="card-info-title">testtest</p>
+                  <div
+                    style={{
+                      height: "11rem",
+                      width: "auto",
+                      overflow: "hidden",
+                    }}
+                  >
+                    <p className="card-info-title" style={{ width: "43rem" }}>
+                      {JSON.stringify(d.detail_text)}
+                    </p>
+                  </div>
                   <ul className="card-info-ul">
                     <li>
                       <span className="card-info-subtitle">감독</span>
-                      <span>{d.director}</span>
+                      {/* <span>{d.director}</span> */}
                     </li>
                     <li>
                       <span className="card-info-subtitle">출연</span>
-                      <span>{d.actors}</span>
+                      {d?.actors?.map((cur) => {
+                        return (
+                          <span className="card-info-director">{cur}</span>
+                        );
+                      })}
+                      {/* <span>{d.actors}</span> */}
                     </li>
                     <li>
                       <span className="card-info-subtitle">개요</span>
@@ -159,14 +189,32 @@ const DetailCard = ({ onClose, movieId }) => {
 // off 일때
 // height: 0px;
 // opacity: 0.01;
+// 0% {
+//   opacity: 0;
+// }
+// 100% {
+//   opacity: 1;
+// }
+const cardView = keyframes`
+  0% {
+    opacity: 0;
+    height: 0;
+  }
+  60% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    height: 35.1562vw;
+  }
+`;
+
 const StyleCard = styled.div`
   position: relative;
   margin-top: 16px;
   padding-left: 4%;
   height: 35.1562vw;
-  opacity: 1;
-  transition: height 0.54s cubic-bezier(0.5, 0, 0.1, 1) 0s,
-    opacity 0.44s cubic-bezier(0.5, 0, 0.1, 1) 0.1s;
+  animation: 0.5s ${cardView} ease-out;
   .card-movie {
     position: relative;
     width: 100%;
@@ -293,6 +341,14 @@ const CardInfo = styled.div`
         padding-right: 0.5vw;
         font-weight: 700;
       }
+      .card-info-director:after {
+        content: ",";
+        margin-right: 0.1vw;
+      }
+      .card-info-director:last-child:after {
+        content: "";
+        margin-right: 0;
+      }
       div {
         position: relative;
         display: inline-block;
@@ -345,14 +401,7 @@ const CardDetail = styled.div`
     color: rgba(255, 255, 255, 0.5);
   }
 `;
-{
-  /* <div className='movie-staff'>
-                                            <span className='staff-posit'>감독</span>
-                                            <ul className='staff-gorup'>
-                                                <li className='staff-list'>이정범</li>
-                                            </ul>
-                                        </div> */
-}
+
 const CardBtnGroup = styled.div`
   position: relative;
   z-index: 101;
@@ -513,4 +562,5 @@ const TitleImage = styled.img`
   width: auto;
   height: 4.53125vw;
 `;
+
 export default DetailCard;

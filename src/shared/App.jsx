@@ -3,7 +3,7 @@ import "../css/App.css";
 import { Route } from "react-router-dom";
 import { history } from "../redux/configureStore";
 import { ConnectedRouter } from "connected-react-router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getCookie } from "./cookie";
 import { actionCreator as userActions } from "../redux/modules/user";
 
@@ -17,6 +17,7 @@ import Watched from "../pages/Watched";
 import Watchings from "../pages/Watchings";
 import Wishes from "../pages/Wishes";
 import Ratings from "../pages/Ratings";
+import Spinner from "../components/Spinner";
 
 /* COMPONENT */
 import { Header, Sidebar, Footer } from "../components/index";
@@ -26,6 +27,8 @@ function App() {
   const hitory = history.location.pathname;
   const dispatch = useDispatch();
   const token = getCookie("is_login");
+
+  const is_loaded = useSelector((state) => state.movie.is_loading);
 
   React.useEffect(() => {
     if (!token) {
@@ -38,6 +41,7 @@ function App() {
   return (
     <div className="App">
       {/* <Header hitory={hitory}/> */}
+
       <ConnectedRouter history={history}>
         <div className="container">
           <Sidebar />
@@ -51,6 +55,7 @@ function App() {
             <Route path="/watchings" exact component={Watchings} />
             <Route path="/watched" exact component={Watched} />
             <Route path="/ratings" exact component={Ratings} />
+            {/* {is_loaded && <Spinner />} */}
             <Footer />
           </Layout>
         </div>
