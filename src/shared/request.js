@@ -15,7 +15,4 @@ if (token_cookie) {
   instance.defaults.headers.common["email"] = `${id}`;
 }
 
-// cookie => is_login : token  /
-// session => user : profilename, 보고싶은~~~~movieid들~~
-
 export default instance;

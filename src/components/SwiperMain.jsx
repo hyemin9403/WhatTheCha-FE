@@ -3,6 +3,8 @@ import React, { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { DetailCard } from "./index";
 
+import { actionCreator as movieActions } from "../redux/modules/movie";
+
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
@@ -12,10 +14,35 @@ import "../css/SwiperMain.css";
 
 // import required modules
 import { Pagination, Navigation } from "swiper";
+import { useDispatch } from "react-redux";
 
 const SwiperMain = (props) => {
+  const dispatch = useDispatch();
+
   const list = props.list;
   const { _loop } = props;
+
+  let [detailCard, setDetailCard] = useState(false);
+  let [clickedMovieId, setClickedMovieId] = useState(0);
+
+  const onDetailCard = (movieId) => {
+    // 만약 디테일 카드가 열려있지 않을 경우
+    if (!detailCard) {
+      // 오픈으로 바꿔준다
+      setDetailCard((prevToggle) => !prevToggle);
+      //영화 id값 받아와서
+      setClickedMovieId(movieId);
+      // 정보 부르라고 요청 보낸다.
+      dispatch(movieActions.detailListM(movieId));
+      // 열려는 있는데 새로운 movie를 클릭한 경우
+    } else if (detailCard && movieId !== clickedMovieId) {
+      //영화 id값 받아와서
+      setClickedMovieId(movieId);
+      // 정보 부르라고 요청 보낸다.
+      dispatch(movieActions.detailListM(movieId));
+    }
+  };
+
   return (
     <div>
       <Swiper
@@ -71,14 +98,22 @@ const SwiperMain = (props) => {
         {list &&
           list.map((movie) => {
             return (
-              <SwiperSlide key={movie.movieId}>
+              <SwiperSlide
+                key={movie.movieId}
+                // onclick하면 1.창을 부른다, 2. 디테일 카드에 데이터를 불러와서 보여준다.
+                onClick={() => {
+                  onDetailCard(movie.movieId);
+                }}
+              >
                 <img src={movie.card_image} alt="" />
               </SwiperSlide>
             );
           })}
       </Swiper>
       <div>
-        <DetailCard/>
+        {detailCard ? (
+          <DetailCard onClose={setDetailCard} movieId={clickedMovieId} />
+        ) : null}
       </div>
     </div>
   );

@@ -5,7 +5,8 @@
 
 .main.mySwiper {
   width: 100%;
-  height: 27rem;
+  height: auto;
+  /* height: 27rem; */
 }
 
 .main .swiper-slide {
@@ -22,6 +23,7 @@
 .main .swiper-slide :hover {
   cursor: pointer;
   overflow: visible;
+  /*100vw - 24rem - 80px*/
   /* transform: scale(1.3); */
 }
 
@@ -34,14 +36,14 @@
 }
 
 .main .swiper-slide img:hover {
-  position: absolute;
+  /* position: absolute;
   top: 0;
   width: 100%;
-  height: 100%;
+  height: 100%; */
   /* left: 0rem; */
-  background-color: #000;
+  background-color: rgba(0, 0, 0);
   opacity: 0.7;
-  z-index: 100;
+  /* z-index: 100; */
 }
 
 .main .swiper-slide .img-top10 {

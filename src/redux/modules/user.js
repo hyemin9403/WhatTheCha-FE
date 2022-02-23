@@ -1,8 +1,10 @@
 import { createAction, handleActions } from "redux-actions";
-import { setCookie, deleteCookie } from "../../shared/cookie";
+import { setCookie, deleteCookie, getCookie } from "../../shared/cookie";
 import axios from "axios";
 
 import instance from "../../shared/request";
+
+const accessToken = getCookie("is_login");
 
 // actions
 const SET_USER = "SET_USER";
@@ -16,7 +18,7 @@ const setUser = createAction(SET_USER, (user) => ({ user }));
 const setProfile = createAction(SET_PROFILE, (info) => ({ info }));
 const selectProfile = createAction(SELECT_PROFILE, (user, info) => ({ user, info }))
 const logOut = createAction(LOG_OUT, (username) => ({ username }));
-const createProfile = createAction(CREATE_PROFILE, (profile) => ({profile}))
+const createProfile = createAction(CREATE_PROFILE, (profile) => ({ profile }));
 
 // initialState
 const initialState = {
@@ -30,12 +32,12 @@ const initialState = {
 const loginFB = (id, pwd) => {
   return function (dispatch, getState, { history }) {
     //axious id, pwd전송/ 토큰요청
-    console.log("id : " + id,  "pwd : " + pwd)
-    
+    console.log("id : " + id, "pwd : " + pwd);
+
     instance
       .post("/users/login", {
-        "email": id,
-        "password": pwd,
+        email: id,
+        password: pwd,
       })
       .then((res) => {
           const accessToken = res.data.token;
@@ -72,9 +74,9 @@ const signupFb = (name, email, pwd) => {
     console.log("id : " + name, "pwd : " + pwd, "email : " + email);
     instance
       .post("/users/signup", {
-        "email": email,
-        "password": pwd,
-        "confirmpassword": pwd
+        email: email,
+        password: pwd,
+        confirmpassword: pwd,
       })
       .then((res) => {
         console.log(res);
@@ -211,8 +213,7 @@ export default handleActions(
       sessionStorage(action.payload.user, action.payload.info);
       state.cur_profile = { [action.payload.user]: action.payload.info };
     },
-    [CREATE_PROFILE]: (state, action) => {
-    }
+    [CREATE_PROFILE]: (state, action) => {},
   },
   initialState
 );

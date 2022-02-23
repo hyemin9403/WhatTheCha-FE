@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import styled from "styled-components";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
+import { SvgPrevBtn, SvgNextBtn } from "../img/main/svg_main";
 
 // Import Swiper styles
 import "swiper/css";
@@ -13,23 +14,19 @@ import "../css/SwiperTitle.css";
 // import required modules
 import { Pagination, Navigation } from "swiper";
 
-const SwiperTitle = () => {
+const SwiperTitle = (props) => {
+  const swiperRef = React.useRef(null);
+
+  const list = props.list;
   return (
     <Container>
-      <TextContainer>
-        <span>왓챠 오리지널</span>
-        <h4>시맨틱 에러</h4>
-        <p>가슴 뛰는 ‘에러’의 시작! 매주 수/목 5시 공개</p>
-      </TextContainer>
-
       <div>
-        {/* 물어볼거 2 media쿼리로 사이즈는 유지하고 개수만 줄어들도록 해야함. @@이하면 6개 보여주고 */}
         <Swiper
-          style={{ height: "32rem" }}
           className="mySwiper title"
           // install Swiper modules
           modules={[Pagination, Navigation]}
           spaceBetween={10}
+          // autoHeight={true}
           loop={true}
           loopFillGroupWithBlank={true}
           pagination={{
@@ -49,25 +46,37 @@ const SwiperTitle = () => {
             },
           }}
         >
-          <SwiperSlide>
-            <img
-              src="https://an2-img.amz.wtchn.net/image/v2/95rT5ndgMw3ZbhvDKDK0qg.jpg?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1KbklsMHNJbkFpT2lJdmRqSXZjM1J2Y21VdmFXMWhaMlV2TVRZME5Ea3dOemsxTmpJME1EUXhNamMxT0NJc0luRWlPamd3ZlEuc1ZFWlJkVlhwZFc1Y2ZYYmxoTzJ4ODFBNEhmNWc3cW9TRVl6Qm1nODR5VQ"
-              alt=""
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img
-              src="https://an2-img.amz.wtchn.net/image/v2/suuG2oEEVGKuaf5DioihvQ.jpg?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1KbklsMHNJbkFpT2lJdmRqSXZjM1J2Y21VdmFXMWhaMlV2TVRZME5UQXdNRFEwTVRNeE1EZ3dOREV3T1NJc0luRWlPamd3ZlEuNGJYZjVqN2FkTmJWVThuNEFrbjZtV29sTTFYMHZQWEJoTGs2T0hwQzVwQQ"
-              alt=""
-            />
-          </SwiperSlide>
-          <SwiperSlide>Slide 3</SwiperSlide>
-          <SwiperSlide>Slide 4</SwiperSlide>
-          <SwiperSlide>Slide 5</SwiperSlide>
-          <SwiperSlide>Slide 6</SwiperSlide>
-          <SwiperSlide>Slide 7</SwiperSlide>
-          <SwiperSlide>Slide 8</SwiperSlide>
+          {list &&
+            list.map((movie) => {
+              return (
+                <>
+                  <SwiperSlide
+                    key={movie.movieId}
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    <TextContainer>
+                      <span>{movie.status}</span>
+                      <h4>{movie.movieName}</h4>
+                      <p>{movie.detail_text}</p>
+                    </TextContainer>
+                    <img src={movie.card_image} alt="" />
+                  </SwiperSlide>
+                </>
+              );
+            })}
         </Swiper>
+      </div>
+      <div className="test">
+        <Prev onClick={() => swiperRef.current.swiper.slidePrev()}>
+          <SvgPrevBtn />
+        </Prev>
+        <Next onClick={() => swiperRef.current.swiper.slideNext()}>
+          <SvgNextBtn />
+        </Next>
       </div>
     </Container>
   );
@@ -76,6 +85,10 @@ const SwiperTitle = () => {
 export default SwiperTitle;
 
 const Container = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
   span {
     font-size: 12px;
     font-weight: 400;
@@ -116,4 +129,35 @@ const Container = styled.div`
 
 const TextContainer = styled.div`
   margin-bottom: 5px;
+`;
+
+const Prev = styled.div`
+  z-index: 101;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: -2rem;
+  width: 2vw;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: 0.2s;
+  &:hover {
+    opacity: 1;
+  }
+`;
+const Next = styled.div`
+  z-index: 101;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: -2.5rem;
+  width: 2vw;
+  height: 100%;
+  opacity: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
