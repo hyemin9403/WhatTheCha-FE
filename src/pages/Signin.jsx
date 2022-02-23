@@ -13,8 +13,8 @@ import {
   SvgApple,
   SvgLine,
 } from "../img/login/svg_login";
-import Corret from "../img/login&signup/btn_check.svg"
-import Wrong from "../img/login&signup/btn_wrong.svg"
+import Corret from "../img/login&signup/btn_check.svg";
+import Wrong from "../img/login&signup/btn_wrong.svg";
 
 const Signin = () => {
   const dispatch = useDispatch();
@@ -23,35 +23,31 @@ const Signin = () => {
   const [emailCheck, setEmailCheck] = React.useState("");
   const [pwdCheck, setPwdCheck] = React.useState("");
   const submitBtn = React.useRef();
-  // 이메일 유효성 검사
-  // const checkEmail = (e) => {
-  //   const regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
-  //   // 형식에 맞는 경우 true 리턴
-  //   console.log('이메일 유효성 검사 :: ', regExp.test(e.target.value))
-  // }
 
   const changeEmail = (e) => {
     setEmail(e.target.value);
-    const regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
+    const regExp =
+      /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
 
     if (regExp.test(e.target.value)) {
       setEmailCheck(true);
-    } else if(e.target.value.length === 0) {
-      setEmailCheck("")
-    } else{
+    } else if (e.target.value.length === 0) {
+      setEmailCheck("");
+    } else {
       setEmailCheck(false);
     }
   };
 
   const changePwd = (e) => {
     setPwd(e.target.value);
-    const regExp = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
+    const regExp =
+      /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
 
     if (regExp.test(e.target.value)) {
       setPwdCheck(true);
-    } else if(e.target.value.length === 0) {
-      setPwdCheck("")
-    } else{
+    } else if (e.target.value.length === 0) {
+      setPwdCheck("");
+    } else {
       setPwdCheck(false);
     }
   };
@@ -80,7 +76,15 @@ const Signin = () => {
             </a>
           </div>
           <SignForm>
-            <InputSign className={emailCheck === true ? "correct" : emailCheck === false ? "wrong" : ""}>
+            <InputSign
+              className={
+                emailCheck === true
+                  ? "correct"
+                  : emailCheck === false
+                  ? "wrong"
+                  : ""
+              }
+            >
               <Input
                 _onChange={changeEmail}
                 _type="email"
@@ -90,7 +94,15 @@ const Signin = () => {
                 _placeholder="이메일 (example@gmail.com)"
               />
             </InputSign>
-            <InputSign className={pwdCheck === true ? "correct" : pwdCheck === false ? "wrong" : ""}>
+            <InputSign
+              className={
+                pwdCheck === true
+                  ? "correct"
+                  : pwdCheck === false
+                  ? "wrong"
+                  : ""
+              }
+            >
               <Input
                 _onChange={changePwd}
                 _type="password"
@@ -101,7 +113,12 @@ const Signin = () => {
               />
             </InputSign>
           </SignForm>
-          <button type="click" onClick={login} ref={submitBtn} className="btn btn-login">
+          <button
+            type="click"
+            onClick={login}
+            ref={submitBtn}
+            className="btn btn-login"
+          >
             로그인
           </button>
         </div>
@@ -212,7 +229,7 @@ const StyleLogin = styled.div`
   }
   .social-link {
   }
-  .btn-login{
+  .btn-login {
     margin-top: 2.3rem;
   }
 `;
@@ -245,8 +262,7 @@ const InputSign = styled.div`
   &.wrong:after {
     content: "";
     display: inline-block;
-    background: url(${Wrong})
-      no-repeat;
+    background: url(${Wrong}) no-repeat;
     position: absolute;
     top: 50%;
     right: 1.2rem;

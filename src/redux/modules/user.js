@@ -3,7 +3,9 @@ import { setCookie, deleteCookie, getCookie } from "../../shared/cookie";
 import { history } from "../configureStore";
 import axios from "axios";
 
+import profileImage from "../../shared/profileImage";
 import instance from "../../shared/request";
+import _ from "lodash";
 
 const accessToken = getCookie("is_login");
 
@@ -17,14 +19,17 @@ const LOG_OUT = "LOG_OUT";
 // Action Creators
 const setUser = createAction(SET_USER, (user) => ({ user }));
 const setProfile = createAction(SET_PROFILE, (info) => ({ info }));
-const selectProfile = createAction(SELECT_PROFILE, (user, info) => ({ user, info }))
+const selectProfile = createAction(SELECT_PROFILE, (user, info) => ({
+  user,
+  info,
+}));
 const logOut = createAction(LOG_OUT, (username) => ({ username }));
 const createProfile = createAction(CREATE_PROFILE, (profile) => ({ profile }));
 
 // initialState
 const initialState = {
   user: null,
-  profile: null, 
+  profile: [],
   cur_profile: {},
   is_login: false,
 };
@@ -41,12 +46,12 @@ const loginFB = (id, pwd) => {
         password: pwd,
       })
       .then((res) => {
-          const accessToken = res.data.token;
-          console.log(accessToken)
-          setCookie("is_login", accessToken);
-          dispatch(setUser(id));
-          localStorage.setItem("id", id);
-          instance
+        const accessToken = res.data.token;
+        console.log(accessToken);
+        setCookie("is_login", accessToken);
+        dispatch(setUser(id));
+        localStorage.setItem("id", id);
+        instance
           .get("/profile", {
             headers: {
               Authorization: `Bearer ${accessToken}`,
@@ -55,14 +60,28 @@ const loginFB = (id, pwd) => {
           })
           .then((res) => {
             console.log("프로파일", res.data.profile);
-            // sessionStorage.setItem("profile", res.data.profile);
-            dispatch(setProfile(res.data.profile));
+            // res.data.profile이 빈 obj가 아닐 때
+            if (!_.isEmpty(res.data.profile)) {
+              // 넣는건 성공했는데, length 어떻게 확인하지?
+              for (let i = 0; i < 1; i++) {
+                sessionStorage.setItem(
+                  "profileName",
+                  res.data.profile[i].profileName,
+                  res.data.profile[i].profileImage
+                );
+                const newProfile = {
+                  profileName: res.data.profile[i].profileName,
+                  profileImage: "test",
+                };
+                dispatch(setProfile(newProfile));
+              }
+            }
           })
           .catch((error) => {
             console.log("프로파일 set중 에러발생", error);
           });
-          window.alert("환영합니다");
-          history.replace("/manage_profiles");
+        window.alert("환영합니다");
+        history.replace("/manage_profiles");
       })
       .catch((error) => {
         console.log("로그인 통신중 에러발생", error);
@@ -84,7 +103,7 @@ const signupFb = (name, email, pwd) => {
         if (res.data.ok) {
           console.log("회원가입 성공");
           window.alert("회원가입성공");
-          history.replace("/sign_in")
+          history.replace("/sign_in");
         } else {
           console.log("회원가입 실패");
           window.alert("아이디/닉네임/비밀번호를 확인해주세요");
@@ -118,7 +137,7 @@ const loginCheckFB = (token, id) => {
         //console.log(res);
         if (res.data.ok) {
           console.log("로그인 유지중", res.data.message);
-          dispatch(setUser(id))
+          dispatch(setUser(id));
         } else {
           dispatch(logoutFB());
           console.log("로그아웃 되었어요");
@@ -141,42 +160,27 @@ const logoutFB = () => {
 };
 
 const makeProfileFB = (name, image) => {
-    return function (dispatch, getState, {history}) {
-      console.log("프로파일 이름", name)
-      console.log("프로파일 이미지", image)
-      const formData = new FormData()
-      formData.append('profileName', name)
-      formData.append('profileImage', image)
-      // console.log(formData.entries())
-      // console.log("진행중")
-      // for(var pair of formData.entries()) {
-      //     console.log(pair[0]+ ', '+ pair[1]); 
-      //     console.log(...pair[1])
-      // }
-      instance
+  return function (dispatch, getState, { history }) {
+    instance
       .post("/profile/create", {
-        "profileName" : name,
-        "profileImage" : "test",
-      },{
-        headers: {
-          "Content-Type": `multipart/form-data`,
-        }
-      }).then((res) => {
-        console.log(res)
-        const newProfile = {"profileName" : name, "profileImage" : "test"}
-        dispatch(setProfile(newProfile))
-      }).catch((error) => {
-        console.log("axios 통신에러 발생", error)
+        profileName: name,
+        profileImage: "test",
       })
-    };
-}
+      .then((res) => {
+        console.log(res);
+        const newProfile = { profileName: name, profileImage: "test" };
+        dispatch(setProfile(newProfile));
+      })
+      .catch((error) => {
+        console.log("axios 통신에러 발생", error);
+      });
+  };
+};
 
 const checkProfileFB = (select) => {
   return function (dispatch, getState, { history }) {
     instance
-      .post(`profile/${select}`, {
-
-      }, {})
+      .post(`profile/${select}`, {}, {})
       .then((res) => {
         //console.log(res.data);
         const profileData = {
@@ -206,8 +210,9 @@ export default handleActions(
       deleteCookie("is_login");
     },
     [SET_PROFILE]: (state, action) => {
-      const tmp = sessionStorage.getItem("profile");
-      sessionStorage.setItem("profile", [...tmp, action.payload.info]);
+      // const tmp = sessionStorage.getItem("profileName");
+      // 여기서 이걸 왜 get set을 해야하지?
+      // sessionStorage.setItem("profileName", [...tmp, action.payload.info]);
       state.profile = [...state.profile, action.payload.info];
     },
     [SELECT_PROFILE]: (state, action) => {
