@@ -14,7 +14,7 @@ import {
 } from "../img/card/svg_card";
 import Star from "./Star";
 
-import { actionCreator as movieActions } from "../redux/modules/movie";
+import movie, { actionCreator as movieActions } from "../redux/modules/movie";
 import { useDispatch } from "react-redux";
 
 const DetailCard = ({ onClose, movieId }) => {
@@ -23,6 +23,15 @@ const DetailCard = ({ onClose, movieId }) => {
   const [is_type, setBasic] = React.useState("info");
   const [is_class, setClass] = React.useState("");
   const [loading, setLoading] = useState(true);
+
+  const wantList = useSelector((state) => state.movie.movie_list.wantList);
+  let wantListArr = [];
+  if (wantList) {
+    wantList.map((m) => {
+      wantListArr.push(m.movieId);
+    });
+  }
+  console.log("wantListArr", wantListArr);
 
   React.useEffect(() => {
     let timer = setTimeout(() => {
@@ -147,15 +156,28 @@ const DetailCard = ({ onClose, movieId }) => {
                         </div>
                         <span>같이보기</span>
                       </button>
-                      <button
-                        className="btn-text"
-                        onClick={() => {
-                          dispatch(movieActions.addWishesM(movieId));
-                        }}
-                      >
-                        <SvgPlus />
-                        <span>보고싶어요</span>
-                      </button>
+                      {wantListArr.includes(movieId) ? (
+                        <button
+                          className="btn-text"
+                          onClick={() => {
+                            dispatch(movieActions.addWishesM(movieId));
+                          }}
+                        >
+                          <SvgPlus />
+                          <span>보기싫어요</span>
+                        </button>
+                      ) : (
+                        <button
+                          className="btn-text"
+                          onClick={() => {
+                            dispatch(movieActions.addWishesM(movieId));
+                          }}
+                        >
+                          <SvgPlus />
+                          <span style={{ color: "f82e62" }}>보고싶어요</span>
+                        </button>
+                      )}
+
                       <button className="btn-text">
                         <SvgShared />
                         <span>공유하기</span>

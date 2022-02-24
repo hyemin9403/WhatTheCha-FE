@@ -24,7 +24,7 @@ const Wishes = () => {
   } else {
     return (
       <Padding>
-        <h2>학새님이 보고싶어요한 작품</h2>
+        <h2>{sessionStorage.getItem("profileName")}님이 보고싶어요한 작품</h2>
         <SwiperGrid list={wantList}></SwiperGrid>
       </Padding>
     );

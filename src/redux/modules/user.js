@@ -278,15 +278,15 @@ export default handleActions(
       deleteCookie("is_login");
     },
     [SET_PROFILE]: (state, action) => {
-      state.profile = action.payload.info;
+      return { ...state, profile: action.payload.info };
     },
     [SELECT_PROFILE]: (state, action) => {
       // sessionStorage(action.payload.user, action.payload.info);
       state.cur_profile = { [action.payload.user]: action.payload.info };
     },
-    [CREATE_PROFILE]: (state, action) => {
-      state.profile = [...state.profile, action.payload.profile];
-      return { ...state };
+    [CREATE_PROFILE]: (state = initialState, action) => {
+      const _new_profile = [...state.profile, action.payload.profile];
+      return { ...state, profile: _new_profile };
     },
   },
   initialState
