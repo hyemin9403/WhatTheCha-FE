@@ -433,8 +433,8 @@ const CardBackgorund = styled.div`
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
-    filter: ${(props) => (props.is_type === "detail" ? "blur(7px);" : "none;")}
-    opacity: ${(props) => (props.is_type === "detail" ? "0.7;" : "1")}
+    filter: ${(props) => (props.is_type === "detail" ? "blur(7px);" : "none;")};
+    opacity: ${(props) => (props.is_type === "detail" ? "0.7;" : "1")};
   }
   .back-deco-side {
     position: absolute;

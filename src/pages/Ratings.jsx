@@ -1,23 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreator as movieActions } from "../redux/modules/movie";
+import Spinner from "../components/Spinner";
+
 import SwiperGrid from "../components/SwiperGrid";
 
 const Ratings = () => {
   const dispatch = useDispatch();
   const listTop10 = useSelector((state) => state.movie.movie_list);
+  const [loading, setLoading] = useState(true);
 
   React.useEffect(() => {
     dispatch(movieActions.getRatingsM());
+
+    let timer = setTimeout(() => {
+      setLoading(false);
+    }, 300);
   }, []);
 
-  return (
-    <Padding>
-      <h2>평가한 작품</h2>
-      <SwiperGrid list={listTop10}></SwiperGrid>
-    </Padding>
-  );
+  if (loading) {
+    return <Spinner is_dim={true} />;
+  } else {
+    return (
+      <Padding>
+        <h2>평가한 작품</h2>
+        <SwiperGrid list={listTop10}></SwiperGrid>
+      </Padding>
+    );
+  }
 };
 
 export default Ratings;
