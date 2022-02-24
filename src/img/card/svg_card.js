@@ -4,18 +4,13 @@ import { ReactComponent as SvgBeta } from "./beta.svg";
 import { ReactComponent as SvgPlus } from "./plus.svg";
 import { ReactComponent as SvgShared } from "./shared.svg";
 import { ReactComponent as SvgCancel } from "./cancel.svg";
+import { ReactComponent as SvgCheck } from "./check.svg";
 
 import { Play } from "./play.svg";
 import { With } from "./with.svg";
 import { Beta } from "./beta.svg";
 import { Plus } from "./plus.svg";
 import { Shared } from "./shared.svg";
+import { Check } from "./check.svg";
 
-export {
-    SvgPlay,
-    SvgWith,
-    SvgBeta,
-    SvgPlus,
-    SvgShared,
-    SvgCancel,
-}
+export { SvgPlay, SvgWith, SvgBeta, SvgPlus, SvgShared, SvgCancel, SvgCheck };

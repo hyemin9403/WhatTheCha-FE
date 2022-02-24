@@ -8,6 +8,8 @@ const LOAD_MOVIE = "LOAD_MOVIE";
 const SET_MOVIE_DETAIL = "SET_MOVIE_DETAIL";
 const SET_WANT = "SET_WANT";
 const SET_EVAL = "SET_EVAL";
+const SET_RELAY = "SET_RELAY";
+const SET_COMPLETE = "SET_COMPLETE";
 const LOADING = "LOADING";
 
 // Action Creators
@@ -15,6 +17,10 @@ const loadMovie = createAction(LOAD_MOVIE, (movie_list) => ({ movie_list }));
 const setMovieDetail = createAction(SET_MOVIE_DETAIL, (movie) => ({ movie }));
 const setWantList = createAction(SET_WANT, (want_list) => ({ want_list }));
 const setEval = createAction(SET_EVAL, (eval_list) => ({ eval_list }));
+const setListRelay = createAction(SET_RELAY, (eval_list) => ({ relay_list }));
+const setComplete = createAction(SET_COMPLETE, (eval_list) => ({
+  complete_list,
+}));
 const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
 
 // initialState
@@ -65,7 +71,7 @@ const addWishesM = (movieId) => {
 
     const profileName = getState();
     console.log("getState", profileName);
-    
+
     instance
       .post("/content/detail/movieId/want", {
         movieId: movieId,
@@ -83,10 +89,10 @@ const setEvalFB = (movieId, score) => {
     const _profileName = sessionStorage.getItem("profileName");
     console.log("점수", score);
     console.log("이름", _profileName);
-    
+
     instance
       .post("/content/detail/movieId/star", {
-        movieId : movieId,
+        movieId: movieId,
         rate: score,
         profileName: _profileName,
       })
@@ -118,37 +124,34 @@ const getWishesM = () => {
 const getRatingsM = () => {
   return function (dispatch, getState, { history }) {
     let _state = getState().movie;
-    console.log("getWishesM에서 받았습니다");
-    console.log(_state.movie_list)
+    console.log(_state.movie_list);
     instance
       .post("/content/doneEvaluation", {
         profileName: sessionStorage.getItem("profileName"),
       })
       .then((res) => {
-<<<<<<< HEAD
         console.log(res);
-        _state.movie_list.doneEvaluation = res.data.doneEvaluation
+        _state.movie_list.doneEvaluation = res.data.doneEvaluation;
         dispatch(setEval(_state.movie_list));
-=======
-        console.log(res.data.doneEvaluation);
-        // dispatch(setWantList(res.data.want));
->>>>>>> f272ea62d53fc1b069588f378ebc60cc044f5836
       })
       .catch((res) => console.log(res));
   };
 };
 
+// 다본작품
 const getWatchedM = () => {
   return function (dispatch, getState, { history }) {
-    console.log("getWishesM에서 받았습니다");
+    let _state = getState().movie;
+    console.log(_state.movie_list);
 
     instance
-      .post("/content/want", {
+      .post("/content/complete", {
         profileName: sessionStorage.getItem("profileName"),
       })
       .then((res) => {
         console.log(res);
-        // dispatch(setWantList(res.data));
+        _state.movie_list.complete = res.data.complete;
+        dispatch(setComplete(_state.movie_list));
       })
       .catch((res) => console.log(res));
   };
@@ -156,15 +159,17 @@ const getWatchedM = () => {
 
 const getWatchingsM = () => {
   return function (dispatch, getState, { history }) {
-    console.log("getWishesM에서 받았습니다");
+    let _state = getState().movie;
+    console.log(_state.movie_list);
 
     instance
-      .post("/content/want", {
+      .post("/content/continue", {
         profileName: sessionStorage.getItem("profileName"),
       })
       .then((res) => {
         console.log(res);
-        // dispatch(setWantList(res.data));
+        _state.movie_list.listRelay = res.data.listRelay;
+        dispatch(setListRelay(_state.movie_list));
       })
       .catch((res) => console.log(res));
   };
@@ -190,8 +195,17 @@ export default handleActions(
     },
     [SET_EVAL]: (state, action) => {
       const new_eval_list = action.payload.eval_list;
-      console.log(state)
-      console.log(new_eval_list)
+
+      return { ...state, movie_list: new_eval_list };
+    },
+    [SET_RELAY]: (state, action) => {
+      const new_eval_list = action.payload.relay_list;
+
+      return { ...state, movie_list: new_eval_list };
+    },
+    [SET_COMPLETE]: (state, action) => {
+      const new_eval_list = action.payload.complete_list;
+
       return { ...state, movie_list: new_eval_list };
     },
     [LOADING]: (state = initialState, action = {}) => {

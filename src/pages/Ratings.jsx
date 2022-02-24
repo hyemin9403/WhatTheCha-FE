@@ -21,7 +21,7 @@ const Ratings = () => {
   }, []);
 
   if (loading) {
-    return <Spinner is_dim={true} />;
+    return <Spinner />;
   } else {
     return (
       <Padding>
