@@ -99,12 +99,12 @@ const getRatingsM = () => {
     console.log("getWishesM에서 받았습니다");
 
     instance
-      .post("/content/want", {
+      .post("/content/doneEvaluation", {
         profileName: sessionStorage.getItem("profileName"),
       })
       .then((res) => {
-        console.log(res);
-        dispatch(setWantList(res.data.want));
+        console.log(res.data.doneEvaluation);
+        // dispatch(setWantList(res.data.want));
       })
       .catch((res) => console.log(res));
   };
@@ -148,14 +148,12 @@ export default handleActions(
       return {
         ...state,
         movie_list: action.payload.movie_list,
-        is_loading: false,
       };
     },
     [SET_MOVIE_DETAIL]: (state, action) => {
       return {
         ...state,
         detail_movie_list: action.payload.movie,
-        is_loading: false,
       };
     },
     [SET_WANT]: (state, action) => {
@@ -175,6 +173,9 @@ const actionCreator = {
   detailListM,
   addWishesM,
   getWishesM,
+  getRatingsM,
+  getWatchedM,
+  getWatchingsM,
 };
 
 export { actionCreator };
