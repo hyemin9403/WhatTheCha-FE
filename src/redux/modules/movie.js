@@ -28,14 +28,7 @@ const allListM = () => {
     dispatch(loading(true));
     instance
       .post("/content/list", {
-        profileName: "",
-        // listRelay랑 want null 일경우 처리 필요
-        listRelay: [
-          {
-            movieId: "",
-          },
-        ],
-        want: [],
+        profileName: sessionStorage.getItem("profileName"),
       })
       .then((res) => {
         console.log(res);
@@ -74,7 +67,7 @@ const addWishesM = (movieId) => {
     instance
       .post("/content/detail/movieId/want", {
         movieId: movieId,
-        profileName: "유저1",
+        profileName: sessionStorage.getItem("profileName"),
       })
       .then((res) => {
         console.log(res);
