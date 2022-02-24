@@ -11,7 +11,9 @@ import {
   SvgPlus,
   SvgShared,
   SvgCancel,
+  SvgCheck,
 } from "../img/card/svg_card";
+
 import Star from "./Star";
 
 import movie, { actionCreator as movieActions } from "../redux/modules/movie";
@@ -162,9 +164,10 @@ const DetailCard = ({ onClose, movieId }) => {
                           onClick={() => {
                             dispatch(movieActions.addWishesM(movieId));
                           }}
+                          style={{ color: "color: rgb(248, 47, 98);" }}
                         >
-                          <SvgPlus />
-                          <span>보기싫어요</span>
+                          <SvgCheck />
+                          <span>보고싶어요</span>
                         </button>
                       ) : (
                         <button
