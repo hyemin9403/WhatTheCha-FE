@@ -57,11 +57,11 @@ function App() {
                 <Route path="/watchings" exact component={Watchings} />
                 <Route path="/watched" exact component={Watched} />
                 <Route path="/ratings" exact component={Ratings} />
+                <Route path="/video" exact component={Video} />
                 {/* {is_loaded && <Spinner />} */}
                 <Footer />
               </Layout>
             </>
-            <Route path="/video" exact component={Video} />
           </Switch>
         </div>
       </ConnectedRouter>

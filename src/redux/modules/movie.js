@@ -7,12 +7,14 @@ import instance from "../../shared/request";
 const LOAD_MOVIE = "LOAD_MOVIE";
 const SET_MOVIE_DETAIL = "SET_MOVIE_DETAIL";
 const SET_WANT = "SET_WANT";
+const SET_EVAL = "SET_EVAL";
 const LOADING = "LOADING";
 
 // Action Creators
 const loadMovie = createAction(LOAD_MOVIE, (movie_list) => ({ movie_list }));
 const setMovieDetail = createAction(SET_MOVIE_DETAIL, (movie) => ({ movie }));
 const setWantList = createAction(SET_WANT, (want_list) => ({ want_list }));
+const setEval = createAction(SET_EVAL, (score) => ({ score }));
 const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
 
 // initialState
@@ -78,6 +80,26 @@ const addWishesM = (movieId) => {
       })
       .then((res) => {
         console.log(res);
+      })
+      .catch((res) => console.log(res));
+  };
+};
+
+const setEvalFB = (movieId, score) => {
+  return function (dispatch, getState, { history }) {
+    console.log("setEvalFB에서 받았습니다.", score);
+
+    const profileName = getState();
+    console.log("getState", profileName);
+
+    instance
+      .post("/content/detail/movieId/star", {
+        movieId : movieId,
+        rate: score,
+        profileName: "유저1",
+      })
+      .then((res) => {
+        console.log(res.data);
       })
       .catch((res) => console.log(res));
   };
@@ -181,6 +203,7 @@ const actionCreator = {
   detailListM,
   addWishesM,
   getWishesM,
+  setEvalFB,
 };
 
 export { actionCreator };

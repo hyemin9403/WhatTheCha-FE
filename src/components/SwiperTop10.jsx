@@ -1,25 +1,49 @@
 import React, { useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+import styled, {keyframes} from "styled-components";
+
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
+import { actionCreator as movieActions } from "../redux/modules/movie";
 import { SvgPrevBtn, SvgNextBtn, SvgCardPlay, SvgCardFavor } from "../img/main/svg_main";
-
-import styled, {keyframes} from "styled-components";
+import { DetailCard } from "./index";
+import { history } from "../redux/configureStore";
 
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-
 import "../css/SwiperMain.css";
 
 // import required modules
 import { Pagination, Navigation } from "swiper";
 
 const SwiperTop10 = ({ listTop10 }) => {
+  const dispatch = useDispatch();
   const ref = useRef();
   const swiperRef = React.useRef(null);
+  let [detailCard, setDetailCard] = useState(false);
+  let [clickedMovieId, setClickedMovieId] = useState(0);
   let slideSize = ref?.current?.swiperSlideSize;
+
+  const onDetailCard = (movieId) => {
+    // 만약 디테일 카드가 열려있지 않을 경우
+    if (!detailCard) {
+      // 오픈으로 바꿔준다
+      setDetailCard((prevToggle) => !prevToggle);
+      //영화 id값 받아와서
+      setClickedMovieId(movieId);
+      // 정보 부르라고 요청 보낸다.
+      dispatch(movieActions.detailListM(movieId));
+      // 열려는 있는데 새로운 movie를 클릭한 경우
+    } else if (detailCard && movieId !== clickedMovieId) {
+      //영화 id값 받아와서
+      setClickedMovieId(movieId);
+      // 정보 부르라고 요청 보낸다.
+      dispatch(movieActions.detailListM(movieId));
+    }
+  };
 
   return (
     <Container size={slideSize}>
@@ -79,7 +103,13 @@ const SwiperTop10 = ({ listTop10 }) => {
         {listTop10 &&
           listTop10.map((movie, i) => {
             return (
-              <SwiperSlide key={movie.movieId} ref={ref}>
+              <SwiperSlide 
+              key={movie.movieId} 
+              ref={ref}
+              onClick={() => {
+                onDetailCard(movie.movieId);
+              }}
+              >
                 <article className="card-info-view">
                   <RankNumber>{i + 1}</RankNumber>
                   <img
@@ -93,7 +123,15 @@ const SwiperTop10 = ({ listTop10 }) => {
                   <img className="img-top10" src={movie.card_image} alt=""/>
                   <div className="hover-content">
                     <div className="hover-group-btn">
-                      <button className="hover-btn-play">
+                      <button  
+                        className="hover-btn-play"
+                        onClick={() =>
+                          history.push({
+                            pathname: `/video`,
+                            //state: d.youtubeId ? d.youtubeId : "",
+                          })
+                        }
+                      >
                         <SvgCardPlay/>
                       </button>
                       <button className="hover-btn-favor">
@@ -112,14 +150,19 @@ const SwiperTop10 = ({ listTop10 }) => {
               </SwiperSlide>
             );
           })}
+          <div className="test">
+            <Prev onClick={() => swiperRef.current.swiper.slidePrev()}>
+              <SvgPrevBtn />
+            </Prev>
+            <Next onClick={() => swiperRef.current.swiper.slideNext()}>
+              <SvgNextBtn />
+            </Next>
+          </div>
       </Swiper>
-      <div className="test">
-        <Prev onClick={() => swiperRef.current.swiper.slidePrev()}>
-          <SvgPrevBtn />
-        </Prev>
-        <Next onClick={() => swiperRef.current.swiper.slideNext()}>
-          <SvgNextBtn />
-        </Next>
+      <div>
+        {detailCard ? (
+          <DetailCard onClose={setDetailCard} movieId={clickedMovieId} />
+        ) : null}
       </div>
     </Container>
   );
@@ -163,8 +206,6 @@ const RankNumber = styled.span`
 
 const Container = styled.div`
   position: relative;
-  display: flex;
-  align-items: center;
   &:hover {
     .test {
       div:last-child {

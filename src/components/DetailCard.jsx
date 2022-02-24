@@ -27,7 +27,7 @@ const DetailCard = ({ onClose, movieId }) => {
   React.useEffect(() => {
     let timer = setTimeout(() => {
       setLoading(false);
-    }, 300);
+    }, 500);
   }, []);
 
   const changeBasic = (e) => {
@@ -57,7 +57,7 @@ const DetailCard = ({ onClose, movieId }) => {
   //["황정민","차승원","한지혜","백성현","김창완","송영창"]
 
   if (loading) {
-    return <Spinner is_dim={true} />;
+    return <Spinner is_dim={true} type={"card"}/>;
   } else {
     return (
       <StyleCard className="on-enter">
@@ -161,7 +161,7 @@ const DetailCard = ({ onClose, movieId }) => {
                         <span>공유하기</span>
                       </button>
                     </CardBtnGroup>
-                    <Star />
+                    <Star _movieId={movieId}/>
                   </CardInfo>
                 );
               } else if (is_type === "detail") {
@@ -385,7 +385,6 @@ const StyleCard = styled.div`
   margin-top: 16px;
   padding: 1.71875vw 0 0 4%;
   height: 35.1562vw;
-  animation: 0.5s ${cardView} ease-out;
   .card-movie {
     position: relative;
     width: 100%;

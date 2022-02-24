@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, {keyframes, css} from "styled-components";
 
 import "../css/Spinner.css";
 
@@ -23,7 +23,19 @@ Spinner.defaultProps = {
   is_dim: false,
   size: 60,
 };
-
+const cardView = keyframes`
+  0% {
+    opacity: 0;
+    height: 0;
+  }
+  60% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    height: 35.1562vw;
+  }
+`;
 const SpinnerWrap = styled.div`
   width: 100%;
   display: flex;
@@ -44,6 +56,13 @@ const SpinnerWrap = styled.div`
       ? `
      background: rgba(0,0,0,0.4); 
      height: 100vh;
+  `
+      : ``}
+  ${(props) =>
+    props.type === "card"
+      ? css`
+      animation: 0.5s ${cardView} ease-out;
+      height: 35.1562vw;
   `
       : ``}
 `;

@@ -7,9 +7,12 @@ import logo from "../img/header/logo.svg"
 import { SvgHome, SvgFavor, SvgComple, SvgRelay, SvgEval } from "../img/nav_side/svg_side"
 
 const Sidebar = () => {
-  //const location = useSelector(state => state.router.location);
+  const location = useSelector(state => state.router.location);
   const is_login = useSelector((state) => state.user.is_login);
 
+  if(location.pathname === '/video' || location.pathname === "/manage_profiles"){
+    return null;
+  }
   if(is_login){
     return (
       <Nav>

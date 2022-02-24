@@ -11,7 +11,12 @@ import {
 } from "../img/footer/svg_footer";
 
 const Footer = () => {
+  const location = useSelector(state => state.router.location);
   const is_login = useSelector((state) => state.user.is_login);
+
+  if(location.pathname === '/video'){
+    return null;
+  }
   if (is_login) {
     return (
       <StyledFooter>

@@ -1,8 +1,12 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
+import { actionCreator as movieActions } from '../redux/modules/movie';
+
 const Star = (props) => {
-    const { is_score } = props
+    const dispatch = useDispatch();
+    const { is_score, _movieId } = props
     const ref = React.useRef();
     const [score, setScore] = React.useState("0%");
     const [starText, setText] = React.useState("이미 본 작품인가요?");
@@ -54,7 +58,7 @@ const Star = (props) => {
             }
             else if(star_offsetX / base_width * 100 >= 80 & star_offsetX / base_width * 100 <= 90){
                 star_width = "90%";
-                star_text = "훌륭해요";
+                star_text = "훌륭해요"; 
             }
             else if(star_offsetX / base_width * 100 >= 90 & star_offsetX / base_width * 100 <= 100) {
                 star_width = "100%";
@@ -64,21 +68,30 @@ const Star = (props) => {
             ref.current.childNodes[1].style.width = star_width
         })
         ref?.current.addEventListener('click', () => {
-            setScore(ref.current.childNodes[1].style.width)
             setText(ref.current.previousSibling.textContent)
-            console.log("클릭", score, starText)
+            setScore(ref.current.childNodes[1].style.width)
+            let calcScore = parseInt(ref.current.childNodes[1].style.width) / 20
+            console.log(calcScore)
+            dispatch(movieActions.setEvalFB(_movieId, calcScore))
+            console.log("클릭 스코어", score)
+            console.log("클릭 텍스트", starText)
         })
-        ref?.current.addEventListener('mouseleave', (e) => {
+        ref?.current.addEventListener('mouseleave', () => {
             ref.current.previousSibling.textContent = starText
             ref.current.childNodes[1].style.width = score
             console.log("리브", score, starText)
         })
     }
-    
+
     React.useEffect(() => {
         if(!is_score){
-            ref?.current.addEventListener('mouseenter', targetOffset)
+            ref?.current.addEventListener('mouseenter', targetOffset);
         }
+        // return (
+        //     ref?.current.removeEventListener('mouseenter', targetOffset)
+        //     ref?.current.removeEventListener('click', targetClick)
+        //     ref?.current.removeEventListener('mouseleave', targetLeave)
+        // )
     });
 
     let style = {

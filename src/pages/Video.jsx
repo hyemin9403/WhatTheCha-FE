@@ -7,7 +7,8 @@ import styled from 'styled-components';
 const Video = (props) => {
     const location = useLocation();
     const youtubeId = location.state;
-    console.log(youtubeId)
+    console.log("프롭", props)
+    console.log("유튜브 아이디", youtubeId)
     const opts = {
         height: '100%',
         width: '100%',
@@ -26,7 +27,7 @@ const Video = (props) => {
         console.log("총 시간", total)
         console.log("본 시간", current)
         console.log("비율", current / total * 100)
-        e.target.seekTo(1000)
+        e.target.seekTo(0)
         e.target.playVideo();
     }
     return (

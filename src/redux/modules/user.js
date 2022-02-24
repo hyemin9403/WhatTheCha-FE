@@ -84,6 +84,7 @@ const loginFB = (id, pwd) => {
       })
       .catch((error) => {
         console.log("로그인 통신중 에러발생", error);
+        window.alert("아이디/비밀번호를 확인해주세요")
       });
   };
 };
