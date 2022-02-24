@@ -128,7 +128,7 @@ const SwiperMain = (props) => {
                         onClick={() =>
                           history.push({
                             pathname: `/video`,
-                            //state: d.youtubeId ? d.youtubeId : "",
+                            state: "",
                           })
                         }
                       >

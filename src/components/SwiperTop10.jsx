@@ -128,7 +128,7 @@ const SwiperTop10 = ({ listTop10 }) => {
                         onClick={() =>
                           history.push({
                             pathname: `/video`,
-                            //state: d.youtubeId ? d.youtubeId : "",
+                            state: "",
                           })
                         }
                       >

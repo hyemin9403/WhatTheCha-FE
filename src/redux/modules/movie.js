@@ -125,14 +125,9 @@ const getRatingsM = () => {
         profileName: sessionStorage.getItem("profileName"),
       })
       .then((res) => {
-<<<<<<< HEAD
         console.log(res);
         _state.movie_list.doneEvaluation = res.data.doneEvaluation
         dispatch(setEval(_state.movie_list));
-=======
-        console.log(res.data.doneEvaluation);
-        // dispatch(setWantList(res.data.want));
->>>>>>> f272ea62d53fc1b069588f378ebc60cc044f5836
       })
       .catch((res) => console.log(res));
   };
