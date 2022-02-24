@@ -19,7 +19,15 @@ const Video = (props) => {
     };
     const onReady = (e) => {
         // access to player in all event handlers via event.target
-        //e.target.pauseVideo();
+        const current = e.target.getCurrentTime()
+        const total = e.target.getDuration()
+        console.log(e.target.playerInfo.duration)
+        console.log(e.target)
+        console.log("총 시간", total)
+        console.log("본 시간", current)
+        console.log("비율", current / total * 100)
+        e.target.seekTo(1000)
+        e.target.playVideo();
     }
     return (
         <StyleVideo>

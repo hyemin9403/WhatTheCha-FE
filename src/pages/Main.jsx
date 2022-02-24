@@ -100,10 +100,32 @@ const Main = () => {
 
 export default Main;
 const Padding = styled.div`
+  position: relative;
   padding-left: 40px;
   padding-right: 40px;
   background-color: black;
-
+  &:before{
+    content: "";
+    z-index: 10;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 40px;
+    height: 100%;
+    background: linear-gradient(90deg,rgb(0,0,0) 70%,rgba(0,0,0,0) 100%)
+  }
+  &:after{
+    content: "";
+    z-index: 10;
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+    width: 40px;
+    height: 100%;
+    background: linear-gradient(270deg, rgb(0, 0, 0) 70%, rgba(0, 0, 0, 0) 100%);
+  }
   h2 {
     color: rgb(255, 255, 255);
     font-size: 20px;

@@ -14,13 +14,13 @@ const HeadMenu = () => {
     //console.log(active)
 
     const handleCloseMenu= (e) => {
-        if(!ref.current.contains(e.target) & !btnRef.current.contains(e.target)) setActive(false);
+        if(!ref.current?.contains(e.target) & !btnRef.current?.contains(e.target)) setActive(false);
     }
        
     React.useEffect(() => {
         window.addEventListener('click', handleCloseMenu);
         return () => {
-        window.removeEventListener('click', handleCloseMenu);
+            window.removeEventListener('click', handleCloseMenu);
         };
     });
     return (

@@ -2,9 +2,9 @@ import React, { useRef, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import { SvgPrevBtn, SvgNextBtn } from "../img/main/svg_main";
+import { SvgPrevBtn, SvgNextBtn, SvgCardPlay, SvgCardFavor } from "../img/main/svg_main";
 
-import styled from "styled-components";
+import styled, {keyframes} from "styled-components";
 
 // Import Swiper styles
 import "swiper/css";
@@ -17,10 +17,12 @@ import "../css/SwiperMain.css";
 import { Pagination, Navigation } from "swiper";
 
 const SwiperTop10 = ({ listTop10 }) => {
+  const ref = useRef();
   const swiperRef = React.useRef(null);
+  let slideSize = ref?.current?.swiperSlideSize;
 
   return (
-    <Container>
+    <Container size={slideSize}>
       <Swiper
         style={{  }}
         className="mySwiper main"
@@ -77,9 +79,9 @@ const SwiperTop10 = ({ listTop10 }) => {
         {listTop10 &&
           listTop10.map((movie, i) => {
             return (
-              <SwiperSlide key={movie.movieId}>
-                <RankNumber>{i + 1}</RankNumber>
+              <SwiperSlide key={movie.movieId} ref={ref}>
                 <article className="card-info-view">
+                  <RankNumber>{i + 1}</RankNumber>
                   <img
                     className="img-top10"
                     style={{ margin: "0 0 0 2rem" }}
@@ -89,6 +91,23 @@ const SwiperTop10 = ({ listTop10 }) => {
                 </article>
                 <article className="card-info-hover">
                   <img className="img-top10" src={movie.card_image} alt=""/>
+                  <div className="hover-content">
+                    <div className="hover-group-btn">
+                      <button className="hover-btn-play">
+                        <SvgCardPlay/>
+                      </button>
+                      <button className="hover-btn-favor">
+                        <SvgCardFavor/>
+                      </button>
+                    </div>
+                    <div className="hover-text">
+                      <h4>{movie.movieName}</h4>
+                      <span>{movie.make_year}</span>
+                      <ul>
+                        <li>{movie.category}</li>
+                      </ul>
+                    </div>
+                  </div>
                 </article>
               </SwiperSlide>
             );
@@ -108,51 +127,20 @@ const SwiperTop10 = ({ listTop10 }) => {
 
 export default SwiperTop10;
 
-const Container = styled.div`
-  position: relative;
-  display: flex;
-  align-items: center;
-  &:hover {
-    .test {
-      div:last-child {
-        opacity: 1;
-      }
-    }
+const showCard = keyframes`
+  0% {
+    opacity: 0;
   }
-  .main{
-    .swiper-slide{
-      overflow: visible;
-    } 
-    .swiper-slide:hover{
-      width: 14vw!important;
-      .card-info-view{
-        opacity: 0;
-        img{
-          heigth: 60%;
-        }
-      }
-      .card-info-hover{
-        z-index: 11;
-        display: block;
-      }
-    }
-    // .card-info-view{
-    //   display: none;
-    // }
-    .card-info-hover{
-      display: none;
-      width: 25rem;
-      height: 108.43%;
-      position: fixed;
-      top: 50%;
-      left: 0;
-      transform: translateY(-50%);
-      img{
-        width: 100%;
-        heigth: 100%;
-        object-fit: cover;
-      }
-    }
+  100% {
+    opacity: 1;
+  }
+`;
+const hiddenCard = keyframes`
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 `;
 
@@ -173,21 +161,154 @@ const RankNumber = styled.span`
   line-height: 56px;
 `;
 
+const Container = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  &:hover {
+    .test {
+      div:last-child {
+        opacity: 1;
+      }
+    }
+  }
+  .main{
+    .swiper-slide{
+      overflow: visible;
+      .card-info-hover{
+        opacity:0;
+        display: none;
+        width: 100%;
+        height: 110%;
+        position: absolute;
+        top: 45%;
+        transform: translateY(-50%);
+        background-color: rgba(0,0,0);
+        img{
+          width: auto;
+          height: 100%;
+          object-fit: cover;
+          opacity: 0.7;
+        }
+        .hover-content{
+          position: absolute;
+          bottom: 0px;
+          left: 0px;
+          z-index: 4;
+          width: 100%;
+          .hover-group-btn{
+            padding: 0 10px;
+            display: flex;
+            justify-content: flex-start;
+            button{
+              display: inline-flex;
+              justify-content: center;
+              align-items: center;
+              background-color: rgb(255, 255, 255);
+              width: 36px;
+              height: 36px;
+              border-radius: 50%;
+              svg{
+                width: 20px;
+                height: 20px;
+              }
+            }
+            button+button{
+              margin-left: 6px;
+            }
+            button:hover{
+              background-color: rgb(248, 47, 98);
+              svg{
+                color: #ffffff;
+                path{
+                  fill: #ffffff;
+                }
+              }
+            }
+            .hover-btn-play{
+              svg{
+                path{
+                  fill: #000000;
+                }
+              }
+            }
+            .hover-btn-favor{
+              background-color: rgba(0, 0, 0, 0.8);
+              svg{
+                color: #ffffff;
+              }
+            }
+          }
+          .hover-text{
+            padding: 12px 12px 14px;
+            h4{
+              position: relative;
+              color: rgb(255, 255, 255);
+              font-size: 18px;
+              font-weight: 700;
+              letter-spacing: 0px;
+              line-height: 24px;
+              padding-bottom: 4px;
+            }
+            span{
+              color: rgba(255, 255, 255, 0.7);
+              margin-bottom: 11px;
+              font-size: 13px;
+              font-weight: 400;
+              letter-spacing: 0px;
+              line-height: 18px;
+            }
+            ul{
+              display: flex;
+              li{
+                color: rgb(255, 255, 255);
+                margin-bottom: 11px;
+                font-size: 13px;
+                font-weight: 400;
+                letter-spacing: 0px;
+                line-height: 18px;
+              }
+            }
+          }
+        }
+      }
+    } 
+    .swiper-slide:hover{
+      width: calc(${props => props.size} * 1px + 2vw)!important;
+      .card-info-view{
+        animation: 0.1s ${hiddenCard} ease-out;
+        opacity: 0;
+      }
+      .card-info-hover{
+        z-index: 11;
+        display: block;
+        animation: 0.4s ${showCard} ease-out;
+        opacity: 1;
+      }
+    }
+  }
+`;
+
 const Prev = styled.div`
   z-index: 101;
   cursor: pointer;
   position: absolute;
   top: 0;
-  left: -2rem;
-  width: 2vw;
+  left: -2px;
+  width: auto;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  opacity: 0;
   transition: 0.2s;
+  svg{
+    z-index: 5;
+    opacity: 0;
+  }
   &:hover {
-    opacity: 1;
+    svg{
+      opacity: 1;
+    }
   }
 `;
 const Next = styled.div`
@@ -195,11 +316,19 @@ const Next = styled.div`
   cursor: pointer;
   position: absolute;
   top: 0;
-  right: -2.5rem;
-  width: 2vw;
+  right: -20px;
+  width: auto;
   height: 100%;
-  opacity: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  svg{
+    z-index: 5;
+    opacity: 0;
+  }
+  &:hover {
+    svg{
+      opacity: 1;
+    }
+  }
 `;
