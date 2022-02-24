@@ -16,7 +16,7 @@ const Header = (props) => {
   const [active, setActive] = React.useState(false);
 
   function observDom(){
-    if(history.location.pathname !== "/"){
+    if(path !== "/"){
       return;
     }
 

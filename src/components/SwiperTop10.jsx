@@ -176,6 +176,7 @@ const showCard = keyframes`
   }
   100% {
     opacity: 1;
+    left: 0;
   }
 `;
 const hiddenCard = keyframes`
@@ -317,13 +318,13 @@ const Container = styled.div`
     .swiper-slide:hover{
       width: calc(${props => props.size} * 1px + 2vw)!important;
       .card-info-view{
-        animation: 0.1s ${hiddenCard} ease-out;
+        animation: 0.4s ${hiddenCard} ease-out;
         opacity: 0;
       }
       .card-info-hover{
         z-index: 11;
         display: block;
-        animation: 0.4s ${showCard} ease-out;
+        animation: 0.6s ${showCard} ease-out;
         opacity: 1;
       }
     }

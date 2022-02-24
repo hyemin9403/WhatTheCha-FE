@@ -19,9 +19,11 @@ const ManageProfile = ({ location }) => {
 
   // 로그인하고 바로 이동했을때
   React.useEffect(() => {
+    // console.log("history", location.props.history, history);
     if (location?.props?.history) {
-      setHistory(location.props.history);
+      setHistory(true);
     }
+    // console.log("history", location.props.history, history);
   }, []);
 
   React.useEffect(() => {
@@ -45,8 +47,8 @@ const ManageProfile = ({ location }) => {
     dispatch(imgActions.setPreview(null));
   };
 
-  const createProfile = () => {
-    dispatch(userActions.makeProfileFB(name, ImgData));
+  const createProfile = async () => {
+    await dispatch(userActions.makeProfileFB(name, ImgData));
     setEdit(false);
 
     setName("");

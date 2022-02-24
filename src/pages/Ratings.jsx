@@ -9,9 +9,9 @@ import SwiperGrid from "../components/SwiperGrid";
 
 const Ratings = () => {
   const dispatch = useDispatch();
-  const listTop10 = useSelector((state) => state.movie.movie_list);
+  const doneEvaluation = useSelector((state) => state.movie.movie_list?.doneEvaluation);
   const [loading, setLoading] = useState(true);
-
+  console.log(doneEvaluation)
   React.useEffect(() => {
     dispatch(movieActions.getRatingsM());
 
@@ -26,7 +26,7 @@ const Ratings = () => {
     return (
       <Padding>
         <h2>평가한 작품</h2>
-        <SwiperGrid list={listTop10}></SwiperGrid>
+        <SwiperGrid list={doneEvaluation}></SwiperGrid>
       </Padding>
     );
   }

@@ -12,10 +12,10 @@ const Star = (props) => {
     const [starText, setText] = React.useState("이미 본 작품인가요?");
     const target = document.getElementById('star');
 
-    //console.log("변화감지", score, starText)
+  //console.log("변화감지", score, starText)
 
     const targetOffset = (e) => {
-        ref?.current.addEventListener('mousemove', (e) => {
+        ref?.current.addEventListener("mousemove", (e) => {
             // console.log(target.childNodes[0].offsetWidth)
             // console.log("오프셋 좌표", e.offsetX)
             // console.log(e.offsetX / e.target.offsetWidth * 100)
@@ -67,88 +67,104 @@ const Star = (props) => {
             ref.current.previousSibling.textContent = star_text
             ref.current.childNodes[1].style.width = star_width
         })
-        ref?.current.addEventListener('click', () => {
-            setText(ref.current.previousSibling.textContent)
-            setScore(ref.current.childNodes[1].style.width)
-            let calcScore = parseInt(ref.current.childNodes[1].style.width) / 20
-            console.log(calcScore)
-            dispatch(movieActions.setEvalFB(_movieId, calcScore))
-            console.log("클릭 스코어", score)
-            console.log("클릭 텍스트", starText)
-        })
+        /* ref?.current.addEventListener('mouseleave', () => {
+            ref.current.previousSibling.textContent = starText
+            ref.current.childNodes[1].style.width = score
+            console.log("리브", score, starText)
+        }) */
+    }
+    const selectScore = () => {
+        console.log("클릭 content",ref.current.previousSibling.textContent)
+        console.log("클릭 width",ref.current.childNodes[1].style.width)
+        setText(ref.current.previousSibling.textContent)
+        setScore(ref.current.childNodes[1].style.width)
+        let calcScore = parseInt(ref.current.childNodes[1].style.width) / 20
+        console.log(calcScore)
+        dispatch(movieActions.setEvalFB(_movieId, calcScore))
+        console.log("클릭 스코어", score)
+        console.log("클릭 텍스트", starText)
+    }
+
+    React.useEffect(() => {
+        if (!is_score) {
+            ref?.current.addEventListener("mouseenter", targetOffset);
+            // ref?.current.addEventListener('click', () => {
+            //     setText(ref.current.previousSibling.textContent)
+            //     setScore(ref.current.childNodes[1].style.width)
+            //     let calcScore = parseInt(ref.current.childNodes[1].style.width) / 20
+            //     console.log(calcScore)
+            //     dispatch(movieActions.setEvalFB(_movieId, calcScore))
+            //     console.log("클릭 스코어", score)
+            //     console.log("클릭 텍스트", starText)
+            // })
+        }
+    }, []);
+
+    React.useEffect(() => {
         ref?.current.addEventListener('mouseleave', () => {
             ref.current.previousSibling.textContent = starText
             ref.current.childNodes[1].style.width = score
             console.log("리브", score, starText)
         })
-    }
-
-    React.useEffect(() => {
-        if(!is_score){
-            ref?.current.addEventListener('mouseenter', targetOffset);
-        }
-        // return (
-        //     ref?.current.removeEventListener('mouseenter', targetOffset)
-        //     ref?.current.removeEventListener('click', targetClick)
-        //     ref?.current.removeEventListener('mouseleave', targetLeave)
-        // )
-    });
+    }, [starText]);
 
     let style = {
-        width : !is_score ? score : is_score * 20 + "%"
-    }
+        width: !is_score ? score : is_score * 20 + "%",
+    };
 
     return (
         <StyleStar className={is_score ? "edit" : ""}>
-            {!is_score && (<p>{starText}</p>)}
-            <div ref={ref} className='star-wrap' id="star">
-                <div className="star-empty">☆☆☆☆☆</div>
-                <div className="star-check" style={style}>★★★★★</div>
+        {!is_score && <p>{starText}</p>}
+        <div onClick={() => selectScore()} ref={ref} className="star-wrap" id="star">
+            <div className="star-empty">☆☆☆☆☆</div>
+            <div className="star-check" style={style}>
+            ★★★★★
             </div>
+        </div>
         </StyleStar>
     );
 };
 const StyleStar = styled.div`
+  position: relative;
+  z-index: 1;
+  margin-top: 1.40625vw;
+  display: flex;
+  align-items: center;
+  line-height: 1em;
+  text-align: center;
+  user-select: none;
+  font-size: 1.5625vw;
+  &.edit {
+    font-size: 1.25vw;
+  }
+  p {
+    width: 11.7188vw;
+    font-size: 1.09375vw;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.7);
+    letter-spacing: -0.03125vw;
+    line-height: 1.5625vw;
+    text-align: left;
+  }
+  .star-wrap {
+    padding-bottom: 0.3vw;
     position: relative;
-    z-index: 1;
-    margin-top: 1.40625vw;
-    display: flex;
-    align-items: center;
-    line-height: 1em;
-    text-align: center;
-    user-select: none;
-    font-size: 1.5625vw;
-    &.edit{
-        font-size: 1.25vw;
+    display: inline-block;
+    cursor: pointer;
+    letter-spacing: -0.3rem;
+    .star-empty {
+      color: rgb(255, 255, 255);
     }
-    p{
-        width: 11.7188vw;
-        font-size: 1.09375vw;
-        font-weight: 700;
-        color: rgba(255, 255, 255, 0.7);
-        letter-spacing: -0.03125vw;
-        line-height: 1.5625vw;
-        text-align: left;
+    .star-check {
+      position: absolute;
+      top: 0px;
+      bottom: 0px;
+      left: 0px;
+      white-space: nowrap;
+      overflow: hidden;
+      color: rgb(255, 255, 255);
+      width: 0%;
     }
-    .star-wrap{
-        padding-bottom: 0.3vw;
-        position: relative;
-        display: inline-block;
-        cursor: pointer;
-        letter-spacing: -0.3rem;
-        .star-empty{
-            color: rgb(255, 255, 255);
-        }
-        .star-check{
-            position: absolute;
-            top: 0px;
-            bottom: 0px;
-            left: 0px;
-            white-space: nowrap;
-            overflow: hidden;
-            color: rgb(255, 255, 255); 
-            width: 0%;
-        }
-    }
-`
+  }
+`;
 export default Star;

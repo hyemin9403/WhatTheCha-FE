@@ -14,7 +14,7 @@ const LOADING = "LOADING";
 const loadMovie = createAction(LOAD_MOVIE, (movie_list) => ({ movie_list }));
 const setMovieDetail = createAction(SET_MOVIE_DETAIL, (movie) => ({ movie }));
 const setWantList = createAction(SET_WANT, (want_list) => ({ want_list }));
-const setEval = createAction(SET_EVAL, (score) => ({ score }));
+const setEval = createAction(SET_EVAL, (eval_list) => ({ eval_list }));
 const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
 
 // initialState
@@ -30,14 +30,7 @@ const allListM = () => {
     dispatch(loading(true));
     instance
       .post("/content/list", {
-        profileName: "",
-        // listRelay랑 want null 일경우 처리 필요
-        listRelay: [
-          {
-            movieId: "",
-          },
-        ],
-        want: [],
+        profileName: sessionStorage.getItem("profileName"),
       })
       .then((res) => {
         console.log(res);
@@ -72,7 +65,7 @@ const addWishesM = (movieId) => {
 
     const profileName = getState();
     console.log("getState", profileName);
-
+    
     instance
       .post("/content/detail/movieId/want", {
         movieId: movieId,
@@ -87,16 +80,15 @@ const addWishesM = (movieId) => {
 
 const setEvalFB = (movieId, score) => {
   return function (dispatch, getState, { history }) {
-    console.log("setEvalFB에서 받았습니다.", score);
-
-    const profileName = getState();
-    console.log("getState", profileName);
-
+    const _profileName = sessionStorage.getItem("profileName");
+    console.log("점수", score);
+    console.log("이름", _profileName);
+    
     instance
       .post("/content/detail/movieId/star", {
         movieId : movieId,
         rate: score,
-        profileName: "유저1",
+        profileName: _profileName,
       })
       .then((res) => {
         console.log(res.data);
@@ -107,16 +99,17 @@ const setEvalFB = (movieId, score) => {
 
 const getWishesM = () => {
   return function (dispatch, getState, { history }) {
-    console.log("getWishesM에서 받았습니다");
-    // dispatch(loading(true));
+    let _state = getState().movie;
+    console.log("state를 불러왔어요", _state);
 
     instance
-      .get("/content/want", {
-        profileName: localStorage.getItem("profileName"),
+      .post("/content/want", {
+        profileName: sessionStorage.getItem("profileName"),
       })
       .then((res) => {
         console.log(res);
-        dispatch(setWantList(res.data));
+        _state.movie_list.wantList = res.data.want;
+        dispatch(setWantList(_state.movie_list));
       })
       .catch((res) => console.log(res));
   };
@@ -124,15 +117,17 @@ const getWishesM = () => {
 
 const getRatingsM = () => {
   return function (dispatch, getState, { history }) {
+    let _state = getState().movie;
     console.log("getWishesM에서 받았습니다");
-
+    console.log(_state.movie_list)
     instance
-      .get("/content/want", {
-        profileName: "유저1",
+      .post("/content/doneEvaluation", {
+        profileName: sessionStorage.getItem("profileName"),
       })
       .then((res) => {
         console.log(res);
-        // dispatch(setWantList(res.data));
+        _state.movie_list.doneEvaluation = res.data.doneEvaluation
+        dispatch(setEval(_state.movie_list));
       })
       .catch((res) => console.log(res));
   };
@@ -143,8 +138,8 @@ const getWatchedM = () => {
     console.log("getWishesM에서 받았습니다");
 
     instance
-      .get("/content/want", {
-        profileName: "유저1",
+      .post("/content/want", {
+        profileName: sessionStorage.getItem("profileName"),
       })
       .then((res) => {
         console.log(res);
@@ -159,8 +154,8 @@ const getWatchingsM = () => {
     console.log("getWishesM에서 받았습니다");
 
     instance
-      .get("/content/want", {
-        profileName: "유저1",
+      .post("/content/want", {
+        profileName: sessionStorage.getItem("profileName"),
       })
       .then((res) => {
         console.log(res);
@@ -188,7 +183,13 @@ export default handleActions(
     },
     [SET_WANT]: (state, action) => {
       const new_want_list = action.payload.want_list;
-      return { ...state.movie_list, wantList: new_want_list };
+      return { ...state, movie_list: new_want_list };
+    },
+    [SET_EVAL]: (state, action) => {
+      const new_eval_list = action.payload.eval_list;
+      console.log(state)
+      console.log(new_eval_list)
+      return { ...state, movie_list: new_eval_list };
     },
     [LOADING]: (state = initialState, action = {}) => {
       return { ...state, is_loading: action.payload.is_loading };
@@ -204,6 +205,7 @@ const actionCreator = {
   addWishesM,
   getWishesM,
   setEvalFB,
+  getRatingsM,
 };
 
 export { actionCreator };

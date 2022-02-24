@@ -9,7 +9,6 @@ import SwiperGrid from "../components/SwiperGrid";
 const Wishes = () => {
   const dispatch = useDispatch();
   const wantList = useSelector((state) => state.movie.movie_list.wantList);
-  console.log(wantList);
   const [loading, setLoading] = useState(true);
 
   React.useEffect(() => {
@@ -26,7 +25,7 @@ const Wishes = () => {
     return (
       <Padding>
         <h2>학새님이 보고싶어요한 작품</h2>
-        {/* <SwiperGrid list={wantList}></SwiperGrid> */}
+        <SwiperGrid list={wantList}></SwiperGrid>
       </Padding>
     );
   }
