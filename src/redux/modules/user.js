@@ -154,7 +154,7 @@ const logoutFB = () => {
     sessionStorage.removeItem("profile");
     localStorage.removeItem("id");
     dispatch(logOut());
-    history.replace('/');
+    history.replace("/");
   };
 };
 
@@ -248,6 +248,10 @@ export default handleActions(
       state.is_login = true;
     },
     [LOG_OUT]: (state, action) => {
+      deleteCookie("is_login");
+      sessionStorage.removeItem("profileName");
+      sessionStorage.removeItem("cur_profile");
+      localStorage.removeItem("id");
       state.user = null;
       state.is_login = false;
       deleteCookie("is_login");

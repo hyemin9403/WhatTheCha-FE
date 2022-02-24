@@ -48,11 +48,15 @@ const ManageProfile = ({ location }) => {
   const createProfile = () => {
     dispatch(userActions.makeProfileFB(name, ImgData));
     setEdit(false);
+
+    setName("");
   };
 
   const selectProfile = (profileName) => {
     console.log(profileName);
     dispatch(userActions.checkProfileFB(profileName));
+
+    setName("");
   };
   return (
     <Section>
