@@ -85,16 +85,17 @@ const addWishesM = (movieId) => {
 
 const getWishesM = () => {
   return function (dispatch, getState, { history }) {
-    console.log("getWishesM에서 받았습니다");
-    // dispatch(loading(true));
+    let _state = getState().movie;
+    console.log("state를 불러왔어요", _state);
 
     instance
-      .get("/content/want", {
-        profileName: localStorage.getItem("profileName"),
+      .post("/content/want", {
+        profileName: sessionStorage.getItem("profileName"),
       })
       .then((res) => {
         console.log(res);
-        dispatch(setWantList(res.data));
+        _state.movie_list.wantList = res.data.want;
+        dispatch(setWantList(_state.movie_list));
       })
       .catch((res) => console.log(res));
   };
@@ -105,12 +106,12 @@ const getRatingsM = () => {
     console.log("getWishesM에서 받았습니다");
 
     instance
-      .get("/content/want", {
-        profileName: "유저1",
+      .post("/content/want", {
+        profileName: sessionStorage.getItem("profileName"),
       })
       .then((res) => {
         console.log(res);
-        // dispatch(setWantList(res.data));
+        dispatch(setWantList(res.data.want));
       })
       .catch((res) => console.log(res));
   };
@@ -121,8 +122,8 @@ const getWatchedM = () => {
     console.log("getWishesM에서 받았습니다");
 
     instance
-      .get("/content/want", {
-        profileName: "유저1",
+      .post("/content/want", {
+        profileName: sessionStorage.getItem("profileName"),
       })
       .then((res) => {
         console.log(res);
@@ -137,8 +138,8 @@ const getWatchingsM = () => {
     console.log("getWishesM에서 받았습니다");
 
     instance
-      .get("/content/want", {
-        profileName: "유저1",
+      .post("/content/want", {
+        profileName: sessionStorage.getItem("profileName"),
       })
       .then((res) => {
         console.log(res);
@@ -166,7 +167,7 @@ export default handleActions(
     },
     [SET_WANT]: (state, action) => {
       const new_want_list = action.payload.want_list;
-      return { ...state.movie_list, wantList: new_want_list };
+      return { ...state, movie_list: new_want_list };
     },
     [LOADING]: (state = initialState, action = {}) => {
       return { ...state, is_loading: action.payload.is_loading };

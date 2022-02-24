@@ -70,17 +70,23 @@ const loginFB = (id, pwd) => {
                 };
                 newProfile.push(_newProfile);
               }
+              window.alert("환영합니다");
+              history.replace({
+                pathname: "/manage_profiles",
+                props: { history: true },
+              });
               dispatch(setProfile(newProfile));
+            } else {
+              window.alert("환영합니다");
+              history.replace({
+                pathname: "/manage_profiles",
+                props: { history: true },
+              });
             }
           })
           .catch((error) => {
             console.log("프로파일 set중 에러발생", error);
           });
-        window.alert("환영합니다");
-        history.replace({
-          pathname: "/manage_profiles",
-          props: { history: true },
-        });
       })
       .catch((error) => {
         console.log("로그인 통신중 에러발생", error);
@@ -161,11 +167,22 @@ const logoutFB = () => {
 const makeProfileFB = (name, image) => {
   return function (dispatch, getState, { history }) {
     let randomNum = Math.floor(Math.random() * 8);
+    const accessToken1 = getCookie("is_login");
+
     instance
-      .post("/profile/create", {
-        profileName: name,
-        profileImage: randomProfileImage[randomNum],
-      })
+      .post(
+        "/profile/create",
+        {
+          profileName: name,
+          profileImage: randomProfileImage[randomNum],
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken1}`,
+            email: localStorage.getItem("id"),
+          },
+        }
+      )
       .then((res) => {
         console.log(res);
         const newProfile = {
@@ -212,10 +229,13 @@ const checkProfileFB = (select) => {
 
 const getProfileFB = () => {
   return function (dispatch, getState, { history }) {
+    const accessToken1 = getCookie("is_login");
+
+    console.log("엑세스토큰", `${accessToken1}`);
     instance
       .get("/profile", {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${accessToken1}`,
           email: localStorage.getItem("id"),
         },
       })
@@ -264,7 +284,8 @@ export default handleActions(
       state.cur_profile = { [action.payload.user]: action.payload.info };
     },
     [CREATE_PROFILE]: (state, action) => {
-      state.profile = [...state.profile, action.payload.info];
+      state.profile = [...state.profile, action.payload.profile];
+      return { ...state };
     },
   },
   initialState
