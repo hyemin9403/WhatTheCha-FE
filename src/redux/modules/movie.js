@@ -17,8 +17,8 @@ const loadMovie = createAction(LOAD_MOVIE, (movie_list) => ({ movie_list }));
 const setMovieDetail = createAction(SET_MOVIE_DETAIL, (movie) => ({ movie }));
 const setWantList = createAction(SET_WANT, (want_list) => ({ want_list }));
 const setEval = createAction(SET_EVAL, (eval_list) => ({ eval_list }));
-const setListRelay = createAction(SET_RELAY, (eval_list) => ({ relay_list }));
-const setComplete = createAction(SET_COMPLETE, (eval_list) => ({
+const setListRelay = createAction(SET_RELAY, (relay_list) => ({ relay_list }));
+const setComplete = createAction(SET_COMPLETE, (complete_list) => ({
   complete_list,
 }));
 const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
