@@ -1,6 +1,6 @@
 import React from "react";
 import "../css/App.css";
-import { Route, useLocation } from "react-router-dom";
+import { Route, useLocation, Switch } from "react-router-dom";
 import { history } from "../redux/configureStore";
 import { ConnectedRouter } from "connected-react-router";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,7 +17,7 @@ import Watched from "../pages/Watched";
 import Watchings from "../pages/Watchings";
 import Wishes from "../pages/Wishes";
 import Ratings from "../pages/Ratings";
-import Video from "../pages/Video"
+import Video from "../pages/Video";
 import Spinner from "../components/Spinner";
 
 /* COMPONENT */
@@ -41,24 +41,28 @@ function App() {
   }, []);
   return (
     <div className="App">
-      <Header/>
+      <Header />
       <ConnectedRouter history={history}>
         <div className="container">
-          <Sidebar />
-          <Route path="/" exact component={Landing} />
-          <Route path="/sign_up" exact component={Signup} />
-          <Route path="/sign_in" exact component={Signin} />
-          <Route path="/manage_profiles" exact component={ManageProfile} />
-          <Layout>
-            <Route path="/browse/video" exact component={Main} />
-            <Route path="/wishes" exact component={Wishes} />
-            <Route path="/watchings" exact component={Watchings} />
-            <Route path="/watched" exact component={Watched} />
-            <Route path="/ratings" exact component={Ratings} />
-            {/* {is_loaded && <Spinner />} */}
-            <Footer />
-          </Layout>
-          <Route path="/video" exact component={Video} />
+          <Switch>
+            <Route path="/" exact component={Landing} />
+            <Route path="/sign_up" exact component={Signup} />
+            <Route path="/sign_in" exact component={Signin} />
+            <Route path="/manage_profiles" exact component={ManageProfile} />
+            <>
+              <Sidebar />
+              <Layout>
+                <Route path="/browse/video" exact component={Main} />
+                <Route path="/wishes" exact component={Wishes} />
+                <Route path="/watchings" exact component={Watchings} />
+                <Route path="/watched" exact component={Watched} />
+                <Route path="/ratings" exact component={Ratings} />
+                {/* {is_loaded && <Spinner />} */}
+                <Footer />
+              </Layout>
+            </>
+            <Route path="/video" exact component={Video} />
+          </Switch>
         </div>
       </ConnectedRouter>
     </div>

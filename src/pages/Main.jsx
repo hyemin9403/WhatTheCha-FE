@@ -20,12 +20,17 @@ import "swiper/css/navigation";
 
 // import required modules
 import { Pagination, Navigation } from "swiper";
+import Spinner from "../components/Spinner";
 
 const Main = () => {
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
 
   React.useEffect(() => {
     dispatch(movieActions.allListM());
+    let timer = setTimeout(() => {
+      setLoading(false);
+    }, 1000);
   }, []);
 
   const movie_list = useSelector((state) => state.movie.movie_list);
@@ -50,52 +55,58 @@ const Main = () => {
     (state) => state.movie.movie_list?.categoryList?.fantasy_crime_romance_etc
   );
 
+  // const cur_profile = useSelector((state)=> state.user.cur_profile)
+
   // console.log("listComedy", listComedy);
 
-  return (
-    <Padding>
-      <HomeContainer>
-        <h1 style={{ color: "white" }}>홈</h1>
-        <Hr />
-      </HomeContainer>
+  if (loading) {
+    return <Spinner is_dim={true} />;
+  } else {
+    return (
+      <Padding>
+        <HomeContainer>
+          <h1 style={{ color: "white" }}>홈</h1>
+          <Hr />
+        </HomeContainer>
 
-      <SwiperContainer>
-        <SwiperTitle list={title_list}></SwiperTitle>
-      </SwiperContainer>
-      <section>
-        <ButtonUL>
-          <li>
-            <Button>전체</Button>
-          </li>
-          <li>
-            <Button>영화</Button>
-          </li>
-          <li>
-            <Button>TV프로그램</Button>
-          </li>
-        </ButtonUL>
-      </section>
-      <SwiperContainer>
-        <h2>왓고리즘</h2>
-        <SwiperMain list={listAction} _loop={false}></SwiperMain>
-      </SwiperContainer>
-      <SwiperContainer>
-        <h2>왓챠 영화 TOP 10</h2>
-        <SwiperTop10 listTop10={listTop10} _loop={false}></SwiperTop10>
-      </SwiperContainer>
-      <SwiperContainer>
-        <h2>이어보기</h2>
-        <SwiperMain list={listComedy} _loop={false}></SwiperMain>
-      </SwiperContainer>
-      <SwiperContainer>
-        <SwiperParty list={watcha_party_list}></SwiperParty>
-      </SwiperContainer>
-      <SwiperContainer>
-        <h2>오직 왓챠에서!</h2>
-        <SwiperOnly list={exclusive_list}></SwiperOnly>
-      </SwiperContainer>
-    </Padding>
-  );
+        <SwiperContainer>
+          <SwiperTitle list={title_list}></SwiperTitle>
+        </SwiperContainer>
+        <section>
+          <ButtonUL>
+            <li>
+              <Button>전체</Button>
+            </li>
+            <li>
+              <Button>영화</Button>
+            </li>
+            <li>
+              <Button>TV프로그램</Button>
+            </li>
+          </ButtonUL>
+        </section>
+        <SwiperContainer>
+          <h2>왓고리즘</h2>
+          <SwiperMain list={listAction} _loop={false}></SwiperMain>
+        </SwiperContainer>
+        <SwiperContainer>
+          <h2>왓챠 영화 TOP 10</h2>
+          <SwiperTop10 listTop10={listTop10} _loop={false}></SwiperTop10>
+        </SwiperContainer>
+        <SwiperContainer>
+          <h2>이어보기</h2>
+          <SwiperMain list={listComedy} _loop={false}></SwiperMain>
+        </SwiperContainer>
+        <SwiperContainer>
+          <SwiperParty list={watcha_party_list}></SwiperParty>
+        </SwiperContainer>
+        <SwiperContainer>
+          <h2>오직 왓챠에서!</h2>
+          <SwiperOnly list={exclusive_list}></SwiperOnly>
+        </SwiperContainer>
+      </Padding>
+    );
+  }
 };
 
 export default Main;

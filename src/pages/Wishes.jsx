@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreator as movieActions } from "../redux/modules/movie";
+import Spinner from "../components/Spinner";
 
 import SwiperGrid from "../components/SwiperGrid";
 
@@ -9,17 +10,26 @@ const Wishes = () => {
   const dispatch = useDispatch();
   const wantList = useSelector((state) => state.movie.movie_list.wantList);
   console.log(wantList);
+  const [loading, setLoading] = useState(true);
 
   React.useEffect(() => {
     dispatch(movieActions.getWishesM());
+
+    let timer = setTimeout(() => {
+      setLoading(false);
+    }, 300);
   }, []);
 
-  return (
-    <Padding>
-      <h2>학새님이 보고싶어요한 작품</h2>
-      {/* <SwiperGrid list={wantList}></SwiperGrid> */}
-    </Padding>
-  );
+  if (loading) {
+    return <Spinner is_dim={true} />;
+  } else {
+    return (
+      <Padding>
+        <h2>학새님이 보고싶어요한 작품</h2>
+        {/* <SwiperGrid list={wantList}></SwiperGrid> */}
+      </Padding>
+    );
+  }
 };
 
 export default Wishes;

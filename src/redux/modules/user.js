@@ -3,7 +3,7 @@ import { setCookie, deleteCookie, getCookie } from "../../shared/cookie";
 import { history } from "../configureStore";
 import axios from "axios";
 
-import profileImage from "../../shared/profileImage";
+import randomProfileImage from "../../shared/profileImage";
 import instance from "../../shared/request";
 import _ from "lodash";
 
@@ -62,26 +62,25 @@ const loginFB = (id, pwd) => {
             console.log("프로파일", res.data.profile);
             // res.data.profile이 빈 obj가 아닐 때
             if (!_.isEmpty(res.data.profile)) {
-              // 넣는건 성공했는데, length 어떻게 확인하지?
-              for (let i = 0; i < 1; i++) {
-                sessionStorage.setItem(
-                  "profileName",
-                  res.data.profile[i].profileName,
-                  res.data.profile[i].profileImage
-                );
-                const newProfile = {
+              let newProfile = [];
+              for (let i = 0; i < Object.keys(res.data.profile).length; i++) {
+                const _newProfile = {
                   profileName: res.data.profile[i].profileName,
-                  profileImage: "test",
+                  profileImage: res.data.profile[i].profileImage,
                 };
-                dispatch(setProfile(newProfile));
+                newProfile.push(_newProfile);
               }
+              dispatch(setProfile(newProfile));
             }
           })
           .catch((error) => {
             console.log("프로파일 set중 에러발생", error);
           });
         window.alert("환영합니다");
-        history.replace("/manage_profiles");
+        history.replace({
+          pathname: "/manage_profiles",
+          props: { history: true },
+        });
       })
       .catch((error) => {
         console.log("로그인 통신중 에러발생", error);
@@ -155,21 +154,25 @@ const logoutFB = () => {
     sessionStorage.removeItem("profile");
     localStorage.removeItem("id");
     dispatch(logOut());
-    history.replace('/');
+    history.replace("/");
   };
 };
 
 const makeProfileFB = (name, image) => {
   return function (dispatch, getState, { history }) {
+    let randomNum = Math.floor(Math.random() * 8);
     instance
       .post("/profile/create", {
         profileName: name,
-        profileImage: "test",
+        profileImage: randomProfileImage[randomNum],
       })
       .then((res) => {
         console.log(res);
-        const newProfile = { profileName: name, profileImage: "test" };
-        dispatch(setProfile(newProfile));
+        const newProfile = {
+          profileName: name,
+          profileImage: randomProfileImage[randomNum],
+        };
+        dispatch(createProfile(newProfile));
       })
       .catch((error) => {
         console.log("axios 통신에러 발생", error);
@@ -180,20 +183,60 @@ const makeProfileFB = (name, image) => {
 const checkProfileFB = (select) => {
   return function (dispatch, getState, { history }) {
     instance
-      .post(`profile/${select}`, {}, {})
+      .post("/profile/checkin", {
+        profileName: select,
+        email: localStorage.getItem("id"),
+      })
       .then((res) => {
-        //console.log(res.data);
+        console.log(res.data);
         const profileData = {
-          want: [...res.data.want],
-          listRelay: [...res.data.listRelay],
-          complete: [...res.data.complete],
-          doneevaluation: [...res.data.doneevaluation],
+          want: [...res.data.checkinProfile.want],
+          listRelay: [...res.data.checkinProfile.listRelay],
+          complete: [...res.data.checkinProfile.complete],
+          doneevaluation: [...res.data.checkinProfile.doneEvaluation],
         };
-        dispatch(setProfile(select, profileData));
+        sessionStorage.setItem("profileName", select);
+        sessionStorage.setItem(
+          "cur_profile",
+          JSON.stringify(res.data.checkinProfile)
+        );
+        dispatch(selectProfile(select, profileData));
+        history.replace("/browse/video");
       })
       .catch((error) => {
         console.log("프로파일 선택 axios 통신중 에러발생");
         console.log(error.code, error.message);
+      });
+  };
+};
+
+const getProfileFB = () => {
+  return function (dispatch, getState, { history }) {
+    instance
+      .get("/profile", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          email: localStorage.getItem("id"),
+        },
+      })
+      .then((res) => {
+        console.log(res.data.profile);
+
+        // res.data.profile이 빈 obj가 아닐 때
+        if (!_.isEmpty(res.data.profile)) {
+          let newProfile = [];
+          for (let i = 0; i < Object.keys(res.data.profile).length; i++) {
+            const _newProfile = {
+              profileName: res.data.profile[i].profileName,
+              profileImage: res.data.profile[i].profileImage,
+            };
+            newProfile.push(_newProfile);
+          }
+          dispatch(setProfile(newProfile));
+        }
+      })
+      .catch((error) => {
+        console.log("프로파일 set중 에러발생", error);
       });
   };
 };
@@ -205,21 +248,24 @@ export default handleActions(
       state.is_login = true;
     },
     [LOG_OUT]: (state, action) => {
+      deleteCookie("is_login");
+      sessionStorage.removeItem("profileName");
+      sessionStorage.removeItem("cur_profile");
+      localStorage.removeItem("id");
       state.user = null;
       state.is_login = false;
       deleteCookie("is_login");
     },
     [SET_PROFILE]: (state, action) => {
-      // const tmp = sessionStorage.getItem("profileName");
-      // 여기서 이걸 왜 get set을 해야하지?
-      // sessionStorage.setItem("profileName", [...tmp, action.payload.info]);
-      state.profile = [...state.profile, action.payload.info];
+      state.profile = action.payload.info;
     },
     [SELECT_PROFILE]: (state, action) => {
-      sessionStorage(action.payload.user, action.payload.info);
+      // sessionStorage(action.payload.user, action.payload.info);
       state.cur_profile = { [action.payload.user]: action.payload.info };
     },
-    [CREATE_PROFILE]: (state, action) => {},
+    [CREATE_PROFILE]: (state, action) => {
+      state.profile = [...state.profile, action.payload.info];
+    },
   },
   initialState
 );
@@ -234,6 +280,7 @@ const actionCreator = {
   logoutFB,
   checkProfileFB,
   makeProfileFB,
+  getProfileFB,
 };
 
 export { actionCreator };

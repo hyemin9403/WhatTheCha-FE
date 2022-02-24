@@ -86,11 +86,11 @@ const addWishesM = (movieId) => {
 const getWishesM = () => {
   return function (dispatch, getState, { history }) {
     console.log("getWishesM에서 받았습니다");
-    dispatch(loading(true));
+    // dispatch(loading(true));
 
     instance
       .get("/content/want", {
-        profileName: "유저1",
+        profileName: localStorage.getItem("profileName"),
       })
       .then((res) => {
         console.log(res);
